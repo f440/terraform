@@ -1,3 +1,5 @@
+require "nokogiri"
+require "uri"
 require 'sqlite3'
 
 class Index
@@ -35,7 +37,7 @@ class Index
   end
 end
 
-task default: [:clean, :build, :setup, :create_index, :import]
+task default: [:clean, :build, :setup, :copy, :create_index, :import]
 
 task :clean do
   rm_rf "build"
@@ -50,9 +52,6 @@ end
 task :setup do
   mkdir_p "Terraform.docset/Contents/Resources/Documents"
 
-  # Contents
-  sh "rsync -a --delete --exclude '*.gz' " +
-    "build/ Terraform.docset/Contents/Resources/Documents/"
   # Icon
   sh "cp source/assets/images/favicon.png Terraform.docset/icon.png"
   # Info.plist
@@ -70,9 +69,40 @@ task :setup do
     <string>terraform</string>
     <key>isDashDocset</key>
     <true/>
+    <key>DashDocSetFamily</key>
+    <string>dashtoc</string>
     </dict>
     </plist>
     XML
+  end
+end
+
+task :copy do
+  file_list = []
+  Dir.chdir("build") { file_list = Dir.glob("**/*").sort }
+
+  file_list.each do |path|
+    source = "build/#{path}"
+    target = "Terraform.docset/Contents/Resources/Documents/#{path}"
+
+    case
+    when File.stat(source).directory?
+      mkdir_p target
+    when source.match(/\.gz$/)
+      next
+    when source.match(/\.html$/)
+      doc = Nokogiri::HTML(File.open(source).read)
+      doc.xpath('//h2').each do |h2|
+        a = Nokogiri::XML::Node.new "a", doc
+        a["class"] = "dashAnchor"
+        a["name"] = "//apple_ref/cpp/%{type}/%{name}" %
+          {type: "Section", name: URI.escape(h2.text)}
+        h2.previous = a
+      end
+      File.open(target, "w") { |f| f.write doc }
+    else
+      cp source, target
+    end
   end
 end
 
