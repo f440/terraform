@@ -71,6 +71,8 @@ task :setup do
     <true/>
     <key>DashDocSetFamily</key>
     <string>dashtoc</string>
+    <key>dashIndexFilePath</key>
+    <string>docs/index.html</string>
     </dict>
     </plist>
     XML
