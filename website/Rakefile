@@ -99,6 +99,17 @@ task :copy do
           {type: "Section", name: URI.escape(h2.text)}
         h2.previous = a
       end
+      doc.xpath('//script').each do |script|
+        if script.text != ""
+          script.remove
+        end
+      end
+      doc.xpath("id('header') | id('footer-wrap')").each do |e|
+        e.remove
+      end
+      doc.xpath("//div[contains(@class, 'docs-sidebar')]").each do |e|
+        e.remove
+      end
       File.open(target, "w") { |f| f.write doc }
     else
       cp source, target
