@@ -1,0 +1,150 @@
+require 'sqlite3'
+
+class Index
+  attr_accessor :db
+
+  def initialize(path)
+    @db = SQLite3::Database.new path
+  end
+
+  def drop
+    @db.execute <<-SQL
+      DROP TABLE IF EXISTS searchIndex
+    SQL
+  end
+
+  def create
+    db.execute <<-SQL
+      CREATE TABLE searchIndex(id INTEGER PRIMARY KEY, name TEXT, type TEXT, path TEXT)
+    SQL
+    db.execute <<-SQL
+      CREATE UNIQUE INDEX anchor ON searchIndex (name, type, path)
+    SQL
+  end
+
+  def reset
+    drop
+    create
+  end
+
+  def insert(name, type, path)
+    @db.execute <<-SQL, name: name, type: type, path: path
+      INSERT OR IGNORE INTO searchIndex (name, type, path)
+      VALUES(:name, :type, :path)
+    SQL
+  end
+end
+
+task default: [:clean, :build, :setup, :create_index, :import]
+
+task :clean do
+  rm_rf "build"
+  rm_rf "Terraform.docset"
+end
+
+task :build do
+  sh "bundle"
+  sh "bundle exec middleman build"
+end
+
+task :setup do
+  mkdir_p "Terraform.docset/Contents/Resources/Documents"
+
+  # Contents
+  sh "rsync -a --delete --exclude '*.gz' " +
+    "build/ Terraform.docset/Contents/Resources/Documents/"
+  # Icon
+  sh "cp source/assets/images/favicon.png Terraform.docset/icon.png"
+  # Info.plist
+  File.open("Terraform.docset/Contents/Info.plist", "w") do |f|
+    f.write <<-XML
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+    <key>CFBundleIdentifier</key>
+    <string>terraform</string>
+    <key>CFBundleName</key>
+    <string>Terraform</string>
+    <key>DocSetPlatformFamily</key>
+    <string>terraform</string>
+    <key>isDashDocset</key>
+    <true/>
+    </dict>
+    </plist>
+    XML
+  end
+end
+
+task :create_index do
+  index = Index.new("Terraform.docset/Contents/Resources/docSet.dsidx")
+  index.reset
+
+  Dir.chdir("Terraform.docset/Contents/Resources/Documents") do
+    # commands
+    Dir.glob("docs/commands/*") do |path|
+      name = File.basename(path, ".html")
+      next if name == "index"
+      index.insert name, "Command", path
+    end
+    # configuration
+    Dir.glob("docs/configuration/*") do |path|
+      name = File.basename(path, ".html")
+      next if name == "index"
+      index.insert name, "Setting", path
+    end
+    # internal
+    Dir.glob("docs/internals/*") do |path|
+      name = File.basename(path, ".html")
+      next if name == "index"
+      index.insert name, "Protocol", path
+    end
+    # modules
+    Dir.glob("docs/modules/*") do |path|
+      name = File.basename(path, ".html")
+      next if name == "index"
+      index.insert name, "Module", path
+    end
+    # plugins
+    Dir.glob("docs/plugins/*") do |path|
+      name = File.basename(path, ".html")
+      next if name == "index"
+      index.insert name, "Plugin", path
+    end
+    # providers
+    Dir.glob("docs/providers/**/*")
+      .find_all{ |f| File.stat(f).file? }.each do |path|
+      name = path.gsub(%r{.*providers/(.*)/r/(.*).html}, "\\1_\\2")
+      next if name == "index"
+      index.insert name, "Provider", path
+    end
+    # provisioner
+    Dir.glob("docs/provisioners/*") do |path|
+      name = File.basename(path, ".html")
+      next if name == "index"
+      index.insert name, "Provisioner", path
+    end
+    # state
+    Dir.glob("docs/state/*") do |path|
+      name = File.basename(path, ".html")
+      next if name == "index"
+      index.insert name, "Instance", path
+    end
+    # example
+    Dir.glob("intro/examples/*") do |path|
+      name = File.basename(path, ".html")
+      next if name == "index"
+      index.insert name, "Sample", path
+    end
+    # getting-started
+    Dir.glob("intro/getting-started/*") do |path|
+      name = File.basename(path, ".html")
+      next if name == "index"
+      index.insert name, "Guide", path
+    end
+  end
+end
+
+task :import do
+  sh "open Terraform.docset"
+end

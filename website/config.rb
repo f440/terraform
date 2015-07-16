@@ -11,3 +11,6 @@ activate :hashicorp do |h|
   h.bintray_user    = "mitchellh"
   h.bintray_key     = ENV["BINTRAY_API_KEY"]
 end
+
+activate :relative_assets
+set :relative_links, true
