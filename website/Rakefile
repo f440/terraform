@@ -53,7 +53,8 @@ task :setup do
   mkdir_p "Terraform.docset/Contents/Resources/Documents"
 
   # Icon
-  sh "cp source/assets/images/favicon.png Terraform.docset/icon.png"
+  sh "convert -resize 16x16 source/assets/images/favicon.png Terraform.docset/icon.png"
+  sh "convert -resize 32x32 source/assets/images/favicon.png Terraform.docset/icon@2x.png"
   # Info.plist
   File.open("Terraform.docset/Contents/Info.plist", "w") do |f|
     f.write <<-XML
