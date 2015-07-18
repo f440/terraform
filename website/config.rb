@@ -14,3 +14,4 @@ end
 
 activate :relative_assets
 set :relative_links, true
+set :strip_index_file, false
