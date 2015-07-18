@@ -95,7 +95,9 @@ task :copy do
       next
     when source.match(/\.html$/)
       doc = Nokogiri::HTML(File.open(source).read)
+
       doc.title = doc.title.sub(" - Terraform by HashiCorp", "")
+
       doc.xpath('//h2').each do |h2|
         a = Nokogiri::XML::Node.new "a", doc
         a["class"] = "dashAnchor"
@@ -103,6 +105,7 @@ task :copy do
           {type: "Section", name: URI.escape(h2.text)}
         h2.previous = a
       end
+
       doc.xpath('//script').each do |script|
         if script.text != ""
           script.remove
@@ -112,8 +115,13 @@ task :copy do
         e.remove
       end
       doc.xpath("//div[contains(@class, 'docs-sidebar')]").each do |e|
-        e.remove
+        e.parent.remove
       end
+
+      doc.xpath("//div[contains(@role, 'main')]").each do |e|
+        e["style"] = "width: 100%"
+      end
+
       File.open(target, "w") { |f| f.write doc }
     else
       cp source, target
