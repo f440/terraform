@@ -111,7 +111,7 @@ task :copy do
           script.remove
         end
       end
-      doc.xpath("id('header') | id('footer-wrap')").each do |e|
+      doc.xpath("id('header')").each do |e|
         e.remove
       end
       doc.xpath("//div[contains(@class, 'docs-sidebar')]").each do |e|
@@ -120,6 +120,9 @@ task :copy do
 
       doc.xpath("//div[contains(@role, 'main')]").each do |e|
         e["style"] = "width: 100%"
+      end
+      doc.xpath("id('footer')").each do |e|
+        e["style"] = "padding-top: 20px"
       end
 
       File.open(target, "w") { |f| f.write doc }
