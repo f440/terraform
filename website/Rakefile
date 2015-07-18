@@ -95,6 +95,7 @@ task :copy do
       next
     when source.match(/\.html$/)
       doc = Nokogiri::HTML(File.open(source).read)
+      doc.title = doc.title.sub(" - Terraform by HashiCorp", "")
       doc.xpath('//h2').each do |h2|
         a = Nokogiri::XML::Node.new "a", doc
         a["class"] = "dashAnchor"
