@@ -37,7 +37,7 @@ class Index
   end
 end
 
-task default: [:clean, :build, :setup, :copy, :create_index, :import]
+task default: [:clean, :build, :setup, :copy, :create_index, :package, :import]
 
 task :clean do
   rm_rf "build"
@@ -191,4 +191,8 @@ end
 
 task :import do
   sh "open Terraform.docset"
+end
+
+task :package do
+  sh "tar --exclude='.DS_Store' -cvzf Terraform.tgz Terraform.docset"
 end
