@@ -1,5 +1,5 @@
 require "nokogiri"
-require "uri"
+require "erb"
 require 'sqlite3'
 
 class Index
@@ -102,7 +102,7 @@ task :copy do
         a = Nokogiri::XML::Node.new "a", doc
         a["class"] = "dashAnchor"
         a["name"] = "//apple_ref/cpp/%{type}/%{name}" %
-          {type: "Section", name: URI.escape(h2.text)}
+          {type: "Section", name: ERB::Util.url_encode(h2.text)}
         h2.previous = a
       end
 
