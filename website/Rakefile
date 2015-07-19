@@ -37,7 +37,7 @@ class Index
   end
 end
 
-task default: [:clean, :build, :setup, :copy, :create_index, :package, :import]
+task default: [:clean, :build, :setup, :copy, :create_index, :package]
 
 task :clean do
   rm_rf "build"
