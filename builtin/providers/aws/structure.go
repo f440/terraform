@@ -157,12 +157,15 @@ func expandIPPerms(
 
 				perm.UserIDGroupPairs[i] = &ec2.UserIDGroupPair{
 					GroupID: aws.String(id),
-					UserID:  aws.String(ownerId),
 				}
+
+				if ownerId != "" {
+					perm.UserIDGroupPairs[i].UserID = aws.String(ownerId)
+				}
+
 				if !vpc {
 					perm.UserIDGroupPairs[i].GroupID = nil
 					perm.UserIDGroupPairs[i].GroupName = aws.String(id)
-					perm.UserIDGroupPairs[i].UserID = nil
 				}
 			}
 		}
@@ -183,12 +186,16 @@ func expandIPPerms(
 // Takes the result of flatmap.Expand for an array of parameters and
 // returns Parameter API compatible objects
 func expandParameters(configured []interface{}) ([]*rds.Parameter, error) {
-	parameters := make([]*rds.Parameter, 0, len(configured))
+	var parameters []*rds.Parameter
 
 	// Loop over our configured parameters and create
 	// an array of aws-sdk-go compatabile objects
 	for _, pRaw := range configured {
 		data := pRaw.(map[string]interface{})
+
+		if data["name"].(string) == "" {
+			continue
+		}
 
 		p := &rds.Parameter{
 			ApplyMethod:    aws.String(data["apply_method"].(string)),

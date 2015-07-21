@@ -1,3 +1,49 @@
+## 0.6.1 (July 20, 2015)
+
+FEATURES:
+
+  * **New resource: `google_container_cluster`** [GH-2357]
+  * **New resource: `aws_vpc_endpoint`** [GH-2695]
+
+IMPROVEMENTS:
+
+  * connection/ssh: Print SSH bastion host details to output [GH-2684]
+  * provider/aws: Create RDS databases from snapshots [GH-2062]
+  * provider/aws: Add support for restoring from Redis backup stored in S3 [GH-2634]
+  * provider/aws: Add `maintenance_window` to ElastiCache cluster [GH-2642]
+  * provider/aws: Availability Zones are optional when specifying VPC Zone Identifiers in
+      Auto Scaling Groups updates [GH-2724]
+  * provider/google: Add metadata_startup_script to google_compute_instance [GH-2375]
+
+BUG FIXES:
+
+  * core: don't prompt for variables with defaults [GH-2613]
+  * core: Return correct number of planned updates [GH-2620]
+  * core: Fix "provider not found" error that can occur while running
+      a destroy plan with grandchildren modules [GH-2755]
+  * core: Fix UUID showing up in diff for computed splat (`foo.*.bar`)
+      variables. [GH-2788]
+  * core: Orphan modules that contain no resources (only other modules)
+      are properly destroyed up to arbitrary depth [GH-2786]
+  * core: Fix "attribute not available" during destroy plans in
+      cases where the parameter is passed between modules [GH-2775]
+  * connection/ssh: fix issue on machines with an SSH Agent available
+    preventing `key_file` from being read without explicitly
+    setting `agent = false` [GH-2615]
+  * provider/aws: Allow uppercase characters in `aws_elb.name` [GH-2580]
+  * provider/aws: Allow underscores in `aws_db_subnet_group.name` (undocumented by AWS) [GH-2604]
+  * provider/aws: Allow dots in `aws_db_subnet_group.name` (undocumented by AWS) [GH-2665]
+  * provider/aws: Fix issue with pending Spot Instance requests [GH-2640]
+  * provider/aws: Fix issue in AWS Classic environment with referencing external
+      Security Groups [GH-2644]
+  * provider/aws: Bump internet gateway detach timeout [GH-2669]
+  * provider/aws: Fix issue with detecting differences in DB Parameters [GH-2728]
+  * provider/aws: `ecs_cluster` rename (recreation) and deletion is handled correctly [GH-2698]
+  * provider/aws: `aws_route_table` ignores routes generated for VPC endpoints [GH-2695]
+  * provider/aws: Fix issue with Launch Configurations and enable_monitoring [GH-2735]
+  * provider/openstack: allow empty api_key and endpoint_type [GH-2626]
+  * provisioner/chef: Fix permission denied error with ohai hints [GH-2781]
+
 ## 0.6.0 (June 30, 2015)
 
 BACKWARDS INCOMPATIBILITIES:
