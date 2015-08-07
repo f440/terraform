@@ -34,6 +34,10 @@ func resourceAwsDynamoDbTable() *schema.Resource {
 		Delete: resourceAwsDynamoDbTableDelete,
 
 		Schema: map[string]*schema.Schema{
+			"arn": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -166,8 +170,8 @@ func resourceAwsDynamoDbTableCreate(d *schema.ResourceData, meta interface{}) er
 	log.Printf("[DEBUG] DynamoDB table create: %s", name)
 
 	throughput := &dynamodb.ProvisionedThroughput{
-		ReadCapacityUnits:  aws.Long(int64(d.Get("read_capacity").(int))),
-		WriteCapacityUnits: aws.Long(int64(d.Get("write_capacity").(int))),
+		ReadCapacityUnits:  aws.Int64(int64(d.Get("read_capacity").(int))),
+		WriteCapacityUnits: aws.Int64(int64(d.Get("write_capacity").(int))),
 	}
 
 	hash_key_name := d.Get("hash_key").(string)
@@ -318,8 +322,8 @@ func resourceAwsDynamoDbTableUpdate(d *schema.ResourceData, meta interface{}) er
 		}
 
 		throughput := &dynamodb.ProvisionedThroughput{
-			ReadCapacityUnits:  aws.Long(int64(d.Get("read_capacity").(int))),
-			WriteCapacityUnits: aws.Long(int64(d.Get("write_capacity").(int))),
+			ReadCapacityUnits:  aws.Int64(int64(d.Get("read_capacity").(int))),
+			WriteCapacityUnits: aws.Int64(int64(d.Get("write_capacity").(int))),
 		}
 		req.ProvisionedThroughput = throughput
 
@@ -486,8 +490,8 @@ func resourceAwsDynamoDbTableUpdate(d *schema.ResourceData, meta interface{}) er
 						Update: &dynamodb.UpdateGlobalSecondaryIndexAction{
 							IndexName: aws.String(gsidata["name"].(string)),
 							ProvisionedThroughput: &dynamodb.ProvisionedThroughput{
-								WriteCapacityUnits: aws.Long(int64(gsiWriteCapacity)),
-								ReadCapacityUnits:  aws.Long(int64(gsiReadCapacity)),
+								WriteCapacityUnits: aws.Int64(int64(gsiWriteCapacity)),
+								ReadCapacityUnits:  aws.Int64(int64(gsiReadCapacity)),
 							},
 						},
 					}
@@ -575,6 +579,7 @@ func resourceAwsDynamoDbTableRead(d *schema.ResourceData, meta interface{}) erro
 	}
 
 	d.Set("global_secondary_index", gsiList)
+	d.Set("arn", table.TableARN)
 
 	return nil
 }
@@ -634,8 +639,8 @@ func createGSIFromData(data *map[string]interface{}) dynamodb.GlobalSecondaryInd
 		KeySchema:  key_schema,
 		Projection: projection,
 		ProvisionedThroughput: &dynamodb.ProvisionedThroughput{
-			WriteCapacityUnits: aws.Long(int64(writeCapacity)),
-			ReadCapacityUnits:  aws.Long(int64(readCapacity)),
+			WriteCapacityUnits: aws.Int64(int64(writeCapacity)),
+			ReadCapacityUnits:  aws.Int64(int64(readCapacity)),
 		},
 	}
 }
