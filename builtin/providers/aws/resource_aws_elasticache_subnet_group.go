@@ -3,6 +3,7 @@ package aws
 import (
 	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -29,6 +30,12 @@ func resourceAwsElasticacheSubnetGroup() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
+				StateFunc: func(val interface{}) string {
+					// Elasticache normalizes subnet names to lowercase,
+					// so we have to do this too or else we can end up
+					// with non-converging diffs.
+					return strings.ToLower(val.(string))
+				},
 			},
 			"subnet_ids": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -57,7 +64,7 @@ func resourceAwsElasticacheSubnetGroupCreate(d *schema.ResourceData, meta interf
 	req := &elasticache.CreateCacheSubnetGroupInput{
 		CacheSubnetGroupDescription: aws.String(desc),
 		CacheSubnetGroupName:        aws.String(name),
-		SubnetIDs:                   subnetIds,
+		SubnetIds:                   subnetIds,
 	}
 
 	_, err := conn.CreateCacheSubnetGroup(req)
@@ -66,7 +73,10 @@ func resourceAwsElasticacheSubnetGroupCreate(d *schema.ResourceData, meta interf
 	}
 
 	// Assign the group name as the resource ID
-	d.SetId(name)
+	// Elasticache always retains the name in lower case, so we have to
+	// mimic that or else we won't be able to refresh a resource whose
+	// name contained uppercase characters.
+	d.SetId(strings.ToLower(name))
 
 	return nil
 }
@@ -122,7 +132,7 @@ func resourceAwsElasticacheSubnetGroupUpdate(d *schema.ResourceData, meta interf
 		_, err := conn.ModifyCacheSubnetGroup(&elasticache.ModifyCacheSubnetGroupInput{
 			CacheSubnetGroupName:        aws.String(d.Get("name").(string)),
 			CacheSubnetGroupDescription: aws.String(d.Get("description").(string)),
-			SubnetIDs:                   subnets,
+			SubnetIds:                   subnets,
 		})
 		if err != nil {
 			return err

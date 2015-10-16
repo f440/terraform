@@ -133,6 +133,7 @@ func TestAccAWSRoute53Record_weighted(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckRoute53RecordExists("aws_route53_record.www-dev"),
 					testAccCheckRoute53RecordExists("aws_route53_record.www-live"),
+					testAccCheckRoute53RecordExists("aws_route53_record.www-off"),
 				),
 			},
 		},
@@ -235,7 +236,7 @@ func testAccCheckRoute53RecordDestroy(s *terraform.State) error {
 		rType := parts[2]
 
 		lopts := &route53.ListResourceRecordSetsInput{
-			HostedZoneID:    aws.String(cleanZoneID(zone)),
+			HostedZoneId:    aws.String(cleanZoneID(zone)),
 			StartRecordName: aws.String(name),
 			StartRecordType: aws.String(rType),
 		}
@@ -275,7 +276,7 @@ func testAccCheckRoute53RecordExists(n string) resource.TestCheckFunc {
 		en := expandRecordName(name, "notexample.com")
 
 		lopts := &route53.ListResourceRecordSetsInput{
-			HostedZoneID:    aws.String(cleanZoneID(zone)),
+			HostedZoneId:    aws.String(cleanZoneID(zone)),
 			StartRecordName: aws.String(en),
 			StartRecordType: aws.String(rType),
 		}
@@ -405,6 +406,16 @@ resource "aws_route53_record" "www-live" {
   ttl = "5"
   weight = 90
   set_identifier = "live"
+  records = ["dev.notexample.com"]
+}
+
+resource "aws_route53_record" "www-off" {
+  zone_id = "${aws_route53_zone.main.zone_id}"
+  name = "www"
+  type = "CNAME"
+  ttl = "5"
+  weight = 0
+  set_identifier = "off"
   records = ["dev.notexample.com"]
 }
 `
