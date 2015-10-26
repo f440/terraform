@@ -1,3 +1,18 @@
+## 0.6.6 (October 23, 2015)
+
+FEATURES:
+
+  * New interpolation functions: `cidrhost`, `cidrnetmask` and `cidrsubnet` [GH-3127]
+
+IMPROVEMENTS:
+
+  * "forces new resource" now highlighted in plan output [GH-3136]
+
+BUG FIXES:
+
+  * helper/schema: Better error message for assigning list/map to string [GH-3009]
+  * remote/state/atlas: Additional remote state conflict handling for semantically neutral state changes [GH-3603]
+
 ## 0.6.5 (October 21, 2015)
 
 FEATURES:
