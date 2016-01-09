@@ -14,11 +14,15 @@ and deleted. Instances also support [provisioning](/docs/provisioners/index.html
 ## Example Usage
 
 ```
-# Create a new instance of the ami-1234 on an m1.small node
-# with an AWS Tag naming it "HelloWorld"
+# Create a new instance of the `ami-408c7f28` (Ubuntu 14.04) on an 
+# t1.micro node with an AWS Tag naming it "HelloWorld"
+provider "aws" {
+    region = "us-east-1"
+}
+    
 resource "aws_instance" "web" {
-    ami = "ami-1234"
-    instance_type = "m1.small"
+    ami = "ami-408c7f28"
+    instance_type = "t1.micro"
     tags {
         Name = "HelloWorld"
     }
