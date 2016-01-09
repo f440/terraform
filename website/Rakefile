@@ -171,6 +171,7 @@ task :create_index do
     Dir.glob("docs/providers/**/*")
       .find_all{ |f| File.stat(f).file? }.each do |path|
       if File.basename(path, ".html") == "index"
+        next if path.match %r{docs/providers/index.html$}
         name = path.gsub(%r{.*providers/(.*)/index.html}, "\\1")
         name = name.gsub(/^do$/, 'digitalocean')
         index.insert name, "Provider", path
