@@ -190,7 +190,8 @@ task :create_index do
       index.insert name, "Provisioner", path
     end
     # state
-    Dir.glob("docs/state/*") do |path|
+    Dir.glob("docs/state/**/*")
+      .find_all{ |f| File.stat(f).file? }.each do |path|
       name = File.basename(path, ".html")
       next if name == "index"
       index.insert name, "Instance", path
