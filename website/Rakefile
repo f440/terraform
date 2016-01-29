@@ -74,6 +74,8 @@ task :setup do
     <string>dashtoc</string>
     <key>dashIndexFilePath</key>
     <string>docs/index.html</string>
+    <key>DashDocSetFallbackURL</key>
+    <string>https://www.terraform.io/</string>
     </dict>
     </plist>
     XML
