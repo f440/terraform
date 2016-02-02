@@ -1,14 +1,49 @@
+## 0.6.11 (February 1, 2016)
+
+BACKWARDS INCOMPATIBILITIES / NOTES:
+
+  * The `max_size`, `min_size` and `desired_capacity` attributes on `aws_autoscaling_schedule` resources now default to 0
+
+FEATURES:
+
+  * **New provider: `powerdns` - PowerDNS REST API** [GH-4885]
+  * **New builtin function:** `trimspace` for trimming whitespaces [GH-4910]
+  * **New builtin function:** `base64sha256` for base64 encoding raw sha256 sum of a given string [GH-4899]
+  * **New resource:** `openstack_lb_member_v1` [GH-4359]
+
+IMPROVEMENTS:
+
+  * provider/template: Remove unnecessary mime-type validation from `template_cloudinit_config` resources [GH-4873]
+  * provider/template: Correct spelling of "Boundary" in the part separator of rendered `template_cloudinit_config` resources [GH-4873]
+  * provider/aws: Provide a better message if no AWS creds are found [GH-4869]
+  * provider/openstack: Ability to specify per-network Floating IPs [GH-4812] 
+ 
+BUG FIXES:
+
+  * provider/aws: `aws_autoscale_schedule` 0 values [GH-4693]
+  * provider/aws: Fix regression with VPCs and ClassicLink for regions that do not support it [GH-4879]
+  * provider/aws: Change VPC ClassicLink to be computed [GH-4933]
+  * provider/aws: Fix SNS Topic Refresh to ensure deleted topics are removed from state [GH-4891]
+  * provider/aws: Refactor Route53 record to fix regression in deleting records created in previous versions of Terraform [GH-4892]
+  * provider/azurerm: Fix panic if no creds supplied [GH-4902]
+  * provider/openstack: Changing the port resource to mark the ip_address as optional [GH-4850]
+  * provider/docker: Catch potential custom network errors in docker [GH-4918]
+  
+
+
 ## 0.6.10 (January 27, 2016)
 
 BACKWARDS INCOMPATIBILITIES / NOTES:
 
- * The `-module-depth` flag available on `plan`, `apply`, `show`, and `graph` now defaults to `-1`, causing
-   resources within modules to be expanded in command output. This is only a cosmetic change; it does not affect
-   any behavior.
- * This release includes a bugfix for `$${}` interpolation escaping. These strings are now properly converted to `${}`
-   during interpolation. This may cause diffs on existing configurations in certain cases.
- * Users of `consul_keys` should note that the `value` sub-attribute of `key` will no longer be updated with the remote value of the key. It should be only used to _set_ a key in Consul K/V. To reference key values, use the `var` attribute.
- * The 0.6.9 release contained a regression in `aws_autoscaling_group` capacity waiting behavior for configs where `min_elb_capacity != desired_capacity` or `min_size != desired_capacity`. This release remedies that regression by un-deprecating `min_elb_capacity` and restoring the prior behavior.
+  * The `-module-depth` flag available on `plan`, `apply`, `show`, and `graph` now defaults to `-1`, causing
+    resources within modules to be expanded in command output. This is only a cosmetic change; it does not affect
+    any behavior.
+  * This release includes a bugfix for `$${}` interpolation escaping. These strings are now properly converted to `${}`
+    during interpolation. This may cause diffs on existing configurations in certain cases.
+  * Users of `consul_keys` should note that the `value` sub-attribute of `key` will no longer be updated with the remote value of the key. It should be only used to _set_ a key in Consul K/V. To reference key values, use the `var` attribute.
+  * The 0.6.9 release contained a regression in `aws_autoscaling_group` capacity waiting behavior for configs where `min_elb_capacity != desired_capacity` or `min_size != desired_capacity`. This release remedies that regression by un-deprecating `min_elb_capacity` and restoring the prior behavior.
+  * Users of `aws_security_group` may notice new diffs in initial plans with 0.6.10 due to a bugfix that fixes drift detection on nested security group rules. These new diffs should reflect the actual state of the resources, which Terraform previously was unable to see.
+
 
 FEATURES:
 
