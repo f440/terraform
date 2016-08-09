@@ -29,7 +29,9 @@ class Index
     create
   end
 
-  def insert(name, type, path)
+  def insert(type, path)
+    doc = Nokogiri::HTML(File.open(path).read)
+    name = doc.xpath("//div[@class='bs-docs-section']/h1").text.chomp
     @db.execute <<-SQL, name: name, type: type, path: path
       INSERT OR IGNORE INTO searchIndex (name, type, path)
       VALUES(:name, :type, :path)
@@ -140,73 +142,70 @@ task :create_index do
 
   Dir.chdir("Terraform.docset/Contents/Resources/Documents") do
     # example
-    Dir.glob("intro/examples/*") do |path|
-      name = File.basename(path, ".html")
-      next if name == "index"
-      index.insert name, "Sample", path
+    Dir.glob("intro/examples/**/*")
+      .find_all{ |f| File.stat(f).file? }.each do |path|
+
+      index.insert "Sample", path
     end
     # getting-started
-    Dir.glob("intro/getting-started/*") do |path|
-      name = File.basename(path, ".html")
-      next if name == "index"
-      index.insert name, "Guide", path
+    Dir.glob("intro/getting-started/**/*")
+      .find_all{ |f| File.stat(f).file? }.each do |path|
+
+      index.insert "Guide", path
     end
     # configuration
-    Dir.glob("docs/configuration/*") do |path|
-      name = File.basename(path, ".html")
-      next if name == "index"
-      index.insert name, "Setting", path
+    Dir.glob("docs/configuration/**/*")
+      .find_all{ |f| File.stat(f).file? }.each do |path|
+
+      index.insert "Setting", path
     end
     # commands
-    Dir.glob("docs/commands/*") do |path|
-      name = File.basename(path, ".html")
-      next if name == "index"
-      index.insert name, "Command", path
+    Dir.glob("docs/commands/**/*")
+      .find_all{ |f| File.stat(f).file? }.each do |path|
+
+      index.insert "Command", path
+    end
+    # import
+    Dir.glob("docs/import/**/*")
+      .find_all{ |f| File.stat(f).file? }.each do |path|
+
+      index.insert "Section", path
     end
     # state
     Dir.glob("docs/state/**/*")
       .find_all{ |f| File.stat(f).file? }.each do |path|
-      name = File.basename(path, ".html")
-      next if name == "index"
-      index.insert name, "Instance", path
+
+      index.insert "Instance", path
     end
     # providers
     Dir.glob("docs/providers/**/*")
       .find_all{ |f| File.stat(f).file? }.each do |path|
-      if File.basename(path, ".html") == "index"
-        next if path.match %r{docs/providers/index.html$}
-        name = path.gsub(%r{.*providers/(.*)/index.html}, "\\1")
-        name = name.gsub(/^do$/, 'digitalocean')
-        index.insert name, "Provider", path
-      else
-        name = path.gsub(%r{.*providers/(.*)/r/(.*).html}, "\\1_\\2")
-        name = name.gsub(/^do_/, 'digitalocean_')
-        index.insert name, "Provider", path
-      end
+
+      index.insert "Provider", path
     end
     # provisioners
-    Dir.glob("docs/provisioners/*") do |path|
-      name = File.basename(path, ".html")
-      next if name == "index"
-      index.insert name, "Provisioner", path
+    Dir.glob("docs/provisioners/**/*")
+      .find_all{ |f| File.stat(f).file? }.each do |path|
+
+      index.insert "Provisioner", path
     end
     # modules
-    Dir.glob("docs/modules/*") do |path|
-      name = File.basename(path, ".html")
-      next if name == "index"
-      index.insert name, "Module", path
+    Dir.glob("docs/modules/**/*")
+      .find_all{ |f| File.stat(f).file? }.each do |path|
+
+      index.insert "Module", path
     end
     # plugins
-    Dir.glob("docs/plugins/*") do |path|
-      name = File.basename(path, ".html")
-      next if name == "index"
-      index.insert name, "Plugin", path
+    Dir.glob("docs/plugins/**/*")
+      .find_all{ |f| File.stat(f).file? }.each do |path|
+
+      index.insert "Plugin", path
     end
     # internals
-    Dir.glob("docs/internals/*") do |path|
-      name = File.basename(path, ".html")
-      next if name == "index"
-      index.insert name, "Protocol", path
+    Dir.glob("docs/internals/**/*")
+      .find_all{ |f| File.stat(f).file? }.each do |path|
+
+      index.insert "Protocol", path
     end
   end
 end
