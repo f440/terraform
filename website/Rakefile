@@ -139,11 +139,17 @@ task :create_index do
   index.reset
 
   Dir.chdir("Terraform.docset/Contents/Resources/Documents") do
-    # commands
-    Dir.glob("docs/commands/*") do |path|
+    # example
+    Dir.glob("intro/examples/*") do |path|
       name = File.basename(path, ".html")
       next if name == "index"
-      index.insert name, "Command", path
+      index.insert name, "Sample", path
+    end
+    # getting-started
+    Dir.glob("intro/getting-started/*") do |path|
+      name = File.basename(path, ".html")
+      next if name == "index"
+      index.insert name, "Guide", path
     end
     # configuration
     Dir.glob("docs/configuration/*") do |path|
@@ -151,23 +157,18 @@ task :create_index do
       next if name == "index"
       index.insert name, "Setting", path
     end
-    # internals
-    Dir.glob("docs/internals/*") do |path|
+    # commands
+    Dir.glob("docs/commands/*") do |path|
       name = File.basename(path, ".html")
       next if name == "index"
-      index.insert name, "Protocol", path
+      index.insert name, "Command", path
     end
-    # modules
-    Dir.glob("docs/modules/*") do |path|
+    # state
+    Dir.glob("docs/state/**/*")
+      .find_all{ |f| File.stat(f).file? }.each do |path|
       name = File.basename(path, ".html")
       next if name == "index"
-      index.insert name, "Module", path
-    end
-    # plugins
-    Dir.glob("docs/plugins/*") do |path|
-      name = File.basename(path, ".html")
-      next if name == "index"
-      index.insert name, "Plugin", path
+      index.insert name, "Instance", path
     end
     # providers
     Dir.glob("docs/providers/**/*")
@@ -189,24 +190,23 @@ task :create_index do
       next if name == "index"
       index.insert name, "Provisioner", path
     end
-    # state
-    Dir.glob("docs/state/**/*")
-      .find_all{ |f| File.stat(f).file? }.each do |path|
+    # modules
+    Dir.glob("docs/modules/*") do |path|
       name = File.basename(path, ".html")
       next if name == "index"
-      index.insert name, "Instance", path
+      index.insert name, "Module", path
     end
-    # example
-    Dir.glob("intro/examples/*") do |path|
+    # plugins
+    Dir.glob("docs/plugins/*") do |path|
       name = File.basename(path, ".html")
       next if name == "index"
-      index.insert name, "Sample", path
+      index.insert name, "Plugin", path
     end
-    # getting-started
-    Dir.glob("intro/getting-started/*") do |path|
+    # internals
+    Dir.glob("docs/internals/*") do |path|
       name = File.basename(path, ".html")
       next if name == "index"
-      index.insert name, "Guide", path
+      index.insert name, "Protocol", path
     end
   end
 end
