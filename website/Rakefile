@@ -151,7 +151,7 @@ task :create_index do
       next if name == "index"
       index.insert name, "Setting", path
     end
-    # internal
+    # internals
     Dir.glob("docs/internals/*") do |path|
       name = File.basename(path, ".html")
       next if name == "index"
@@ -183,7 +183,7 @@ task :create_index do
         index.insert name, "Provider", path
       end
     end
-    # provisioner
+    # provisioners
     Dir.glob("docs/provisioners/*") do |path|
       name = File.basename(path, ".html")
       next if name == "index"
