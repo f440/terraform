@@ -1,7 +1,6 @@
 source "https://rubygems.org"
 
-gem "middleman-hashicorp",
-  git: "https://github.com/hashicorp/middleman-hashicorp.git"
+gem "middleman-hashicorp", "0.3.4"
 
 gem "rake"
 gem "nokogiri"
