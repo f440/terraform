@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/hashicorp/terraform/config/module"
+	"github.com/hashicorp/terraform/helper/experiment"
 )
 
 func TestContext2Apply_basic(t *testing.T) {
@@ -2113,6 +2114,58 @@ func TestContext2Apply_outputOrphan(t *testing.T) {
 	}
 }
 
+func TestContext2Apply_outputOrphanModule(t *testing.T) {
+	if !experiment.Enabled(experiment.X_newApply) {
+		t.SkipNow()
+	}
+
+	m := testModule(t, "apply-output-orphan-module")
+	p := testProvider("aws")
+	p.ApplyFn = testApplyFn
+	p.DiffFn = testDiffFn
+
+	state := &State{
+		Modules: []*ModuleState{
+			&ModuleState{
+				Path: []string{"root", "child"},
+				Outputs: map[string]*OutputState{
+					"foo": &OutputState{
+						Type:  "string",
+						Value: "bar",
+					},
+					"bar": &OutputState{
+						Type:  "string",
+						Value: "baz",
+					},
+				},
+			},
+		},
+	}
+
+	ctx := testContext2(t, &ContextOpts{
+		Module: m,
+		Providers: map[string]ResourceProviderFactory{
+			"aws": testProviderFuncFixed(p),
+		},
+		State: state,
+	})
+
+	if _, err := ctx.Plan(); err != nil {
+		t.Fatalf("err: %s", err)
+	}
+
+	state, err := ctx.Apply()
+	if err != nil {
+		t.Fatalf("err: %s", err)
+	}
+
+	actual := strings.TrimSpace(state.String())
+	expected := strings.TrimSpace(testTerraformApplyOutputOrphanModuleStr)
+	if actual != expected {
+		t.Fatalf("bad: \n%s", actual)
+	}
+}
+
 func TestContext2Apply_providerComputedVar(t *testing.T) {
 	m := testModule(t, "apply-provider-computed")
 	p := testProvider("aws")
@@ -2190,6 +2243,43 @@ func TestContext2Apply_providerConfigureDisabled(t *testing.T) {
 
 	if !called {
 		t.Fatal("configure never called")
+	}
+}
+
+func TestContext2Apply_provisionerModule(t *testing.T) {
+	m := testModule(t, "apply-provisioner-module")
+	p := testProvider("aws")
+	pr := testProvisioner()
+	p.ApplyFn = testApplyFn
+	p.DiffFn = testDiffFn
+	ctx := testContext2(t, &ContextOpts{
+		Module: m,
+		Providers: map[string]ResourceProviderFactory{
+			"aws": testProviderFuncFixed(p),
+		},
+		Provisioners: map[string]ResourceProvisionerFactory{
+			"shell": testProvisionerFuncFixed(pr),
+		},
+	})
+
+	if _, err := ctx.Plan(); err != nil {
+		t.Fatalf("err: %s", err)
+	}
+
+	state, err := ctx.Apply()
+	if err != nil {
+		t.Fatalf("err: %s", err)
+	}
+
+	actual := strings.TrimSpace(state.String())
+	expected := strings.TrimSpace(testTerraformApplyProvisionerModuleStr)
+	if actual != expected {
+		t.Fatalf("bad: \n%s", actual)
+	}
+
+	// Verify apply was invoked
+	if !pr.ApplyCalled {
+		t.Fatalf("provisioner not invoked")
 	}
 }
 

@@ -501,6 +501,14 @@ Outputs:
 foo = bar
 `
 
+const testTerraformApplyOutputOrphanModuleStr = `
+module.child:
+  <no state>
+  Outputs:
+
+  foo = bar
+`
+
 const testTerraformApplyProvisionerStr = `
 aws_instance.bar:
   ID = foo
@@ -512,6 +520,13 @@ aws_instance.foo:
   dynamical = computed_dynamical
   num = 2
   type = aws_instance
+`
+
+const testTerraformApplyProvisionerModuleStr = `
+<no state>
+module.child:
+  aws_instance.bar:
+    ID = foo
 `
 
 const testTerraformApplyProvisionerFailStr = `

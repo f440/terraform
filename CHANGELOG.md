@@ -1,4 +1,39 @@
-## 0.7.9 (Unreleased)
+## 0.7.9 (November 4, 2016)
+
+FEATURES:
+
+ * **New Data Source:** `aws_acm_certificate` ([#8359](https://github.com/hashicorp/terraform/issues/8359))
+ * **New Resource:** `aws_autoscaling_attachment` ([#9146](https://github.com/hashicorp/terraform/issues/9146))
+ * **New Resource:** `postgresql_extension` ([#9210](https://github.com/hashicorp/terraform/issues/9210))
+
+IMPROVEMENTS:
+
+ * core: Improve shadow graph robustness by catching panics during graph evaluation. ([#9852](https://github.com/hashicorp/terraform/issues/9852))
+ * provider/aws: Provide the option to skip_destroy on aws_volume_attachment ([#9792](https://github.com/hashicorp/terraform/issues/9792))
+ * provider/aws: Allows aws_alb security_groups to be updated ([#9804](https://github.com/hashicorp/terraform/issues/9804))
+ * provider/aws: Add the enable_sni attribute for Route53 health checks. ([#9822](https://github.com/hashicorp/terraform/issues/9822))
+ * provider/openstack: Add `value_specs` to openstack_fw_rule_v1 resource, allowing vendor information ([#9834](https://github.com/hashicorp/terraform/issues/9834))
+ * state/remote/swift: Enable OpenStack Identity/Keystone v3 authentication ([#9769](https://github.com/hashicorp/terraform/issues/9769))
+ * state/remote/swift: Now supports all login/config options that the OpenStack Provider supports ([#9777](https://github.com/hashicorp/terraform/issues/9777))
+
+BUG FIXES:
+
+ * core: Provisioners in modules do not crash during `apply` (regression). ([#9846](https://github.com/hashicorp/terraform/issues/9846))
+ * core: Computed bool fields with non-bool values will not crash ([#9812](https://github.com/hashicorp/terraform/issues/9812))
+ * core: `formatlist` interpolation function accepts an empty list ([#9795](https://github.com/hashicorp/terraform/issues/9795))
+ * core: Validate outputs have a name ([#9823](https://github.com/hashicorp/terraform/issues/9823))
+ * core: Validate variables have a name ([#9818](https://github.com/hashicorp/terraform/issues/9818))
+ * command/apply: If a partial set of required variables are provided with `-var`, ask for the remainder ([#9794](https://github.com/hashicorp/terraform/issues/9794))
+ * command/fmt: Multiline strings aren't erroneously indented ([#9859](https://github.com/hashicorp/terraform/issues/9859))
+ * provider/aws: Fix issue setting `certificate_upload_date` in `aws_api_gateway_domain_name` ([#9815](https://github.com/hashicorp/terraform/issues/9815))
+ * provider/azurerm: allow storage_account resource with name "$root" ([#9813](https://github.com/hashicorp/terraform/issues/9813))
+ * provider/google: fix for looking up project image families ([#9243](https://github.com/hashicorp/terraform/issues/9243))
+ * provider/openstack: Don't pass `shared` in FWaaS Policy unless it's set ([#9830](https://github.com/hashicorp/terraform/issues/9830))
+ * provider/openstack: openstack_fw_firewall_v1 `admin_state_up` should default to true ([#9832](https://github.com/hashicorp/terraform/issues/9832))
+
+PLUGIN CHANGES:
+
+  * Fields in resources can now have both `Optional` and `ConflictsWith` ([#9825](https://github.com/hashicorp/terraform/issues/9825))
 
 ## 0.7.8 (November 1, 2016)
 
@@ -91,7 +126,7 @@ BUG FIXES:
  * core: `prevent_destroy` prevents decreasing count ([#9707](https://github.com/hashicorp/terraform/issues/9707))
  * core: removed optional items will trigger "requires new" if necessary ([#9699](https://github.com/hashicorp/terraform/issues/9699))
  * command/apply: `-backup` and `-state-out` work with plan files ([#9706](https://github.com/hashicorp/terraform/issues/9706))
- * command/fmt: Cleaner formatting for multiline standalone comments above resources 
+ * command/fmt: Cleaner formatting for multiline standalone comments above resources
  * command/validate: respond to `--help` ([#9660](https://github.com/hashicorp/terraform/issues/9660))
  * provider/archive: Converting to datasource. ([#8492](https://github.com/hashicorp/terraform/issues/8492))
  * provider/aws: Fix issue importing AWS Instances and setting the correct `associate_public_ip_address` value ([#9453](https://github.com/hashicorp/terraform/issues/9453))
@@ -108,7 +143,7 @@ BUG FIXES:
  * provider/aws: Allow underscores in IAM user and group names ([#9684](https://github.com/hashicorp/terraform/issues/9684))
  * provider/aws: aws_ami: handle deletion of AMIs ([#9721](https://github.com/hashicorp/terraform/issues/9721))
  * provider/aws: Fix aws_route53_record alias perpetual diff ([#9704](https://github.com/hashicorp/terraform/issues/9704))
- * provider/aws: Allow `active` state while waiting for the VPC Peering Connection. #9754
+ * provider/aws: Allow `active` state while waiting for the VPC Peering Connection. ([#9754](https://github.com/hashicorp/terraform/issues/9754))
  * provider/aws: Normalize all-principals wildcard in `aws_iam_policy_document` ([#9720](https://github.com/hashicorp/terraform/issues/9720))
  * provider/azurerm: Fix Azure RM loadbalancer rules validation ([#9468](https://github.com/hashicorp/terraform/issues/9468))
  * provider/azurerm: Fix servicebus_topic values when using the Update func to stop perpetual diff ([#9323](https://github.com/hashicorp/terraform/issues/9323))
@@ -276,6 +311,13 @@ BUG FIXES:
  * provisioner/chef: Change to order in which to cleanup the user key so this is done before the Chef run starts ([#9114](https://github.com/hashicorp/terraform/issues/9114))
 
 ## 0.7.4 (September 19, 2016)
+
+BACKWARDS INCOMPATIBILITIES / NOTES:
+ * In previous releases, the `private_key` field in the connection provisioner
+   inadvertently accepted a path argument and would read the file contents.
+   This functionality has been removed in this release ([#8577](https://github.com/hashicorp/terraform/issues/8577)), and the documented
+   method of using the `file()` interpolation function should be used to load
+   the key from a file.
 
 FEATURES:
  * **New Resource:** `aws_codecommit_trigger` ([#8751](https://github.com/hashicorp/terraform/issues/8751))
