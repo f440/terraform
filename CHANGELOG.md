@@ -1,4 +1,150 @@
-## 0.8.0 (unreleased)
+## 0.8.0-rc1 (unreleased)
+
+BACKWARDS INCOMPATIBILITIES / NOTES:
+
+ * The chef provider now accepts `key_material` as an alternative to `private_key_pem`. `private_key_pem` will be deprecated in a future release
+ * The `template_file` resource no longer accepts a file path for the `template` attribute. You may still specify a file path with the `filepath` attribute. This was deprecated during 0.7.x.
+
+FEATURES:
+ * core: allow outputs to have descriptions [GH-9722]
+ * state/azure: support passing of lease ID when writing storage blob [GH-10115]
+ * **New Resource:** `aws_ebs_snapshot` [GH-10017]
+ * **New Resource:** `openstack_blockstorage_volume_attach_v2` [GH-10259]
+ * **New Resource:** `openstack_compute_volume_attach_v2` [GH-10260]
+ * **New Data Source:** `aws_ebs_snapshot` [GH-10017]
+ * The `import` command can now specify a provider alias to use. [GH-10310]
+
+IMPROVEMENTS:
+
+ * provider/aws: Addition of suspended_processes to aws_autoscaling_group [GH-10096]
+ * provider/aws: added auto_minor_version_upgrade on aws_rds_cluster_insstance [GH-10284]
+ * provider/aws: Add JSON validation to the aws_iam_policy resource [GH-10239]
+ * provider/azurerm: enable import of more resources [GH-10195]
+ * provider/chef: Migrate Chef to use KEY_MATERIAL rather than using a Pem file [GH-10105]
+ * provider/docker: authentication via values instead of files [GH-10151]
+ * provider/google: Add Service Accounts resource [GH-9946]
+ * provider/nomad: Update to support Nomad 0.5.0
+ * provider/openstack: Add Swauth/Swift Authentication [GH-9943]
+ * state/remote/swift: Add support for versioning state file in swift and expiring versioned state [GH-10055]
+
+BUG FIXES:
+
+ * core: Catch parse errors for null characters mid-file [GH-9134]
+ * core: escape sequence for " works (0.8 beta regression) [GH-10236]
+ * core: Terraform starts on Windows (0.8 beta2 regression) [GH-10266]
+ * core: Remove extra dot from state command backup files [GH-10300]
+ * core: Validate data sources do not have provisioners [GH-10318]
+ * core: Disable checkpoint settings take effect [GH-10206]
+ * provider/aws: Skip VPC endpoint routes when removing default route table's routes [GH-10303]
+ * provider/azurerm: Prevent null reference when reading boot_diagnostics settings in azurerm_virtual_machine [GH-10283]
+ * provider/template: No file path error when setting template to `/` [GH-10297]
+
+PLUGIN CHANGES:
+
+ * The protocol version has been incremented, requiring all plugins for
+   0.8 to be built with 0.8 sources (or newer). This should only require
+   a simple recompile for compatibility.
+
+## 0.8.0-beta2 (November 16, 2016)
+
+BASED ON: 0.7.11 (includes any changes up to that point as well)
+
+**Please read prior beta notes, as those are also included. The 0.8 changes
+will be coalesced for a 0.8 final, but will remain separate for the pre-release
+period.**
+
+BACKWARDS INCOMPATIBILITIES / NOTES:
+
+ * Math operators now follow the standard order of operations: *, /, % followed
+   by +, -. See the updated interpolation docs for more information. You can
+   continue to force ordering with parentheses.
+
+FEATURES:
+
+ * **New command:** `terraform console`, an interactive console for experimenting
+   with and using interpolations. [GH-10093]
+ * **Terraform version requirement in configuration.** You can now specify
+   a Terraform version requirement in configuration and modules. [GH-10080]
+ * **`depends_on` can reference modules.** This allows a resource or output
+   to depend on everything within a module. [GH-10076]
+ * **`output` supports `depends_on`.** This is useful when the output depends
+   on a certain ordering to happen that can't be represented with interpolations.
+   [GH-10072]
+
+## 0.8.0-beta1 (November 11, 2016)
+
+BASED ON: 0.7.10 (includes any changes up to that point as well)
+
+BACKWARDS INCOMPATIBILITIES / NOTES:
+
+ * `template_file` _inline_ templates must escape their variable usage. What
+      was previously `${foo}` must now be `$${foo}`. Note that this is only
+      for _inline_ templates. Templates read from files are unchanged. ([#9698](https://github.com/hashicorp/terraform/issues/9698))
+ * Escape sequences used to require double-escaping when used within interpolations.
+      You now must only escape once (which is the expected/typical behavior).
+      For example: `${replace(var.foo, "\\", "\\\\")}` is correct. Before,
+      that would cause very strange behavior. However, this may break existing
+      configurations which found a level of escape sequences to work. Check
+      `terraform plan` for incorrect output.
+
+FEATURES:
+
+ * **New provider:** `nomad` ([#9538](https://github.com/hashicorp/terraform/issues/9538))
+ * **New provider:** `vault` ([#9158](https://github.com/hashicorp/terraform/issues/9158))
+ * The `import` command will now read provider configuration from Terraform
+   configuration files (including loading tfvars files and so on). ([#9809](https://github.com/hashicorp/terraform/issues/9809))
+ * Providers and resources are now notified by Terraform core to "stop" when
+   an interrupt is received, allowing resources to gracefully exit much, much
+   faster. ([#9607](https://github.com/hashicorp/terraform/issues/9607))
+
+IMPROVEMENTS:
+
+  * core: Human-friendly error when a computed count is used. ([#10060](https://github.com/hashicorp/terraform/issues/10060))
+  * helper/schema: only map, list, and set elements that are actually causing
+      a resource to destroy/create are marked as "requires new". ([#9613](https://github.com/hashicorp/terraform/issues/9613))
+
+BUG FIXES:
+
+  * core: Escape sequences in interpolations work in every case. ([#8709](https://github.com/hashicorp/terraform/issues/8709))
+  * core: Maps in outputs with computed values are no longer removed. ([#9549](https://github.com/hashicorp/terraform/issues/9549))
+  * command/fmt: Multiline comments aren't indented every fmt. ([#6524](https://github.com/hashicorp/terraform/issues/6524))
+
+## 0.7.13 (Unreleased)
+
+IMPROVEMENTS:
+
+BUG FIXES:
+ * provider/aws: fix crash on aws_lambda with empty environment. [GH-10306]
+
+## 0.7.12 (November 22, 2016)
+
+BACKWARDS INCOMPATIBILITIES / NOTES:
+
+ * provider/cloudstack: `cloudstack_port_forward` has now deprecated `network_id` ([#10204](https://github.com/hashicorp/terraform/issues/10204))
+
+FEATURES:
+
+ * *New Data Source:* `aws_alb_listener` ([#10181](https://github.com/hashicorp/terraform/issues/10181))
+ * *New Resource:* `github_label` ([#10213](https://github.com/hashicorp/terraform/issues/10213))
+
+IMPROVEMENTS:
+
+ * core: Experimental feature failures are less verbose. ([#10276](https://github.com/hashicorp/terraform/issues/10276))
+ * provider/aws: Add name_prefix to aws_iam_policy ([#10178](https://github.com/hashicorp/terraform/issues/10178))
+ * provider/aws: Add ability to select aws_prefix_list data source by name ([#10248](https://github.com/hashicorp/terraform/issues/10248))
+ * provider/aws Return service CIDR blocks from aws_vpc_endpoint resource ([#10254](https://github.com/hashicorp/terraform/issues/10254))
+ * provider/aws: Added `environment` configuration for AWS Lambda Functions ([#10275](https://github.com/hashicorp/terraform/issues/10275))
+
+BUG FIXES:
+
+ * core: Fix potential crashing race condition on state write ([#10277](https://github.com/hashicorp/terraform/issues/10277))
+ * core: Data sources in modules lose their `data.` prefix when moved within the state ([#9996](https://github.com/hashicorp/terraform/issues/9996))
+ * provider/aws: Fixed issue with `enable_dns_support` on creation in `aws_vpc` ([#10171](https://github.com/hashicorp/terraform/issues/10171))
+ * provider/aws: Add CertificateNotFound retry waiter to aws_alb_listener ([#10180](https://github.com/hashicorp/terraform/issues/10180))
+ * provider/aws: Remove IAM user's MFA devices with `force_destroy` ([#10262](https://github.com/hashicorp/terraform/issues/10262))
+ * provider/scaleway: improve volume attachment ([#10084](https://github.com/hashicorp/terraform/issues/10084))
+
+## 0.7.11 (November 15, 2016)
 
 BACKWARDS INCOMPATIBILITIES / NOTES:
 
@@ -73,7 +219,7 @@ IMPROVEMENTS:
  * provider/aws: Added aws_api_gateway_api_key created_date & last_updated_date attributes ([#9530](https://github.com/hashicorp/terraform/issues/9530))
  * provider/aws: Added aws_api_gateway_rest_api created_date attribute ([#9532](https://github.com/hashicorp/terraform/issues/9532))
  * provider/aws: Exposed aws_api_gateway_deployment.created_date attribute ([#9534](https://github.com/hashicorp/terraform/issues/9534))
- * provider/aws: Added `retry_duraction` to `redshift_configuration` in `kinesis_firehose_delivery_stream` ([#10113](https://github.com/hashicorp/terraform/issues/10113))
+ * provider/aws: Added `retry_duration` to `redshift_configuration` in `kinesis_firehose_delivery_stream` ([#10113](https://github.com/hashicorp/terraform/issues/10113))
  * provider/azurerm: allow updating load balancer sub-resources ([#10016](https://github.com/hashicorp/terraform/issues/10016))
  * provider/openstack: Instance `user_data` will now detect if input is already Base64-encode ([#9966](https://github.com/hashicorp/terraform/issues/9966))
 

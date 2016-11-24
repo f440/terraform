@@ -950,10 +950,15 @@ func flattenDSVpcSettings(
 	return []map[string]interface{}{settings}
 }
 
-func flattenLambdaEnvironment(variables map[string]*string) []interface{} {
+func flattenLambdaEnvironment(lambdaEnv *lambda.EnvironmentResponse) []interface{} {
 	envs := make(map[string]interface{})
 	en := make(map[string]string)
-	for k, v := range variables {
+
+	if lambdaEnv == nil {
+		return nil
+	}
+
+	for k, v := range lambdaEnv.Variables {
 		en[k] = *v
 	}
 	if len(en) > 0 {
@@ -1065,6 +1070,16 @@ func flattenCloudFormationOutputs(cfOutputs []*cloudformation.Output) map[string
 		outputs[*o.OutputKey] = *o.OutputValue
 	}
 	return outputs
+}
+
+func flattenAsgSuspendedProcesses(list []*autoscaling.SuspendedProcess) []string {
+	strs := make([]string, 0, len(list))
+	for _, r := range list {
+		if r.ProcessName != nil {
+			strs = append(strs, *r.ProcessName)
+		}
+	}
+	return strs
 }
 
 func flattenAsgEnabledMetrics(list []*autoscaling.EnabledMetric) []string {
