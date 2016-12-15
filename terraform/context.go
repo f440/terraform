@@ -162,13 +162,18 @@ func NewContext(opts *ContextOpts) (*Context, error) {
 		}
 	}
 
+	diff := opts.Diff
+	if diff == nil {
+		diff = &Diff{}
+	}
+
 	return &Context{
 		components: &basicComponentFactory{
 			providers:    opts.Providers,
 			provisioners: opts.Provisioners,
 		},
 		destroy:   opts.Destroy,
-		diff:      opts.Diff,
+		diff:      diff,
 		hooks:     hooks,
 		module:    opts.Module,
 		shadow:    opts.Shadow,
@@ -184,13 +189,55 @@ func NewContext(opts *ContextOpts) (*Context, error) {
 }
 
 type ContextGraphOpts struct {
+	// If true, validates the graph structure (checks for cycles).
 	Validate bool
-	Verbose  bool
+
+	// Legacy graphs only: won't prune the graph
+	Verbose bool
 }
 
-// Graph returns the graph for this config.
-func (c *Context) Graph(g *ContextGraphOpts) (*Graph, error) {
-	return c.graphBuilder(g).Build(RootModulePath)
+// Graph returns the graph used for the given operation type.
+//
+// The most extensive or complex graph type is GraphTypePlan.
+func (c *Context) Graph(typ GraphType, opts *ContextGraphOpts) (*Graph, error) {
+	if opts == nil {
+		opts = &ContextGraphOpts{Validate: true}
+	}
+
+	switch typ {
+	case GraphTypeApply:
+		return (&ApplyGraphBuilder{
+			Module:       c.module,
+			Diff:         c.diff,
+			State:        c.state,
+			Providers:    c.components.ResourceProviders(),
+			Provisioners: c.components.ResourceProvisioners(),
+			Destroy:      c.destroy,
+			Validate:     opts.Validate,
+		}).Build(RootModulePath)
+
+	case GraphTypePlan:
+		return (&PlanGraphBuilder{
+			Module:    c.module,
+			State:     c.state,
+			Providers: c.components.ResourceProviders(),
+			Targets:   c.targets,
+			Validate:  opts.Validate,
+		}).Build(RootModulePath)
+
+	case GraphTypePlanDestroy:
+		return (&DestroyPlanGraphBuilder{
+			Module:   c.module,
+			State:    c.state,
+			Targets:  c.targets,
+			Validate: opts.Validate,
+		}).Build(RootModulePath)
+
+	case GraphTypeLegacy:
+		return c.graphBuilder(opts).Build(RootModulePath)
+	}
+
+	return nil, fmt.Errorf("unknown graph type: %s", typ)
 }
 
 // GraphBuilder returns the GraphBuilder that will be used to create
@@ -246,7 +293,7 @@ func (c *Context) Interpolater() *Interpolater {
 		Module:             c.module,
 		State:              c.state.DeepCopy(),
 		StateLock:          &stateLock,
-		VariableValues:     map[string]interface{}{},
+		VariableValues:     c.variables,
 		VariableValuesLock: &varLock,
 	}
 }
@@ -355,7 +402,7 @@ func (c *Context) Input(mode InputMode) error {
 
 	if mode&InputModeProvider != 0 {
 		// Build the graph
-		graph, err := c.Graph(&ContextGraphOpts{Validate: true})
+		graph, err := c.Graph(GraphTypeLegacy, nil)
 		if err != nil {
 			return err
 		}
@@ -385,20 +432,11 @@ func (c *Context) Apply() (*State, error) {
 	X_legacyGraph := experiment.Enabled(experiment.X_legacyGraph)
 
 	// Build the graph.
-	var graph *Graph
-	var err error
+	graphType := GraphTypeLegacy
 	if !X_legacyGraph {
-		graph, err = (&ApplyGraphBuilder{
-			Module:       c.module,
-			Diff:         c.diff,
-			State:        c.state,
-			Providers:    c.components.ResourceProviders(),
-			Provisioners: c.components.ResourceProvisioners(),
-			Destroy:      c.destroy,
-		}).Build(RootModulePath)
-	} else {
-		graph, err = c.Graph(&ContextGraphOpts{Validate: true})
+		graphType = GraphTypeApply
 	}
+	graph, err := c.Graph(graphType, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -470,40 +508,15 @@ func (c *Context) Plan() (*Plan, error) {
 	X_legacyGraph := experiment.Enabled(experiment.X_legacyGraph)
 
 	// Build the graph.
-	var graph *Graph
-	var err error
+	graphType := GraphTypeLegacy
 	if !X_legacyGraph {
 		if c.destroy {
-			graph, err = (&DestroyPlanGraphBuilder{
-				Module:  c.module,
-				State:   c.state,
-				Targets: c.targets,
-			}).Build(RootModulePath)
+			graphType = GraphTypePlanDestroy
 		} else {
-			graph, err = (&PlanGraphBuilder{
-				Module:    c.module,
-				State:     c.state,
-				Providers: c.components.ResourceProviders(),
-				Targets:   c.targets,
-			}).Build(RootModulePath)
+			graphType = GraphTypePlan
 		}
-	} else {
-		newGraph, err = (&PlanGraphBuilder{
-			Module:    c.module,
-			State:     c.state,
-			Providers: c.components.ResourceProviders(),
-			Targets:   c.targets,
-		}).Build(RootModulePath)
 	}
-	if err != nil && !newGraphEnabled {
-		// If we had an error graphing but we're not using this graph, just
-		// set it to nil and record it as a shadow error.
-		c.shadowErr = multierror.Append(c.shadowErr, fmt.Errorf(
-			"Error building new graph: %s", err))
-
-		newGraph = nil
-		err = nil
-	}
+	graph, err := c.Graph(graphType, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -554,7 +567,7 @@ func (c *Context) Plan() (*Plan, error) {
 	if X_legacyGraph {
 		// Now that we have a diff, we can build the exact graph that Apply will use
 		// and catch any possible cycles during the Plan phase.
-		if _, err := c.Graph(&ContextGraphOpts{Validate: true}); err != nil {
+		if _, err := c.Graph(GraphTypeLegacy, nil); err != nil {
 			return nil, err
 		}
 	}
@@ -580,7 +593,7 @@ func (c *Context) Refresh() (*State, error) {
 	c.state = c.state.DeepCopy()
 
 	// Build the graph
-	graph, err := c.Graph(&ContextGraphOpts{Validate: true})
+	graph, err := c.Graph(GraphTypeLegacy, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -651,7 +664,7 @@ func (c *Context) Validate() ([]string, []error) {
 	// We also validate the graph generated here, but this graph doesn't
 	// necessarily match the graph that Plan will generate, so we'll validate the
 	// graph again later after Planning.
-	graph, err := c.Graph(&ContextGraphOpts{Validate: true})
+	graph, err := c.Graph(GraphTypeLegacy, nil)
 	if err != nil {
 		return nil, []error{err}
 	}
