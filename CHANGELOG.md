@@ -1,3 +1,44 @@
+## 0.8.2 (December 21, 2016)
+
+BACKWARDS INCOMPATIBILITIES / NOTES:
+
+ * `aws_lambda_function` Please note that `runtime` is now a required field as AWS have deprecated the use of nodejs 0.10 in lambda functions ([#9724](https://github.com/hashicorp/terraform/issues/9724))
+
+FEATURES:
+
+ * **New Provider:**  `New Relic` ([#10317](https://github.com/hashicorp/terraform/issues/10317))
+ * **New Resource:**  `aws_ses_configuration_set` ([#10735](https://github.com/hashicorp/terraform/issues/10735))
+ * **New Resource:**  `aws_ses_event_destination` ([#10735](https://github.com/hashicorp/terraform/issues/10735))
+ * **New Resource:**  `azurerm_redis_cache` ([#10184](https://github.com/hashicorp/terraform/issues/10184))
+ * **New Resource:**  `ultradns_dirpool` ([#9788](https://github.com/hashicorp/terraform/issues/9788))
+ * **New Resource:**  `ultradns_probe_http` ([#9788](https://github.com/hashicorp/terraform/issues/9788))
+ * **New Resource:**  `ultradns_probe_ping` ([#9788](https://github.com/hashicorp/terraform/issues/9788))
+ * **New Resource:**  `ultradns_record` ([#9788](https://github.com/hashicorp/terraform/issues/9788))
+ * **New Resource:**  `ultradns_tcpool` ([#9788](https://github.com/hashicorp/terraform/issues/9788))
+ * **New Data Source:**  `aws_iam_account_alias` ([#10804](https://github.com/hashicorp/terraform/issues/10804))
+ 
+IMPROVEMENTS:
+
+ * provider/aws: Add support for BinaryMediaTypes and ContentHandling to AWS API Gateway ([#10776](https://github.com/hashicorp/terraform/issues/10776))
+ * provider/aws: Deprecated aws_lambda_function nodejs runtime in favor of nodejs4.3 ([#9724](https://github.com/hashicorp/terraform/issues/9724))
+ * provider/aws: Support updating of aws_db_instance db_subnet_group_name ([#10818](https://github.com/hashicorp/terraform/issues/10818))
+ * provider/aws: Allow update to RDS password when restoring from snapshot ([#8622](https://github.com/hashicorp/terraform/issues/8622))
+ * provider/azurerm: add support for tags to dns_zone ([#10750](https://github.com/hashicorp/terraform/issues/10750))
+ * provider/pagerduty pagerduty_schedule - support for start_day_of_week (schedule restriction) ([#10069](https://github.com/hashicorp/terraform/issues/10069))
+ * state/remote/swift: add support for token authentication ([#10866](https://github.com/hashicorp/terraform/issues/10866))
+
+BUG FIXES:
+
+ * core: Improve validation for provider aliases to allow inheritance in moduels. ([#10807](https://github.com/hashicorp/terraform/issues/10807))
+ * core: Math operations always prefer floating point if an argument is floating point. ([#10886](https://github.com/hashicorp/terraform/issues/10886))
+ * core: Strings are implicitly converted to integers/floats for comparison. ([#10886](https://github.com/hashicorp/terraform/issues/10886))
+ * provider/aws: Fixed crash in `data_source_ami` with empty `owner` value ([#10763](https://github.com/hashicorp/terraform/issues/10763))
+ * provider/aws: Require `master_username` and `master_password` if no snapshot given in Redshift Cluster ([#9837](https://github.com/hashicorp/terraform/issues/9837))
+ * provider/azurerm: fix network_interface.ip_configuration hash for load balancers ([#10834](https://github.com/hashicorp/terraform/issues/10834))
+ * provider/docker: Fix regression, 'cert_path' stop working ([#10801](https://github.com/hashicorp/terraform/issues/10801))
+ * provider/google: Use node_version during google_container_cluster creation ([#10817](https://github.com/hashicorp/terraform/issues/10817))
+ * provider/openstack: Handle Volume Creation Errors ([#10821](https://github.com/hashicorp/terraform/issues/10821))
+
 ## 0.8.1 (December 14, 2016)
 
 IMPROVEMENTS:
