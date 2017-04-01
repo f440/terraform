@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/aws/aws-sdk-go/service/apigateway"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/hashicorp/terraform/helper/schema"
 )
@@ -140,7 +141,24 @@ func validateElbName(v interface{}, k string) (ws []string, errors []error) {
 			"%q cannot end with a hyphen: %q", k, value))
 	}
 	return
+}
 
+func validateElbNamePrefix(v interface{}, k string) (ws []string, errors []error) {
+	value := v.(string)
+	if !regexp.MustCompile(`^[0-9A-Za-z-]+$`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"only alphanumeric characters and hyphens allowed in %q: %q",
+			k, value))
+	}
+	if len(value) > 6 {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot be longer than 6 characters: %q", k, value))
+	}
+	if regexp.MustCompile(`^-`).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot begin with a hyphen: %q", k, value))
+	}
+	return
 }
 
 func validateEcrRepositoryName(v interface{}, k string) (ws []string, errors []error) {
@@ -926,7 +944,7 @@ func validateConfigExecutionFrequency(v interface{}, k string) (ws []string, err
 		}
 	}
 	errors = append(errors, fmt.Errorf(
-		"%q contains an invalid freqency %q. Valid frequencies are %q.",
+		"%q contains an invalid frequency %q. Valid frequencies are %q.",
 		k, frequency, validFrequencies))
 	return
 }
@@ -946,7 +964,19 @@ func validateAccountAlias(v interface{}, k string) (ws []string, es []error) {
 	if strings.HasSuffix(val, "-") {
 		es = append(es, fmt.Errorf("%q must not end in a hyphen", k))
 	}
+	return
+}
 
+func validateApiGatewayApiKeyValue(v interface{}, k string) (ws []string, errors []error) {
+	value := v.(string)
+	if len(value) < 30 {
+		errors = append(errors, fmt.Errorf(
+			"%q must be at least 30 characters long", k))
+	}
+	if len(value) > 128 {
+		errors = append(errors, fmt.Errorf(
+			"%q cannot be longer than 128 characters", k))
+	}
 	return
 }
 
@@ -972,5 +1002,42 @@ func validateIamRolePolicyNamePrefix(v interface{}, k string) (ws []string, erro
 	if !regexp.MustCompile("^[\\w+=,.@-]+$").MatchString(value) {
 		errors = append(errors, fmt.Errorf("%q must match [\\w+=,.@-]", k))
 	}
+	return
+}
+
+func validateApiGatewayUsagePlanQuotaSettingsPeriod(v interface{}, k string) (ws []string, errors []error) {
+	validPeriods := []string{
+		apigateway.QuotaPeriodTypeDay,
+		apigateway.QuotaPeriodTypeWeek,
+		apigateway.QuotaPeriodTypeMonth,
+	}
+	period := v.(string)
+	for _, f := range validPeriods {
+		if period == f {
+			return
+		}
+	}
+	errors = append(errors, fmt.Errorf(
+		"%q contains an invalid period %q. Valid period are %q.",
+		k, period, validPeriods))
+	return
+}
+
+func validateApiGatewayUsagePlanQuotaSettings(v map[string]interface{}) (errors []error) {
+	period := v["period"].(string)
+	offset := v["offset"].(int)
+
+	if period == apigateway.QuotaPeriodTypeDay && offset != 0 {
+		errors = append(errors, fmt.Errorf("Usage Plan quota offset must be zero in the DAY period"))
+	}
+
+	if period == apigateway.QuotaPeriodTypeWeek && (offset < 0 || offset > 6) {
+		errors = append(errors, fmt.Errorf("Usage Plan quota offset must be between 0 and 6 inclusive in the WEEK period"))
+	}
+
+	if period == apigateway.QuotaPeriodTypeMonth && (offset < 0 || offset > 27) {
+		errors = append(errors, fmt.Errorf("Usage Plan quota offset must be between 0 and 27 inclusive in the MONTH period"))
+	}
+
 	return
 }
