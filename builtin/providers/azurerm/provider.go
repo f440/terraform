@@ -63,6 +63,7 @@ func Provider() terraform.ResourceProvider {
 
 		DataSourcesMap: map[string]*schema.Resource{
 			"azurerm_client_config": dataSourceArmClientConfig(),
+			"azurerm_public_ip":     dataSourceArmPublicIP(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
@@ -77,6 +78,8 @@ func Provider() terraform.ResourceProvider {
 			"azurerm_eventhub_authorization_rule": resourceArmEventHubAuthorizationRule(),
 			"azurerm_eventhub_consumer_group":     resourceArmEventHubConsumerGroup(),
 			"azurerm_eventhub_namespace":          resourceArmEventHubNamespace(),
+
+			"azurerm_express_route_circuit": resourceArmExpressRouteCircuit(),
 
 			"azurerm_lb":                      resourceArmLoadBalancer(),
 			"azurerm_lb_backend_address_pool": resourceArmLoadBalancerBackendAddressPool(),
