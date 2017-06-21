@@ -948,33 +948,6 @@ resource "aws_route53_record" "redis-volatile-sandbox-daruma-local-CNAME" {
 
 }
 
-resource "aws_route53_record" "kokeshi-local-NS" {
-    zone_id = "ZHW6QBB99SZR1"
-    name    = "kokeshi.local"
-    type    = "NS"
-    records = ["ns-1536.awsdns-00.co.uk.", "ns-0.awsdns-00.com.", "ns-1024.awsdns-00.org.", "ns-512.awsdns-00.net."]
-    ttl     = "172800"
-
-}
-
-resource "aws_route53_record" "kokeshi-local-SOA" {
-    zone_id = "ZHW6QBB99SZR1"
-    name    = "kokeshi.local"
-    type    = "SOA"
-    records = ["ns-1536.awsdns-00.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
-    ttl     = "900"
-
-}
-
-resource "aws_route53_record" "kokeshi-local-TXT" {
-    zone_id = "ZHW6QBB99SZR1"
-    name    = "kokeshi.local"
-    type    = "TXT"
-    records = ["MS=xxx999", "hogehoge=piyopiyo"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "rumpes-co-uk-NS" {
     zone_id = "Z105MD7LRN2YR3"
     name    = "rumpes.co.uk"
