@@ -876,15 +876,6 @@ resource "aws_route53_record" "redis-volatile-staging-hanica-local-CNAME" {
 
 }
 
-resource "aws_route53_record" "db-t2mid-hanica-local-CNAME" {
-    zone_id = "ZLIRD0XRN4QQM"
-    name    = "db.t2mid.hanica.local"
-    type    = "CNAME"
-    records = ["yoshinari-migration.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "daruma-local-NS" {
     zone_id = "Z1YXIDFKK62OT2"
     name    = "daruma.local"
