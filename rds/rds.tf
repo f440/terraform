@@ -43,6 +43,8 @@ resource "aws_db_instance" "hanica-production-0" {
     backup_window             = "19:00-21:00"
     maintenance_window        = "sat:16:00-sat:16:30"
     final_snapshot_identifier = "hanica-production-0-final"
+    copy_tags_to_snapshot     = true
+    monitoring_interval       = 5
 }
 resource "aws_db_instance" "hanica-sandbox" {
     identifier                = "hanica-sandbox"
