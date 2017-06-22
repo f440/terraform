@@ -342,33 +342,6 @@ resource "aws_route53_record" "bastion-local-hanica-me-A" {
 
 }
 
-resource "aws_route53_record" "db-local-hanica-me-CNAME" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "db.local.hanica.me"
-    type    = "CNAME"
-    records = ["hanica-production-0.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "db-local-staging-hanica-me-CNAME" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "db.local.staging.hanica.me"
-    type    = "CNAME"
-    records = ["hanica-staging2.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "db-t2mid-hanica-me-CNAME" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "db.t2mid.hanica.me"
-    type    = "CNAME"
-    records = ["yoshinari-migration.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "daruma-space-MX" {
     zone_id = "Z2IE6RW5PM57F5"
     name    = "daruma.space"
