@@ -20,6 +20,10 @@ resource "aws_db_instance" "docker-staging" {
     backup_window             = "14:39-15:09"
     maintenance_window        = "sat:20:00-sat:20:30"
     final_snapshot_identifier = "docker-staging-final"
+
+    lifecycle {
+      ignore_changes = ["password"]
+    }
 }
 resource "aws_db_instance" "hanica-production-0" {
     identifier                = "hanica-production-0"
@@ -45,6 +49,10 @@ resource "aws_db_instance" "hanica-production-0" {
     final_snapshot_identifier = "hanica-production-0-final"
     copy_tags_to_snapshot     = true
     monitoring_interval       = 5
+
+    lifecycle {
+      ignore_changes = ["password"]
+    }
 }
 resource "aws_db_instance" "hanica-sandbox" {
     identifier                = "hanica-sandbox"
@@ -68,6 +76,15 @@ resource "aws_db_instance" "hanica-sandbox" {
     backup_window             = "19:00-19:30"
     maintenance_window        = "sat:20:00-sat:20:30"
     final_snapshot_identifier = "hanica-sandbox-final"
+    monitoring_interval       = 60
+
+    tags {
+        workload-type = "?????"
+    }
+
+    lifecycle {
+      ignore_changes = ["password"]
+    }
 }
 resource "aws_db_instance" "hanica-staging2" {
     identifier                = "hanica-staging2"
@@ -91,6 +108,11 @@ resource "aws_db_instance" "hanica-staging2" {
     backup_window             = "14:39-15:09"
     maintenance_window        = "sat:20:00-sat:20:30"
     final_snapshot_identifier = "hanica-staging2-final"
+    monitoring_interval       = 5
+
+    lifecycle {
+      ignore_changes = ["password"]
+    }
 }
 resource "aws_db_instance" "yoshinari-migration" {
     identifier                = "yoshinari-migration"
@@ -114,4 +136,8 @@ resource "aws_db_instance" "yoshinari-migration" {
     backup_window             = "19:00-21:00"
     maintenance_window        = "sat:16:00-sat:16:30"
     final_snapshot_identifier = "yoshinari-migration-final"
+
+    lifecycle {
+      ignore_changes = ["password"]
+    }
 }
