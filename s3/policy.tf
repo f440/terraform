@@ -51,3 +51,21 @@ resource "aws_s3_bucket_policy" "smarthr-api-lp" {
 }
 POLICY
 }
+
+resource "aws_s3_bucket_policy" "yknot-staging" {
+    bucket = "yknot-staging"
+    policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AddPerm",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::yknot-staging/*"
+    }
+  ]
+}
+POLICY
+}
