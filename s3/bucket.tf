@@ -9,3 +9,14 @@ resource "aws_s3_bucket" "smarthr-api-lp" {
     acl    = "private"
     force_destroy = ""
 }
+
+resource "aws_s3_bucket" "kokeshi-space" {
+    bucket = "kokeshi.space"
+    acl    = "private"
+    force_destroy = ""
+
+    website {
+      index_document = "index.html"
+    }
+
+}
