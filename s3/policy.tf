@@ -90,3 +90,53 @@ resource "aws_s3_bucket_policy" "kokeshi-elb-logs" {
 }
 POLICY
 }
+
+resource "aws_s3_bucket_policy" "elasticbeanstalk-ap-northeast-1-736134917012" {
+    bucket = "elasticbeanstalk-ap-northeast-1-736134917012"
+    policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "eb-ad78f54a-f239-4c90-adda-49e5f56cb51e",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::736134917012:role/aws-elasticbeanstalk-ec2-role"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::elasticbeanstalk-ap-northeast-1-736134917012/resources/environments/logs/*"
+    },
+    {
+      "Sid": "eb-58950a8c-feb6-11e2-89e0-0800277d041b",
+      "Effect": "Deny",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": "s3:DeleteBucket",
+      "Resource": "arn:aws:s3:::elasticbeanstalk-ap-northeast-1-736134917012"
+    },
+    {
+      "Sid": "eb-af163bf3-d27b-4712-b795-d1e33e331ca4",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::736134917012:role/aws-elasticbeanstalk-ec2-role",
+          "arn:aws:iam::736134917012:role/hanica-PowerUserRole-4XJCF4IP5J8X",
+          "arn:aws:iam::736134917012:role/yknot-PowerUserRole-1P04EZ1KTTO8K"
+        ]
+      },
+      "Action": [
+        "s3:ListBucketVersions",
+        "s3:GetObjectVersion",
+        "s3:ListBucket",
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::elasticbeanstalk-ap-northeast-1-736134917012/resources/environments/*",
+        "arn:aws:s3:::elasticbeanstalk-ap-northeast-1-736134917012"
+      ]
+    }
+  ]
+}
+POLICY
+}

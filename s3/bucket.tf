@@ -49,3 +49,8 @@ resource "aws_s3_bucket" "maintenance-smarthr" {
     }
 }
 
+resource "aws_s3_bucket" "elasticbeanstalk-ap-northeast-1-736134917012" {
+    bucket = "elasticbeanstalk-ap-northeast-1-736134917012"
+    acl    = "private"
+    force_destroy = ""
+}
