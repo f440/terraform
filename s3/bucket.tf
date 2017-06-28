@@ -4,6 +4,12 @@ resource "aws_s3_bucket" "bak-20170208-smarthr-production" {
     force_destroy = ""
 }
 
+resource "aws_s3_bucket" "cf-templates-5sy5m8ovfkzr-ap-northeast-1" {
+    bucket = "cf-templates-5sy5m8ovfkzr-ap-northeast-1"
+    acl    = "private"
+    force_destroy = ""
+}
+
 resource "aws_s3_bucket" "elasticbeanstalk-ap-northeast-1-736134917012" {
     bucket = "elasticbeanstalk-ap-northeast-1-736134917012"
     acl    = "private"
