@@ -63,6 +63,40 @@ resource "aws_s3_bucket" "kokeshi-space" {
     }
 }
 
+resource "aws_s3_bucket" "kufu-terraform-state" {
+    bucket = "kufu-terraform-state"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "kufu-test-redshift" {
+    bucket = "kufu-test-redshift"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "maintenance-smarthr" {
+    bucket = "maintenance-smarthr"
+    acl    = "private"
+    force_destroy = ""
+
+    website {
+      index_document = "maintenance.html"
+    }
+}
+
+resource "aws_s3_bucket" "mstyle-client" {
+    bucket = "mstyle-client"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "s3-backup-skillsand-me" {
+    bucket = "s3.backup.skillsand.me"
+    acl    = "private"
+    force_destroy = ""
+}
+
 resource "aws_s3_bucket" "smarthr-api-lp" {
     bucket = "smarthr-api-lp"
     acl    = "private"
@@ -79,15 +113,5 @@ resource "aws_s3_bucket" "yknot-staging" {
       allowed_methods = ["GET", "HEAD"]
       allowed_origins = ["*"]
       max_age_seconds = 3000
-    }
-}
-
-resource "aws_s3_bucket" "maintenance-smarthr" {
-    bucket = "maintenance-smarthr"
-    acl    = "private"
-    force_destroy = ""
-
-    website {
-      index_document = "maintenance.html"
     }
 }
