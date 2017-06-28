@@ -89,12 +89,27 @@ resource "aws_s3_bucket" "mstyle-client" {
     bucket = "mstyle-client"
     acl    = "private"
     force_destroy = ""
+
+    website {
+      index_document = "index.html"
+    }
 }
 
 resource "aws_s3_bucket" "s3-backup-skillsand-me" {
     bucket = "s3.backup.skillsand.me"
     acl    = "private"
     force_destroy = ""
+
+    lifecycle_rule {
+      id      = "60days-to-gracier"
+      prefix  = ""
+      enabled = true
+
+      transition {
+        days          = 60
+        storage_class = "GLACIER"
+      }
+    }
 }
 
 resource "aws_s3_bucket" "smarthr-api-lp" {
