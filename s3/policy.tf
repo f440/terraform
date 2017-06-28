@@ -69,3 +69,24 @@ resource "aws_s3_bucket_policy" "yknot-staging" {
 }
 POLICY
 }
+
+resource "aws_s3_bucket_policy" "kokeshi-elb-logs" {
+    bucket = "kokeshi-elb-logs"
+    policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Id": "AWSConsole-AccessLogs-Policy-1492738217415",
+  "Statement": [
+    {
+      "Sid": "AWSConsoleStmt-1492738217415",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::582318560864:root"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::kokeshi-elb-logs/AWSLogs/736134917012/*"
+    }
+  ]
+}
+POLICY
+}

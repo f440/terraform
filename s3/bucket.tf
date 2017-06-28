@@ -32,3 +32,9 @@ resource "aws_s3_bucket" "yknot-staging" {
       max_age_seconds = 3000
     }
 }
+
+resource "aws_s3_bucket" "kokeshi-elb-logs" {
+    bucket = "kokeshi-elb-logs"
+    acl    = "private"
+    force_destroy = ""
+}
