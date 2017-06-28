@@ -140,3 +140,87 @@ resource "aws_s3_bucket_policy" "elasticbeanstalk-ap-northeast-1-736134917012" {
 }
 POLICY
 }
+
+resource "aws_s3_bucket_policy" "hanica-logbucket-1ev0czxrupen3" {
+    bucket = "hanica-logbucket-1ev0czxrupen3"
+    policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Id": "LogBucketPolicy",
+  "Statement": [
+    {
+      "Sid": "WriteAccess",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::582318560864:root"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::hanica-logbucket-1ev0czxrupen3/AWSLogs/736134917012/*"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_s3_bucket_policy" "hanica-logbucket-1ljc24gzg76i7" {
+    bucket = "hanica-logbucket-1ljc24gzg76i7"
+    policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Id": "LogBucketPolicy",
+  "Statement": [
+    {
+      "Sid": "WriteAccess",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::582318560864:root"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::hanica-logbucket-1ljc24gzg76i7/AWSLogs/736134917012/*"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_s3_bucket_policy" "hanica-logbucket-cxc8o6o2ehgm" {
+    bucket = "hanica-logbucket-cxc8o6o2ehgm"
+    policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Id": "LogBucketPolicy",
+  "Statement": [
+    {
+      "Sid": "WriteAccess",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::582318560864:root"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::hanica-logbucket-cxc8o6o2ehgm/AWSLogs/736134917012/*"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_s3_bucket_policy" "hanica-logbucket-yy53p0g4qopp" {
+    bucket = "hanica-logbucket-yy53p0g4qopp"
+    policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Id": "LogBucketPolicy",
+  "Statement": [
+    {
+      "Sid": "WriteAccess",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::582318560864:root"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::hanica-logbucket-yy53p0g4qopp/AWSLogs/736134917012/*"
+    }
+  ]
+}
+POLICY
+}

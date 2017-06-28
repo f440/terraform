@@ -22,6 +22,31 @@ resource "aws_s3_bucket" "cloudtrail-test-kufu" {
     force_destroy = ""
 }
 
+resource "aws_s3_bucket" "hanica-logbucket-1ev0czxrupen3" {
+    bucket = "hanica-logbucket-1ev0czxrupen3"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "hanica-logbucket-1ljc24gzg76i7" {
+    bucket = "hanica-logbucket-1ljc24gzg76i7"
+    acl    = "private"
+    force_destroy = ""
+}
+
+
+resource "aws_s3_bucket" "hanica-logbucket-cxc8o6o2ehgm" {
+    bucket = "hanica-logbucket-cxc8o6o2ehgm"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "hanica-logbucket-yy53p0g4qopp" {
+    bucket = "hanica-logbucket-yy53p0g4qopp"
+    acl    = "private"
+    force_destroy = ""
+}
+
 resource "aws_s3_bucket" "smarthr-api-lp" {
     bucket = "smarthr-api-lp"
     acl    = "private"
