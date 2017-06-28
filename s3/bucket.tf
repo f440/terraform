@@ -1,3 +1,15 @@
+resource "aws_s3_bucket" "bak-20170208-smarthr-production" {
+    bucket = "bak-20170208-smarthr-production"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "elasticbeanstalk-ap-northeast-1-736134917012" {
+    bucket = "elasticbeanstalk-ap-northeast-1-736134917012"
+    acl    = "private"
+    force_destroy = ""
+}
+
 resource "aws_s3_bucket" "cloudtrail-test-kufu" {
     bucket = "cloudtrail-test-kufu"
     acl = "private"
@@ -47,10 +59,4 @@ resource "aws_s3_bucket" "maintenance-smarthr" {
     website {
       index_document = "maintenance.html"
     }
-}
-
-resource "aws_s3_bucket" "elasticbeanstalk-ap-northeast-1-736134917012" {
-    bucket = "elasticbeanstalk-ap-northeast-1-736134917012"
-    acl    = "private"
-    force_destroy = ""
 }
