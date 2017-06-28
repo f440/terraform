@@ -47,8 +47,8 @@ resource "aws_s3_bucket" "hanica-logbucket-yy53p0g4qopp" {
     force_destroy = ""
 }
 
-resource "aws_s3_bucket" "smarthr-api-lp" {
-    bucket = "smarthr-api-lp"
+resource "aws_s3_bucket" "kokeshi-elb-logs" {
+    bucket = "kokeshi-elb-logs"
     acl    = "private"
     force_destroy = ""
 }
@@ -63,6 +63,12 @@ resource "aws_s3_bucket" "kokeshi-space" {
     }
 }
 
+resource "aws_s3_bucket" "smarthr-api-lp" {
+    bucket = "smarthr-api-lp"
+    acl    = "private"
+    force_destroy = ""
+}
+
 resource "aws_s3_bucket" "yknot-staging" {
     bucket = "yknot-staging"
     acl    = "private"
@@ -74,12 +80,6 @@ resource "aws_s3_bucket" "yknot-staging" {
       allowed_origins = ["*"]
       max_age_seconds = 3000
     }
-}
-
-resource "aws_s3_bucket" "kokeshi-elb-logs" {
-    bucket = "kokeshi-elb-logs"
-    acl    = "private"
-    force_destroy = ""
 }
 
 resource "aws_s3_bucket" "maintenance-smarthr" {
