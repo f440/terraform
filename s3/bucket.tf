@@ -24,4 +24,11 @@ resource "aws_s3_bucket" "yknot-staging" {
     bucket = "yknot-staging"
     acl    = "private"
     force_destroy = ""
+
+    cors_rule {
+      allowed_headers = ["Authorization", "Content-*", "Host", "*"]
+      allowed_methods = ["GET", "HEAD"]
+      allowed_origins = ["*"]
+      max_age_seconds = 3000
+    }
 }
