@@ -255,6 +255,10 @@ resource "aws_s3_bucket" "kufu-terraform-state" {
     bucket = "kufu-terraform-state"
     acl    = "private"
     force_destroy = ""
+
+    versioning {
+      enabled = true
+    }
 }
 
 resource "aws_s3_bucket" "kufu-test-redshift" {
@@ -461,6 +465,168 @@ resource "aws_s3_bucket" "smarthr-tmp-development" {
     force_destroy = ""
 }
 
+resource "aws_s3_bucket" "smarthr-tmp-kokeshi" {
+    bucket = "smarthr-tmp-kokeshi"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "smarthr-tmp-production" {
+    bucket = "smarthr-tmp-production"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "smarthr-tmp-sandbox" {
+    bucket = "smarthr-tmp-sandbox"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "smarthr-tmp-staging" {
+    bucket = "smarthr-tmp-staging"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "sorry-hanica-me" {
+    bucket = "sorry-hanica-me"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "yknot-development" {
+    bucket = "yknot-development"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "yknot-logbucket-8zjh0y3c37jt" {
+    bucket = "yknot-logbucket-8zjh0y3c37jt"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket_policy" "yknot-logbucket-8zjh0y3c37jt" {
+    bucket = "yknot-logbucket-8zjh0y3c37jt"
+    policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Id": "LogBucketPolicy",
+  "Statement": [
+    {
+      "Sid": "WriteAccess",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::582318560864:root"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::yknot-logbucket-8zjh0y3c37jt/AWSLogs/736134917012/*"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_s3_bucket" "yknot-prod-logbucket-70gexro70itw" {
+    bucket = "yknot-prod-logbucket-70gexro70itw"
+    acl    = "private"
+    force_destroy = ""
+    tags {
+      cf = "yknot-prod"
+    }
+}
+
+resource "aws_s3_bucket_policy" "yknot-prod-logbucket-70gexro70itw" {
+    bucket = "yknot-prod-logbucket-70gexro70itw"
+    policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Id": "LogBucketPolicy",
+  "Statement": [
+    {
+      "Sid": "WriteAccess",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::582318560864:root"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::yknot-prod-logbucket-70gexro70itw/AWSLogs/736134917012/*"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_s3_bucket" "yknot-prod-logbucket-9rd76kpls3hc" {
+    bucket = "yknot-prod-logbucket-9rd76kpls3hc"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket_policy" "yknot-prod-logbucket-9rd76kpls3hc" {
+    bucket = "yknot-prod-logbucket-9rd76kpls3hc"
+    policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Id": "LogBucketPolicy",
+  "Statement": [
+    {
+      "Sid": "WriteAccess",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::582318560864:root"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::yknot-prod-logbucket-9rd76kpls3hc/AWSLogs/736134917012/*"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_s3_bucket" "yknot-production" {
+    bucket = "yknot-production"
+    acl    = "private"
+    force_destroy = ""
+
+    cors_rule {
+      allowed_headers = ["Authorization", "Content-*", "Host", "*"]
+      allowed_methods = ["GET", "HEAD"]
+      allowed_origins = ["*"]
+      max_age_seconds = 3000
+    }
+
+    logging {
+      target_bucket = "yknot-production"
+      target_prefix = "s3-logs/"
+    }
+}
+
+resource "aws_s3_bucket_policy" "yknot-production" {
+    bucket = "yknot-production"
+    policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AddPerm",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::yknot-production/*"
+    }
+  ]
+}
+POLICY
+}
+
+resource "aws_s3_bucket" "yknot-production-backup" {
+    bucket = "yknot-production-backup"
+    acl    = "private"
+    force_destroy = ""
+}
+
 resource "aws_s3_bucket" "yknot-staging" {
     bucket = "yknot-staging"
     acl    = "private"
@@ -491,4 +657,3 @@ resource "aws_s3_bucket_policy" "yknot-staging" {
 }
 POLICY
 }
-
