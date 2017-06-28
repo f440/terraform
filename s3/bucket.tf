@@ -38,3 +38,14 @@ resource "aws_s3_bucket" "kokeshi-elb-logs" {
     acl    = "private"
     force_destroy = ""
 }
+
+resource "aws_s3_bucket" "maintenance-smarthr" {
+    bucket = "maintenance-smarthr"
+    acl    = "private"
+    force_destroy = ""
+
+    website {
+      index_document = "maintenance.html"
+    }
+}
+
