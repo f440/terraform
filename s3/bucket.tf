@@ -112,10 +112,53 @@ resource "aws_s3_bucket" "s3-backup-skillsand-me" {
     }
 }
 
+resource "aws_s3_bucket" "skillsand-me" {
+    bucket = "skillsand.me"
+    acl    = "private"
+    force_destroy = ""
+
+    website {
+      error_document = "503.html"
+      index_document = "503.html"
+    }
+}
+
+
 resource "aws_s3_bucket" "smarthr-api-lp" {
     bucket = "smarthr-api-lp"
     acl    = "private"
     force_destroy = ""
+}
+
+resource "aws_s3_bucket" "smarthr-development" {
+    bucket = "smarthr-development"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "smarthr-letter-opener" {
+    bucket = "smarthr-letter-opener"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "smarthr-notification-integration" {
+    bucket = "smarthr-notification-integration"
+    acl    = "private"
+    force_destroy = ""
+}
+
+resource "aws_s3_bucket" "smarthr-production" {
+    bucket = "smarthr-production"
+    acl    = "private"
+    force_destroy = ""
+
+    cors_rule {
+      allowed_headers = ["Content-*", "Host", "*"]
+      allowed_methods = ["GET", "HEAD"]
+      allowed_origins = ["*"]
+      max_age_seconds = 3000
+    }
 }
 
 resource "aws_s3_bucket" "yknot-staging" {

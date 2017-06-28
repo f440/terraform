@@ -224,3 +224,23 @@ resource "aws_s3_bucket_policy" "hanica-logbucket-yy53p0g4qopp" {
 }
 POLICY
 }
+
+resource "aws_s3_bucket_policy" "smarthr-notification-integration" {
+    bucket = "smarthr-notification-integration"
+    policy = <<POLICY
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowPublicRead",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::smarthr-notification-integration/*"
+    }
+  ]
+}
+POLICY
+}
