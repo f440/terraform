@@ -53,7 +53,13 @@ resource "aws_db_instance" "hanica-production-0" {
     lifecycle {
       ignore_changes = ["password"]
     }
+
+    tags {
+        Mackerel = "on"
+    }
+
 }
+
 resource "aws_db_instance" "hanica-sandbox" {
     identifier                = "hanica-sandbox"
     allocated_storage         = 5
