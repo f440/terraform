@@ -20,9 +20,13 @@ resource "aws_cloudfront_distribution" "smarthr-api-lp" {
   }
 
   default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "S3-smarthr-api-lp"
+    allowed_methods         = ["GET", "HEAD"]
+    cached_methods          = ["GET", "HEAD"]
+    target_origin_id        = "S3-smarthr-api-lp"
+    viewer_protocol_policy  = "redirect-to-https"
+    min_ttl                 = 1
+    default_ttl             = 1
+    max_ttl                 = 1
 
     forwarded_values {
       query_string = false
@@ -32,10 +36,6 @@ resource "aws_cloudfront_distribution" "smarthr-api-lp" {
       }
     }
 
-    viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 1
-    default_ttl            = 1
-    max_ttl                = 1
   }
 
   restrictions {
@@ -49,5 +49,49 @@ resource "aws_cloudfront_distribution" "smarthr-api-lp" {
     cloudfront_default_certificate  = false
     minimum_protocol_version        = "TLSv1"
     ssl_support_method              = "sni-only"
+  }
+}
+
+resource "aws_cloudfront_distribution" "smarthr-production" {
+
+  origin {
+    domain_name           = "smarthr-production.s3.amazonaws.com"
+    origin_id             = "S3-smarthr-production"
+    origin_path           = ""
+  }
+
+  enabled             = true
+  is_ipv6_enabled     = false
+  http_version        = "http1.1"
+  price_class         = "PriceClass_All"
+
+  default_cache_behavior {
+    default_ttl             = 86400
+    max_ttl                 = 31536000
+    min_ttl                 = 0
+    target_origin_id        = "S3-smarthr-production"
+    viewer_protocol_policy  = "allow-all"
+
+    allowed_methods  = ["GET", "HEAD"]
+    cached_methods   = ["GET", "HEAD"]
+
+    forwarded_values {
+      query_string  = true
+      headers       = ["Origin"]
+      cookies {
+        forward = "none"
+      }
+    }
+  }
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+
+  viewer_certificate {
+    cloudfront_default_certificate  = true
+    minimum_protocol_version        = "SSLv3"
   }
 }
