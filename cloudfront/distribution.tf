@@ -197,8 +197,6 @@ resource "aws_cloudfront_distribution" "sorry-hanica-me" {
   http_version        = "http2"
   price_class         = "PriceClass_All"
 
-  aliases = ["sorry.hanica.me"]
-
   custom_error_response {
     error_caching_min_ttl = 300
     error_code            = "403"
