@@ -8,8 +8,8 @@ resource "aws_route53_record" "skillsand-me-A-0" {
         name    = "lb-001-368705549.ap-northeast-1.elb.amazonaws.com"
         zone_id = "Z14GRHDCWA56QT"
         evaluate_target_health = true
-
     }
+
     failover_routing_policy {
         type = "PRIMARY"
     }
@@ -315,13 +315,31 @@ resource "aws_route53_record" "hanica-me-TXT" {
 
 }
 
-resource "aws_route53_record" "asterisk-hanica-me-CNAME" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "*.hanica.me"
-    type    = "CNAME"
-    records = ["hanica-staging.elasticbeanstalk.com"]
-    ttl     = "300"
+resource "aws_route53_record" "asterisk-hanica-me-CNAME-asterisk-Primary" {
+    zone_id         = "ZTGHQY50Y0K1C"
+    name            = "*.hanica.me"
+    type            = "CNAME"
+    records         = ["hanica-staging.elasticbeanstalk.com"]
+    ttl             = "300"
+    set_identifier  = "asterisk-Primary"
+    health_check_id = "3e047f44-f9bf-4ef8-bcec-8d092d7caaa3"
 
+    failover_routing_policy {
+        type = "PRIMARY"
+    }
+}
+
+resource "aws_route53_record" "asterisk-hanica-me-CNAME-asterisk-Secondary" {
+    zone_id         = "ZTGHQY50Y0K1C"
+    name            = "*.hanica.me"
+    type            = "CNAME"
+    records         = ["d3a51uzw8xf2mw.cloudfront.net"]
+    ttl             = "300"
+    set_identifier = "asterisk-Secondary"
+
+    failover_routing_policy {
+        type = "SECONDARY"
+    }
 }
 
 resource "aws_route53_record" "app-hanica-me-CNAME" {
