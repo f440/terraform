@@ -342,15 +342,6 @@ resource "aws_route53_record" "asterisk-hanica-me-CNAME-asterisk-Secondary" {
     }
 }
 
-resource "aws_route53_record" "app-hanica-me-CNAME" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "app.hanica.me"
-    type    = "CNAME"
-    records = ["hanica-staging.elasticbeanstalk.com"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "bastion-local-hanica-me-A" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "bastion.local.hanica.me"
@@ -554,15 +545,6 @@ resource "aws_route53_record" "app-smarthr-jp-CNAME" {
     name    = "app.smarthr.jp"
     type    = "CNAME"
     records = ["hanica-production.elasticbeanstalk.com"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "db-smarthr-jp-CNAME" {
-    zone_id = "Z38IZYREYRKWXV"
-    name    = "db.smarthr.jp"
-    type    = "CNAME"
-    records = ["hdqmrhbk7x3zue.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
     ttl     = "300"
 
 }
