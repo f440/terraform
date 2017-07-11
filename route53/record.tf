@@ -315,31 +315,12 @@ resource "aws_route53_record" "hanica-me-TXT" {
 
 }
 
-resource "aws_route53_record" "asterisk-hanica-me-CNAME-asterisk-Primary" {
+resource "aws_route53_record" "asterisk-hanica-me-CNAME" {
     zone_id         = "ZTGHQY50Y0K1C"
     name            = "*.hanica.me"
     type            = "CNAME"
     records         = ["hanica-staging.elasticbeanstalk.com"]
     ttl             = "300"
-    set_identifier  = "asterisk-Primary"
-    health_check_id = "3e047f44-f9bf-4ef8-bcec-8d092d7caaa3"
-
-    failover_routing_policy {
-        type = "PRIMARY"
-    }
-}
-
-resource "aws_route53_record" "asterisk-hanica-me-CNAME-asterisk-Secondary" {
-    zone_id         = "ZTGHQY50Y0K1C"
-    name            = "*.hanica.me"
-    type            = "CNAME"
-    records         = ["d3a51uzw8xf2mw.cloudfront.net"]
-    ttl             = "300"
-    set_identifier = "asterisk-Secondary"
-
-    failover_routing_policy {
-        type = "SECONDARY"
-    }
 }
 
 resource "aws_route53_record" "bastion-local-hanica-me-A" {
