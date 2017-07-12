@@ -118,6 +118,12 @@ resource "aws_iam_user" "tansu-admin" {
     force_destroy = ""
 }
 
+resource "aws_iam_user" "tei" {
+    name = "tei"
+    path = "/"
+    force_destroy = ""
+}
+
 resource "aws_iam_user" "yoshinari" {
     name = "yoshinari"
     path = "/"
