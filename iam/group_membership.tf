@@ -1,6 +1,6 @@
 resource "aws_iam_group_membership" "kufu-admin" {
     name  = "kufu-admin-group-membership"
-    users = ["kanzaki", "fujii", "naito", "takahashi", "yoshinari", "serverless", "sato", "hanica-circleci", "mizoue", "serizawa", "inoue", "tansu-admin"]
+    users = ["kanzaki", "fujii", "naito", "takahashi", "yoshinari", "serverless", "sato", "hanica-circleci", "mizoue", "serizawa", "inoue", "tansu-admin", "tei"]
     group = "kufu-admin"
 }
 
