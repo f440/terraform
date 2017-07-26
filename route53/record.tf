@@ -512,15 +512,6 @@ resource "aws_route53_record" "s2-_domainkey-smarthr-jp-CNAME" {
 
 }
 
-resource "aws_route53_record" "api-smarthr-jp-A" {
-    zone_id = "Z38IZYREYRKWXV"
-    name    = "api.smarthr.jp"
-    type    = "A"
-    records = ["157.7.188.212"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "app-smarthr-jp-CNAME" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "app.smarthr.jp"
