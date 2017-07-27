@@ -657,3 +657,8 @@ resource "aws_s3_bucket_policy" "yknot-staging" {
 }
 POLICY
 }
+
+resource "aws_s3_bucket" "smarthr-mackerel-agent-plugins" {
+    bucket = "smarthr-mackerel-agent-plugins"
+    acl    = "public-read"
+}
