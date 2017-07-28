@@ -834,7 +834,7 @@ resource "aws_route53_record" "db-staging-hanica-local-CNAME" {
     zone_id = "ZLIRD0XRN4QQM"
     name    = "db.staging.hanica.local"
     type    = "CNAME"
-    records = ["hanica-staging2.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
+    records = ["hanica-staging3.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
     ttl     = "300"
 
 }

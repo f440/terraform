@@ -92,8 +92,8 @@ resource "aws_db_instance" "hanica-sandbox" {
       ignore_changes = ["password"]
     }
 }
-resource "aws_db_instance" "hanica-staging2" {
-    identifier                = "hanica-staging2"
+resource "aws_db_instance" "hanica-staging3" {
+    identifier                = "hanica-staging3"
     allocated_storage         = 300
     storage_type              = "gp2"
     engine                    = "mysql"
@@ -113,7 +113,7 @@ resource "aws_db_instance" "hanica-staging2" {
     backup_retention_period   = 1
     backup_window             = "14:39-15:09"
     maintenance_window        = "sat:20:00-sat:20:30"
-    final_snapshot_identifier = "hanica-staging2-final"
+    final_snapshot_identifier = "hanica-staging3-final"
     monitoring_interval       = 5
 
     lifecycle {
