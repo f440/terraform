@@ -114,34 +114,7 @@ resource "aws_db_instance" "hanica-staging3" {
     backup_window             = "14:39-15:09"
     maintenance_window        = "sat:20:00-sat:20:30"
     final_snapshot_identifier = "hanica-staging3-final"
-    monitoring_interval       = 5
-
-    lifecycle {
-      ignore_changes = ["password"]
-    }
-}
-resource "aws_db_instance" "yoshinari-migration" {
-    identifier                = "yoshinari-migration"
-    allocated_storage         = 300
-    storage_type              = "gp2"
-    engine                    = "mysql"
-    engine_version            = "5.7.16"
-    instance_class            = "db.t2.small"
-    name                      = ""
-    username                  = "admin"
-    password                  = "xxxxxxxx"
-    port                      = 3306
-    publicly_accessible       = false
-    availability_zone         = "ap-northeast-1a"
-    security_group_names      = []
-    vpc_security_group_ids    = ["sg-99be0ffc"]
-    db_subnet_group_name      = "hanica-dbsubnetgroup-163c09r6dxjsq"
-    parameter_group_name      = "hanica-dbparamgroup-20170509"
-    multi_az                  = false
-    backup_retention_period   = 1
-    backup_window             = "19:00-21:00"
-    maintenance_window        = "sat:16:00-sat:16:30"
-    final_snapshot_identifier = "yoshinari-migration-final"
+    monitoring_interval       = 0
 
     lifecycle {
       ignore_changes = ["password"]
