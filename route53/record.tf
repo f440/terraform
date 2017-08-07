@@ -467,6 +467,14 @@ resource "aws_route53_record" "0e2ec3229d46ff2dbc9d2240f2cc8b44-smarthr-jp-CNAME
 
 }
 
+resource "aws_route53_record" "o1-sg-smarthr-jp-A" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "o1.sg.smarthr.jp"
+    type    = "A"
+    records = ["168.245.113.131"]
+    ttl     = "300"
+}
+
 resource "aws_route53_record" "asterisk-smarthr-jp-CNAME" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "*.smarthr.jp"
@@ -979,4 +987,3 @@ resource "aws_route53_record" "app-udemushi-com-A" {
         evaluate_target_health = false
     }
 }
-
