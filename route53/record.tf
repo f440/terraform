@@ -956,27 +956,11 @@ resource "aws_route53_record" "udemushi-com-TXT" {
 
 }
 
-resource "aws_route53_record" "asterisk-udemushi-com-A" {
-    zone_id = "Z2O12CF0N1E9JW"
-    name    = "*.udemushi.com"
-    type    = "A"
-
-    alias {
-        name    = "dualstack.hanica-staging-201706-1221152763.ap-northeast-1.elb.amazonaws.com"
-        zone_id = "Z14GRHDCWA56QT"
-        evaluate_target_health = false
-    }
-}
-
-resource "aws_route53_record" "app-udemushi-com-A" {
-    zone_id = "Z2O12CF0N1E9JW"
-    name    = "app.udemushi.com"
-    type    = "A"
-
-    alias {
-        name    = "dualstack.hanica-staging-201706-1221152763.ap-northeast-1.elb.amazonaws.com"
-        zone_id = "Z14GRHDCWA56QT"
-        evaluate_target_health = false
-    }
+resource "aws_route53_record" "asterisk-udemushi-com-CNAME" {
+    zone_id         = "ZTGHQY50Y0K1C"
+    name            = "*.udemushi.com"
+    type            = "CNAME"
+    records         = ["hanica-staging-rails-51.ap-northeast-1.elasticbeanstalk.com"]
+    ttl             = "300"
 }
 
