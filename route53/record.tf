@@ -914,8 +914,8 @@ resource "aws_route53_record" "rumpes-co-uk-NS" {
     zone_id = "Z105MD7LRN2YR3"
     name    = "rumpes.co.uk"
     type    = "NS"
-    records = ["ns-1309.awsdns-35.org.", "ns-250.awsdns-31.com.", "ns-1732.awsdns-24.co.uk.", "ns-760.awsdns-31.net."]
-    ttl     = "172800"
+    records = ["bella.ns.cloudflare.com.", "guy.ns.cloudflare.com."]
+    ttl     = "300"
 
 }
 
