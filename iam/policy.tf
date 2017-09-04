@@ -129,7 +129,9 @@ resource "aws_iam_policy" "policy-s3-hanica-kokeshi" {
       ],
       "Resource": [
         "arn:aws:s3:::smarthr-tmp-kokeshi",
-        "arn:aws:s3:::smarthr-tmp-kokeshi/*"
+        "arn:aws:s3:::smarthr-tmp-kokeshi/*",
+        "arn:aws:s3:::smarthr-kokeshi",
+        "arn:aws:s3:::smarthr-kokeshi/*"
       ]
     }
   ]
