@@ -88,12 +88,6 @@ resource "aws_iam_user" "read-only-user" {
     force_destroy = ""
 }
 
-resource "aws_iam_user" "sato" {
-    name = "sato"
-    path = "/"
-    force_destroy = ""
-}
-
 resource "aws_iam_user" "serizawa" {
     name = "serizawa"
     path = "/"
