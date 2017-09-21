@@ -963,11 +963,3 @@ resource "aws_route53_record" "udemushi-com-TXT" {
     ttl     = "300"
 
 }
-
-resource "aws_route53_record" "asterisk-udemushi-com-CNAME" {
-    zone_id         = "ZTGHQY50Y0K1C"
-    name            = "*.udemushi.com"
-    type            = "CNAME"
-    records         = ["hanica-staging-rails-51.ap-northeast-1.elasticbeanstalk.com"]
-    ttl             = "300"
-}
