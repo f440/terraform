@@ -320,7 +320,7 @@ resource "aws_route53_record" "asterisk-hanica-me-CNAME" {
     name            = "*.hanica.me"
     type            = "CNAME"
     records         = ["hanica-staging.elasticbeanstalk.com"]
-    ttl             = "300"
+    ttl             = "60"
 }
 
 resource "aws_route53_record" "bastion-local-hanica-me-A" {
@@ -480,7 +480,7 @@ resource "aws_route53_record" "asterisk-smarthr-jp-CNAME" {
     name    = "*.smarthr.jp"
     type    = "CNAME"
     records = ["hanica-production.elasticbeanstalk.com"]
-    ttl     = "300"
+    ttl     = "60"
 
 }
 
@@ -525,7 +525,7 @@ resource "aws_route53_record" "app-smarthr-jp-CNAME" {
     name    = "app.smarthr.jp"
     type    = "CNAME"
     records = ["hanica-production.elasticbeanstalk.com"]
-    ttl     = "300"
+    ttl     = "60"
 
 }
 
