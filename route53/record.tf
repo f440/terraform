@@ -453,7 +453,7 @@ resource "aws_route53_record" "smarthr-jp-TXT" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "smarthr.jp"
     type    = "TXT"
-    records = ["google-site-verification=H_4Xzz8vDzjNoCyuJyo5EmkAOTTt-E5Hg3BULxNnzMQ", "v=spf1 include:mktomail.com -all"]
+    records = ["google-site-verification=H_4Xzz8vDzjNoCyuJyo5EmkAOTTt-E5Hg3BULxNnzMQ", "v=spf1 include:mktomail.com -all", "v=spf1 include:servers.mcsv.net ?all"]
     ttl     = "300"
 
 }
@@ -591,6 +591,15 @@ resource "aws_route53_record" "www-smarthr-jp-CNAME" {
     name    = "www.smarthr.jp"
     type    = "CNAME"
     records = ["smarthr.jp"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "k1-_domainkey-smarthr-jp-CNAME" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "k1._domainkey.smarthr.jp"
+    type    = "CNAME"
+    records = ["dkim.mcsv.net"]
     ttl     = "300"
 
 }
