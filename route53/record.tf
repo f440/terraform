@@ -320,7 +320,7 @@ resource "aws_route53_record" "asterisk-hanica-me-CNAME" {
     name            = "*.hanica.me"
     type            = "CNAME"
     records         = ["hanica-staging.elasticbeanstalk.com"]
-    ttl             = "300"
+    ttl             = "60"
 }
 
 resource "aws_route53_record" "bastion-local-hanica-me-A" {
@@ -453,7 +453,7 @@ resource "aws_route53_record" "smarthr-jp-TXT" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "smarthr.jp"
     type    = "TXT"
-    records = ["google-site-verification=H_4Xzz8vDzjNoCyuJyo5EmkAOTTt-E5Hg3BULxNnzMQ", "v=spf1 include:mktomail.com -all"]
+    records = ["google-site-verification=H_4Xzz8vDzjNoCyuJyo5EmkAOTTt-E5Hg3BULxNnzMQ", "v=spf1 include:mktomail.com -all", "v=spf1 include:servers.mcsv.net ?all"]
     ttl     = "300"
 
 }
@@ -480,7 +480,7 @@ resource "aws_route53_record" "asterisk-smarthr-jp-CNAME" {
     name    = "*.smarthr.jp"
     type    = "CNAME"
     records = ["hanica-production.elasticbeanstalk.com"]
-    ttl     = "300"
+    ttl     = "60"
 
 }
 
@@ -525,7 +525,7 @@ resource "aws_route53_record" "app-smarthr-jp-CNAME" {
     name    = "app.smarthr.jp"
     type    = "CNAME"
     records = ["hanica-production.elasticbeanstalk.com"]
-    ttl     = "300"
+    ttl     = "60"
 
 }
 
@@ -591,6 +591,15 @@ resource "aws_route53_record" "www-smarthr-jp-CNAME" {
     name    = "www.smarthr.jp"
     type    = "CNAME"
     records = ["smarthr.jp"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "k1-_domainkey-smarthr-jp-CNAME" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "k1._domainkey.smarthr.jp"
+    type    = "CNAME"
+    records = ["dkim.mcsv.net"]
     ttl     = "300"
 
 }
