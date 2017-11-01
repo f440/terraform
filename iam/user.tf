@@ -124,3 +124,8 @@ resource "aws_iam_user" "yoshinari" {
     force_destroy = ""
 }
 
+resource "aws_iam_user" "miyaguni" {
+    name = "miyaguni"
+    path = "/"
+    force_destroy = ""
+}
