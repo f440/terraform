@@ -12,7 +12,7 @@ resource "aws_iam_group_membership" "kufu-cloudwatch-readonly" {
 
 resource "aws_iam_group_membership" "kufu-s3" {
     name  = "kufu-s3-group-membership"
-    users = []
+    users = ["embulk-analysis"]
     group = "kufu-s3"
 }
 
