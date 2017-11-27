@@ -98,3 +98,34 @@ resource "aws_route53_zone" "udemushi-com-public" {
     }
 }
 
+resource "aws_route53_zone" "the-yellow-meads-of-asphodel-click-public" {
+    name       = "the-yellow-meads-of-asphodel.click"
+    comment    = "HostedZone created by Route53 Registrar"
+
+    tags {
+    }
+}
+
+resource "aws_route53_zone" "smarthr-plus-public" {
+    name       = "smarthr.plus"
+    comment    = "HostedZone created by Route53 Registrar"
+
+    tags {
+    }
+}
+
+resource "aws_route53_zone" "aoyagi-farm-public" {
+    name       = "aoyagi.farm"
+    comment    = "HostedZone created by Route53 Registrar"
+
+    tags {
+    }
+}
+
+resource "aws_route53_zone" "staging-smarthr-lp-com-public" {
+    name       = "staging-smarthr-lp.com"
+    comment    = "HostedZone created by Route53 Registrar"
+
+    tags {
+    }
+}
