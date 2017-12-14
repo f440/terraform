@@ -886,7 +886,7 @@ resource "aws_route53_record" "db-prod-hanica-local-CNAME" {
     zone_id = "ZLIRD0XRN4QQM"
     name    = "db.prod.hanica.local"
     type    = "CNAME"
-    records = ["hanica-production-0.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
+    records = ["hanica-production-1.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
     ttl     = "300"
 
 }
