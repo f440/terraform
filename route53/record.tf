@@ -357,13 +357,16 @@ resource "aws_route53_record" "new-rundeck-hanica-me-A" {
     }
 }
 
-resource "aws_route53_record" "rundeck-hanica-me-CNAME" {
+resource "aws_route53_record" "rundeck-hanica-me-A" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "rundeck.hanica.me"
-    type    = "CNAME"
-    records = ["internal-1687960478.ap-northeast-1.elb.amazonaws.com"]
-    ttl     = "300"
+    type    = "A"
 
+    alias {
+        name    = "dualstack.internal-1687960478.ap-northeast-1.elb.amazonaws.com."
+        zone_id = "Z14GRHDCWA56QT"
+        evaluate_target_health = false
+    }
 }
 
 resource "aws_route53_record" "vpn-hanica-me-A" {
@@ -886,7 +889,7 @@ resource "aws_route53_record" "db-prod-hanica-local-CNAME" {
     zone_id = "ZLIRD0XRN4QQM"
     name    = "db.prod.hanica.local"
     type    = "CNAME"
-    records = ["hanica-production-0.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
+    records = ["hanica-production-1.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
     ttl     = "300"
 
 }
