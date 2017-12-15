@@ -357,7 +357,7 @@ resource "aws_route53_record" "new-rundeck-hanica-me-A" {
     }
 }
 
-resource "aws_route53_record" "rundeck-hanica-me-CNAME" {
+resource "aws_route53_record" "rundeck-hanica-me-A" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "rundeck.hanica.me"
     type    = "A"
