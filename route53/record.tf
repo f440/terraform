@@ -549,15 +549,6 @@ resource "aws_route53_record" "m1-_domainkey-smarthr-jp-TXT" {
 
 }
 
-resource "aws_route53_record" "k1-_domainkey-smarthr-jp-TXT" {
-    zone_id = "Z38IZYREYRKWXV"
-    name    = "k1._domainkey.smarthr.jp"
-    type    = "TXT"
-    records = ["k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDzR1Br8J5p4Wzmw2PGbaTfPNOyBA8MMW0X2+6cREAQ1Nk+F2gGR7IG/I2HlIgH5lmFIGDyRZ5D2Jk/qgtKQrSO8jQzlnEYtdky57cKemQDwnty1xAXU1A37j1snjlNYwzMD9AcTpuanHrKw6QDqV26WU/nTw/hswzrbGM4SmphwwIDAQAB"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "email-smarthr-jp-CNAME" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "email.smarthr.jp"
