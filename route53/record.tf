@@ -363,7 +363,7 @@ resource "aws_route53_record" "rundeck-hanica-me-A" {
     type    = "A"
 
     alias {
-        name    = "dualstack.internal-1687960478.ap-northeast-1.elb.amazonaws.com."
+        name    = "dualstack.internal-1687960478.ap-northeast-1.elb.amazonaws.com"
         zone_id = "Z14GRHDCWA56QT"
         evaluate_target_health = false
     }
@@ -499,7 +499,7 @@ resource "aws_route53_record" "smarthr-jp-TXT" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "smarthr.jp"
     type    = "TXT"
-    records = ["google-site-verification=H_4Xzz8vDzjNoCyuJyo5EmkAOTTt-E5Hg3BULxNnzMQ", "v=spf1 include:mktomail.com -all", "v=spf1 include:servers.mcsv.net ?all"]
+    records = ["google-site-verification=H_4Xzz8vDzjNoCyuJyo5EmkAOTTt-E5Hg3BULxNnzMQ", "v=spf1 include:mktomail.com -all", "v=spf1 include:servers.mcsv.net ?all", "v=spf1 include:mailgun.org ~all"]
     ttl     = "300"
 
 }
@@ -545,6 +545,24 @@ resource "aws_route53_record" "m1-_domainkey-smarthr-jp-TXT" {
     name    = "m1._domainkey.smarthr.jp"
     type    = "TXT"
     records = ["v=DKIM1;k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCUMniujh1X0S0c0Ujf/UyACMkvQfkrBpN7vlonzPEbk12T4U83swCaqeKiHWJoLfnHzWc/Gyoaazd2Fo2yZBs/ximtqmVFLbTs2Sn5e4Q2CB1STc2dJYR1J9q6Wo+Hk9dXooZB/j1GFsg1lJlOajzLyrmNRiFg8G2VUZLWYtaJPQIDAQAB"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "k1-_domainkey-smarthr-jp-TXT" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "k1._domainkey.smarthr.jp"
+    type    = "TXT"
+    records = ["k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDzR1Br8J5p4Wzmw2PGbaTfPNOyBA8MMW0X2+6cREAQ1Nk+F2gGR7IG/I2HlIgH5lmFIGDyRZ5D2Jk/qgtKQrSO8jQzlnEYtdky57cKemQDwnty1xAXU1A37j1snjlNYwzMD9AcTpuanHrKw6QDqV26WU/nTw/hswzrbGM4SmphwwIDAQAB"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "email-smarthr-jp-CNAME" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "email.smarthr.jp"
+    type    = "CNAME"
+    records = ["mailgun.org"]
     ttl     = "300"
 
 }
