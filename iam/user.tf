@@ -129,3 +129,39 @@ resource "aws_iam_user" "miyaguni" {
     path = "/"
     force_destroy = ""
 }
+
+resource "aws_iam_user" "risa-watanabe" {
+    name = "risa.watanabe"
+    path = "/"
+    force_destroy = ""
+}
+
+resource "aws_iam_user" "hiroki-watanabe" {
+    name = "hiroki.watanabe"
+    path = "/"
+    force_destroy = ""
+}
+
+resource "aws_iam_user" "shogo-hashimoto" {
+    name = "shogo.hashimoto"
+    path = "/"
+    force_destroy = ""
+}
+
+resource "aws_iam_user" "NewRelicCloudWatch" {
+    name = "NewRelicCloudWatch"
+    path = "/"
+    force_destroy = ""
+}
+
+resource "aws_iam_user" "embulk-analysis" {
+    name = "embulk-analysis"
+    path = "/"
+    force_destroy = ""
+}
+
+resource "aws_iam_user" "smarthr-gcp-key" {
+    name = "smarthr-gcp-key"
+    path = "/"
+    force_destroy = ""
+}
