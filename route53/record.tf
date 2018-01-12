@@ -499,7 +499,7 @@ resource "aws_route53_record" "smarthr-jp-TXT" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "smarthr.jp"
     type    = "TXT"
-    records = ["google-site-verification=H_4Xzz8vDzjNoCyuJyo5EmkAOTTt-E5Hg3BULxNnzMQ", "v=spf1 include:mktomail.com -all", "v=spf1 include:servers.mcsv.net ?all", "v=spf1 include:mailgun.org ~all"]
+    records = ["google-site-verification=H_4Xzz8vDzjNoCyuJyo5EmkAOTTt-E5Hg3BULxNnzMQ", "v=spf1 include:mktomail.com -all", "v=spf1 include:servers.mcsv.net ?all"]
     ttl     = "300"
 
 }
@@ -549,11 +549,29 @@ resource "aws_route53_record" "m1-_domainkey-smarthr-jp-TXT" {
 
 }
 
-resource "aws_route53_record" "email-smarthr-jp-CNAME" {
+resource "aws_route53_record" "success-smarthr-jp-TXT" {
     zone_id = "Z38IZYREYRKWXV"
-    name    = "email.smarthr.jp"
+    name    = "success.smarthr.jp"
+    type    = "TXT"
+    records = ["v=spf1 include:mailgun.org ~all"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "email-success-smarthr-jp-CNAME" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "email.success.smarthr.jp"
     type    = "CNAME"
     records = ["mailgun.org"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "success-smarthr-jp-MX" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "success.smarthr.jp"
+    type    = "MX"
+    records = ["10\tmxa.mailgun.org", "10\tmxb.mailgun.org"]
     ttl     = "300"
 
 }
