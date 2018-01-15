@@ -1,9 +1,17 @@
+## 関連リンク
+
+```
+- JIRA の URL
+- StackOverflow や Qiita の URL
+- https://smarthr.atlassian.net/browse/SHRC-XXX
+```
+
 ## やりたいこと
 
 ```
-（例）
 {{誰}}の{{課題の内容}}という課題を解決したい
 ```
+
 
 ## やったこと
 
@@ -15,7 +23,6 @@
 ## terraform plan の実行結果
 
 ```
-（例）
 -> % terraform plan
 
 Refreshing Terraform state in-memory prior to plan...
@@ -32,20 +39,11 @@ doesn't need to do anything.
 
 ```
 
-## 関連リンク
-
-```
-（例）
-- JIRA の URL
-- StackOverflow や Qiita の URL
-```
-
-
 ## マージ後にやること
 
-```
-（例）
 - terraform を適用する必要がある場合のみ
+
+```
 - `terraform plan`
 - `terraform apply`
 ```
