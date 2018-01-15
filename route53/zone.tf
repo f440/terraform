@@ -38,14 +38,6 @@ resource "aws_route53_zone" "smarthr-jp-public" {
     }
 }
 
-resource "aws_route53_zone" "kokeshi-space-public" {
-    name       = "kokeshi.space"
-    comment    = ""
-
-    tags {
-    }
-}
-
 resource "aws_route53_zone" "smarthr-co-jp-public" {
     name       = "smarthr.co.jp"
     comment    = ""
