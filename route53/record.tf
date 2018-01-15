@@ -930,6 +930,33 @@ resource "aws_route53_record" "redis-volatile-staging-hanica-local-CNAME" {
 
 }
 
+resource "aws_route53_record" "redis-persistent-qa-hanica-local-CNAME" {
+    zone_id = "ZLIRD0XRN4QQM"
+    name    = "redis.persistent.qa.hanica.local"
+    type    = "CNAME"
+    records = ["qa-hanica-persistent.eigvkv.0001.apne1.cache.amazonaws.com"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "redis-volatile-qa-hanica-local-CNAME" {
+    zone_id = "ZLIRD0XRN4QQM"
+    name    = "redis.volatile.qa.hanica.local"
+    type    = "CNAME"
+    records = ["qa-hanica-volatile.eigvkv.0001.apne1.cache.amazonaws.com"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "db-qa-hanica-local-CNAME" {
+    zone_id = "ZLIRD0XRN4QQM"
+    name    = "db.qa.hanica.local"
+    type    = "CNAME"
+    records = ["hanica-qa.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
+    ttl     = "300"
+
+}
+
 resource "aws_route53_record" "daruma-local-NS" {
     zone_id = "Z1YXIDFKK62OT2"
     name    = "daruma.local"
@@ -1376,6 +1403,16 @@ resource "aws_route53_record" "_f28c4b14a62fbfd62fa88de3039821ac-arigata-me-CNAM
     ttl     = "300"
 
 }
+
+resource "aws_route53_record" "asterisk-arigata-me-CNAME" {
+    zone_id = "Z1OXYS5OD2PLTY"
+    name    = "*.arigata.me"
+    type    = "CNAME"
+    records = ["hanica-qa-201801.ap-northeast-1.elasticbeanstalk.com"]
+    ttl     = "300"
+
+}
+
 
 resource "aws_route53_record" "cs-smarthr-jp-MX" {
     zone_id = "Z3MCH2A0C8IVX8"
