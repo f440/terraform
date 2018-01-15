@@ -345,6 +345,15 @@ resource "aws_route53_record" "bastion-local-hanica-me-A" {
 
 }
 
+resource "aws_route53_record" "new-bastion-local-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "new-bastion.local.hanica.me"
+    type    = "A"
+    records = ["13.114.200.229"]
+    ttl     = "300"
+
+}
+
 resource "aws_route53_record" "new-rundeck-hanica-me-A" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "new-rundeck.hanica.me"
@@ -582,6 +591,15 @@ resource "aws_route53_record" "app-smarthr-jp-CNAME" {
     type    = "CNAME"
     records = ["hanica-production.elasticbeanstalk.com"]
     ttl     = "60"
+
+}
+
+resource "aws_route53_record" "cs-smarthr-jp-NS-0" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "cs.smarthr.jp"
+    type    = "NS"
+    records = ["ns-904.awsdns-49.net.", "ns-151.awsdns-18.com.", "ns-1934.awsdns-49.co.uk.", "ns-1464.awsdns-55.org."]
+    ttl     = "300"
 
 }
 
@@ -1197,3 +1215,209 @@ resource "aws_route53_record" "jekins-staging-smarthr-lp-com-A" {
     }
 }
 
+resource "aws_route53_record" "kokeshi-biz-NS" {
+    zone_id = "ZBO83EMKHTTDB"
+    name    = "kokeshi.biz"
+    type    = "NS"
+    records = ["ns-1820.awsdns-35.co.uk.", "ns-1188.awsdns-20.org.", "ns-702.awsdns-23.net.", "ns-7.awsdns-00.com."]
+    ttl     = "172800"
+
+}
+
+resource "aws_route53_record" "kokeshi-biz-SOA" {
+    zone_id = "ZBO83EMKHTTDB"
+    name    = "kokeshi.biz"
+    type    = "SOA"
+    records = ["ns-1820.awsdns-35.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
+    ttl     = "900"
+
+}
+
+resource "aws_route53_record" "asterisk-kokeshi-biz-A" {
+    zone_id = "ZBO83EMKHTTDB"
+    name    = "*.kokeshi.biz"
+    type    = "A"
+
+    alias {
+        name    = "dualstack.kokeshi-1122525354.ap-northeast-1.elb.amazonaws.com"
+        zone_id = "Z14GRHDCWA56QT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "_83666d46395078b6c17632736e5a1e87-kokeshi-biz-CNAME" {
+    zone_id = "ZBO83EMKHTTDB"
+    name    = "_83666d46395078b6c17632736e5a1e87.kokeshi.biz"
+    type    = "CNAME"
+    records = ["_805239741f4c96759083f53eda27cf40.acm-validations.aws"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "api-kokeshi-biz-CNAME" {
+    zone_id = "ZBO83EMKHTTDB"
+    name    = "api.kokeshi.biz"
+    type    = "CNAME"
+    records = ["kokeshi-kojin-dev.ap-northeast-1.elasticbeanstalk.com"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "app-kokeshi-biz-A" {
+    zone_id = "ZBO83EMKHTTDB"
+    name    = "app.kokeshi.biz"
+    type    = "A"
+
+    alias {
+        name    = "dualstack.kokeshi-1122525354.ap-northeast-1.elb.amazonaws.com"
+        zone_id = "Z14GRHDCWA56QT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "akeome-cc-NS" {
+    zone_id = "Z116S8B7W8HALH"
+    name    = "akeome.cc"
+    type    = "NS"
+    records = ["ns-806.awsdns-36.net.", "ns-1268.awsdns-30.org.", "ns-1998.awsdns-57.co.uk.", "ns-1.awsdns-00.com."]
+    ttl     = "172800"
+
+}
+
+resource "aws_route53_record" "akeome-cc-SOA" {
+    zone_id = "Z116S8B7W8HALH"
+    name    = "akeome.cc"
+    type    = "SOA"
+    records = ["ns-806.awsdns-36.net. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
+    ttl     = "900"
+
+}
+
+resource "aws_route53_record" "asterisk-akeome-cc-CNAME" {
+    zone_id = "Z116S8B7W8HALH"
+    name    = "*.akeome.cc"
+    type    = "CNAME"
+    records = ["wildcard.akeome.cc.herokudns.com."]
+    ttl     = "60"
+
+}
+
+resource "aws_route53_record" "www-akeome-cc-CNAME" {
+    zone_id = "Z116S8B7W8HALH"
+    name    = "www.akeome.cc"
+    type    = "CNAME"
+    records = ["akeome.cc.herokudns.com."]
+    ttl     = "60"
+
+}
+
+resource "aws_route53_record" "hanica-zuora-qa-com-NS" {
+    zone_id = "Z2EBWB9KAFD8KY"
+    name    = "hanica-zuora-qa.com"
+    type    = "NS"
+    records = ["ns-851.awsdns-42.net.", "ns-45.awsdns-05.com.", "ns-1073.awsdns-06.org.", "ns-1892.awsdns-44.co.uk."]
+    ttl     = "172800"
+
+}
+
+resource "aws_route53_record" "hanica-zuora-qa-com-SOA" {
+    zone_id = "Z2EBWB9KAFD8KY"
+    name    = "hanica-zuora-qa.com"
+    type    = "SOA"
+    records = ["ns-851.awsdns-42.net. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
+    ttl     = "900"
+
+}
+
+resource "aws_route53_record" "asterisk-hanica-zuora-qa-com-A" {
+    zone_id = "Z2EBWB9KAFD8KY"
+    name    = "*.hanica-zuora-qa.com"
+    type    = "A"
+
+    alias {
+        name    = "hanica-zuora-qa.ap-northeast-1.elasticbeanstalk.com"
+        zone_id = "Z1R25G3KIG2GBW"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "_0ed1bc5873e314dc31166ab00ed93920-hanica-zuora-qa-com-CNAME" {
+    zone_id = "Z2EBWB9KAFD8KY"
+    name    = "_0ed1bc5873e314dc31166ab00ed93920.hanica-zuora-qa.com"
+    type    = "CNAME"
+    records = ["_249bfd420bff1226f537e18302d37274.acm-validations.aws"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "arigata-me-NS" {
+    zone_id = "Z1OXYS5OD2PLTY"
+    name    = "arigata.me"
+    type    = "NS"
+    records = ["ns-1496.awsdns-59.org.", "ns-659.awsdns-18.net.", "ns-91.awsdns-11.com.", "ns-1659.awsdns-15.co.uk."]
+    ttl     = "172800"
+
+}
+
+resource "aws_route53_record" "arigata-me-SOA" {
+    zone_id = "Z1OXYS5OD2PLTY"
+    name    = "arigata.me"
+    type    = "SOA"
+    records = ["ns-1496.awsdns-59.org. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
+    ttl     = "900"
+
+}
+
+resource "aws_route53_record" "_f28c4b14a62fbfd62fa88de3039821ac-arigata-me-CNAME" {
+    zone_id = "Z1OXYS5OD2PLTY"
+    name    = "_f28c4b14a62fbfd62fa88de3039821ac.arigata.me"
+    type    = "CNAME"
+    records = ["_4f7551644f7ae9169f7030bcef3dd4b2.acm-validations.aws"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "cs-smarthr-jp-MX" {
+    zone_id = "Z3MCH2A0C8IVX8"
+    name    = "cs.smarthr.jp"
+    type    = "MX"
+    records = ["10 mxa.mailgun.org.", "10 mxb.mailgun.org."]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "cs-smarthr-jp-NS-1" {
+    zone_id = "Z3MCH2A0C8IVX8"
+    name    = "cs.smarthr.jp"
+    type    = "NS"
+    records = ["ns-904.awsdns-49.net.", "ns-151.awsdns-18.com.", "ns-1934.awsdns-49.co.uk.", "ns-1464.awsdns-55.org."]
+    ttl     = "172800"
+
+}
+
+resource "aws_route53_record" "cs-smarthr-jp-SOA" {
+    zone_id = "Z3MCH2A0C8IVX8"
+    name    = "cs.smarthr.jp"
+    type    = "SOA"
+    records = ["ns-904.awsdns-49.net. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
+    ttl     = "900"
+
+}
+
+resource "aws_route53_record" "cs-smarthr-jp-TXT" {
+    zone_id = "Z3MCH2A0C8IVX8"
+    name    = "cs.smarthr.jp"
+    type    = "TXT"
+    records = ["v=spf1 include:mailgun.org ~all"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "email-cs-smarthr-jp-CNAME" {
+    zone_id = "Z3MCH2A0C8IVX8"
+    name    = "email.cs.smarthr.jp"
+    type    = "CNAME"
+    records = ["mailgun.org"]
+    ttl     = "300"
+
+}
