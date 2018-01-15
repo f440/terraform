@@ -549,24 +549,6 @@ resource "aws_route53_record" "m1-_domainkey-smarthr-jp-TXT" {
 
 }
 
-resource "aws_route53_record" "cs-smarthr-jp-TXT" {
-    zone_id = "Z38IZYREYRKWXV"
-    name    = "cs.smarthr.jp"
-    type    = "TXT"
-    records = ["v=spf1 include:mailgun.org ~all"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "email-cs-smarthr-jp-CNAME" {
-    zone_id = "Z38IZYREYRKWXV"
-    name    = "email.cs.smarthr.jp"
-    type    = "CNAME"
-    records = ["mailgun.org"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "k1-_domainkey-smarthr-jp-CNAME" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "k1._domainkey.smarthr.jp"
