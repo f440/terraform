@@ -655,7 +655,7 @@ resource "aws_route53_record" "tech-smarthr-jp-CNAME" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "tech.smarthr.jp"
     type    = "CNAME"
-    records = ["smarthr.heteml.jp"]
+    records = ["hatenablog.com"]
     ttl     = "300"
 
 }
