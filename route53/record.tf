@@ -315,13 +315,16 @@ resource "aws_route53_record" "hanica-me-TXT" {
 
 }
 
-resource "aws_route53_record" "asterisk-hanica-me-CNAME" {
+resource "aws_route53_record" "asterisk-hanica-me-A" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "*.hanica.me"
-    type    = "CNAME"
-    records = ["hanica-staging.elasticbeanstalk.com"]
-    ttl     = "60"
+    type    = "A"
 
+    alias {
+        name    = "hanica-staging-app.22pcpprwmz.ap-northeast-1.elasticbeanstalk.com"
+        zone_id = "Z1R25G3KIG2GBW"
+        evaluate_target_health = false
+    }
 }
 
 resource "aws_route53_record" "jenkins-hanica-me-A" {
@@ -350,6 +353,24 @@ resource "aws_route53_record" "new-bastion-local-hanica-me-A" {
     name    = "new-bastion.local.hanica.me"
     type    = "A"
     records = ["13.114.200.229"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "staging-ap1-local-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "staging-ap1.local.hanica.me"
+    type    = "A"
+    records = ["10.0.130.206"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "staging-wk1-local-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "staging-wk1.local.hanica.me"
+    type    = "A"
+    records = ["10.0.130.151"]
     ttl     = "300"
 
 }
@@ -414,14 +435,18 @@ resource "aws_route53_record" "daruma-space-SOA" {
 
 }
 
-resource "aws_route53_record" "asterisk-daruma-space-CNAME" {
+resource "aws_route53_record" "asterisk-daruma-space-A" {
     zone_id = "Z2IE6RW5PM57F5"
     name    = "*.daruma.space"
-    type    = "CNAME"
-    records = ["hanica-sandbox.ap-northeast-1.elasticbeanstalk.com"]
-    ttl     = "300"
+    type    = "A"
 
+    alias {
+        name    = "hanica-sandbox-app.ap-northeast-1.elasticbeanstalk.com"
+        zone_id = "Z1R25G3KIG2GBW"
+        evaluate_target_health = false
+    }
 }
+
 
 resource "aws_route53_record" "s1-_domainkey-daruma-space-CNAME" {
     zone_id = "Z2IE6RW5PM57F5"
@@ -441,13 +466,16 @@ resource "aws_route53_record" "s2-_domainkey-daruma-space-CNAME" {
 
 }
 
-resource "aws_route53_record" "app-daruma-space-CNAME" {
+resource "aws_route53_record" "app-daruma-space-A" {
     zone_id = "Z2IE6RW5PM57F5"
     name    = "app.daruma.space"
-    type    = "CNAME"
-    records = ["hanica-sandbox.ap-northeast-1.elasticbeanstalk.com"]
-    ttl     = "300"
+    type    = "A"
 
+    alias {
+        name    = "hanica-sandbox-app.ap-northeast-1.elasticbeanstalk.com"
+        zone_id = "Z1R25G3KIG2GBW"
+        evaluate_target_health = false
+    }
 }
 
 resource "aws_route53_record" "em-daruma-space-CNAME" {
@@ -1365,16 +1393,13 @@ resource "aws_route53_record" "hanica-zuora-qa-com-SOA" {
 
 }
 
-resource "aws_route53_record" "asterisk-hanica-zuora-qa-com-A" {
+resource "aws_route53_record" "asterisk-hanica-zuora-qa-com-CNAME" {
     zone_id = "Z2EBWB9KAFD8KY"
     name    = "*.hanica-zuora-qa.com"
-    type    = "A"
+    type    = "CNAME"
+    records = ["hanica-zuora-qa.ap-northeast-1.elasticbeanstalk.com"]
+    ttl     = "300"
 
-    alias {
-        name    = "hanica-zuora-qa.ap-northeast-1.elasticbeanstalk.com"
-        zone_id = "Z1R25G3KIG2GBW"
-        evaluate_target_health = false
-    }
 }
 
 resource "aws_route53_record" "_0ed1bc5873e314dc31166ab00ed93920-hanica-zuora-qa-com-CNAME" {
