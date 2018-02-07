@@ -688,9 +688,9 @@ resource "aws_route53_record" "tech-smarthr-jp-CNAME" {
 
 }
 
-resource "aws_route53_record" "wantedly-2018-event-smarthr-jp-CNAME" {
+resource "aws_route53_record" "asterisk-event-smarthr-jp-CNAME" {
     zone_id = "Z38IZYREYRKWXV"
-    name    = "wantedly-2018.event.smarthr.jp"
+    name    = "*.event.smarthr.jp"
     type    = "CNAME"
     records = ["secure.pageserve.co"]
     ttl     = "300"
