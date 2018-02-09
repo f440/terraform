@@ -399,6 +399,15 @@ resource "aws_route53_record" "rundeck-hanica-me-A" {
     }
 }
 
+resource "aws_route53_record" "hackmd-hanica-me-CNAME" {
+    zone_id = "Z116S8B7W8HALH"
+    name    = "hackmd.hanica.me"
+    type    = "CNAME"
+    records = ["hackmd.hanica.me.herokudns.com."]
+    ttl     = "60"
+
+}
+
 resource "aws_route53_record" "vpn-hanica-me-A" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "vpn.hanica.me"
