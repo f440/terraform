@@ -1465,15 +1465,17 @@ resource "aws_route53_record" "_f28c4b14a62fbfd62fa88de3039821ac-arigata-me-CNAM
 
 }
 
-resource "aws_route53_record" "asterisk-arigata-me-CNAME" {
+resource "aws_route53_record" "asterisk-arigata-me-A" {
     zone_id = "Z1OXYS5OD2PLTY"
     name    = "*.arigata.me"
-    type    = "CNAME"
-    records = ["hanica-qa-201801.ap-northeast-1.elasticbeanstalk.com"]
-    ttl     = "300"
+    type    = "A"
 
+    alias {
+        name    = "hanica-qa-app.ap-northeast-1.elasticbeanstalk.com"
+        zone_id = "Z1R25G3KIG2GBW"
+        evaluate_target_health = false
+    }
 }
-
 
 resource "aws_route53_record" "cs-smarthr-jp-MX" {
     zone_id = "Z3MCH2A0C8IVX8"
