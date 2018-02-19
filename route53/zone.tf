@@ -162,3 +162,13 @@ resource "aws_route53_zone" "cs-smarthr-jp-public" {
     }
 }
 
+resource "aws_route53_zone" "hanica-internal-private" {
+    name       = "hanica.internal"
+    comment    = ""
+    vpc_id     = "vpc-77586713"
+    vpc_region = "ap-northeast-1"
+
+    tags {
+    }
+}
+
