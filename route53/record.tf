@@ -357,6 +357,87 @@ resource "aws_route53_record" "new-bastion-local-hanica-me-A" {
 
 }
 
+resource "aws_route53_record" "prod-ap1-local-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "prod-ap1.local.hanica.me"
+    type    = "A"
+    records = ["10.0.128.150"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "prod-ap2-local-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "prod-ap2.local.hanica.me"
+    type    = "A"
+    records = ["10.0.128.9"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "prod-ap3-local-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "prod-ap3.local.hanica.me"
+    type    = "A"
+    records = ["10.0.130.35"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "prod-long-wk1-local-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "prod-long-wk1.local.hanica.me"
+    type    = "A"
+    records = ["10.0.130.156"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "prod-migrate-local-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "prod-migrate.local.hanica.me"
+    type    = "A"
+    records = ["10.0.130.142"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "prod-wk1-local-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "prod-wk1.local.hanica.me"
+    type    = "A"
+    records = ["10.0.130.164"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "prod-wk2-local-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "prod-wk2.local.hanica.me"
+    type    = "A"
+    records = ["10.0.128.149"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "prod-wk3-local-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "prod-wk3.local.hanica.me"
+    type    = "A"
+    records = ["10.0.130.9"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "prod-wk4-local-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "prod-wk4.local.hanica.me"
+    type    = "A"
+    records = ["10.0.128.130"]
+    ttl     = "300"
+
+}
+
 resource "aws_route53_record" "staging-ap1-local-hanica-me-A" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "staging-ap1.local.hanica.me"
