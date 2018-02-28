@@ -760,6 +760,15 @@ resource "aws_route53_record" "em-smarthr-jp-CNAME" {
 
 }
 
+resource "aws_route53_record" "payment-smarthr-jp-CNAME" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "payment.smarthr.jp"
+    type    = "CNAME"
+    records = ["payment.smarthr.jp.herokudns.com"]
+    ttl     = "300"
+
+}
+
 resource "aws_route53_record" "envy-smarthr-jp-CNAME" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "envy.smarthr.jp"
