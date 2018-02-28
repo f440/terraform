@@ -397,7 +397,7 @@ resource "aws_route53_record" "prod-migrate-local-hanica-me-A" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "prod-migrate.local.hanica.me"
     type    = "A"
-    records = ["10.0.130.142"]
+    records = ["10.0.130.151"]
     ttl     = "300"
 
 }
