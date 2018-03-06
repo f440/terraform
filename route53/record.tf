@@ -297,6 +297,15 @@ resource "aws_route53_record" "hanica-me-NS" {
 
 }
 
+resource "aws_route53_record" "local-hanica-me-NS-0" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "local.hanica.me"
+    type    = "NS"
+    records = ["ns-1148.awsdns-15.org.", "ns-796.awsdns-35.net.", "ns-1820.awsdns-35.co.uk.", "ns-461.awsdns-57.com."]
+    ttl     = "300"
+
+}
+
 resource "aws_route53_record" "hanica-me-SOA" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "hanica.me"
@@ -337,123 +346,6 @@ resource "aws_route53_record" "jenkins-hanica-me-A" {
         zone_id = "Z14GRHDCWA56QT"
         evaluate_target_health = false
     }
-}
-
-resource "aws_route53_record" "bastion-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "bastion.local.hanica.me"
-    type    = "A"
-    records = ["54.178.169.42"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "new-bastion-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "new-bastion.local.hanica.me"
-    type    = "A"
-    records = ["13.114.200.229"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "prod-ap1-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "prod-ap1.local.hanica.me"
-    type    = "A"
-    records = ["10.0.128.150"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "prod-ap2-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "prod-ap2.local.hanica.me"
-    type    = "A"
-    records = ["10.0.128.9"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "prod-ap3-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "prod-ap3.local.hanica.me"
-    type    = "A"
-    records = ["10.0.130.35"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "prod-long-wk1-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "prod-long-wk1.local.hanica.me"
-    type    = "A"
-    records = ["10.0.130.156"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "prod-migrate-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "prod-migrate.local.hanica.me"
-    type    = "A"
-    records = ["10.0.130.151"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "prod-wk1-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "prod-wk1.local.hanica.me"
-    type    = "A"
-    records = ["10.0.130.164"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "prod-wk2-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "prod-wk2.local.hanica.me"
-    type    = "A"
-    records = ["10.0.128.149"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "prod-wk3-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "prod-wk3.local.hanica.me"
-    type    = "A"
-    records = ["10.0.130.9"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "prod-wk4-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "prod-wk4.local.hanica.me"
-    type    = "A"
-    records = ["10.0.128.130"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "staging-ap1-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "staging-ap1.local.hanica.me"
-    type    = "A"
-    records = ["10.0.128.45"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "staging-wk1-local-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "staging-wk1.local.hanica.me"
-    type    = "A"
-    records = ["10.0.130.13"]
-    ttl     = "300"
-
 }
 
 resource "aws_route53_record" "logtracer-hanica-me-A" {
