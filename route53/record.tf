@@ -1258,6 +1258,15 @@ resource "aws_route53_record" "staging-smarthr-lp-com-A" {
 
 }
 
+resource "aws_route53_record" "corporate-staging-smarthr-lp-com-A" {
+    zone_id = "ZTS5ADHRRDLJQ"
+    name    = "corporate.staging-smarthr-lp.com"
+    type    = "A"
+    records = ["157.7.188.212"]
+    ttl     = "300"
+
+}
+
 resource "aws_route53_record" "staging-smarthr-lp-com-NS" {
     zone_id = "ZTS5ADHRRDLJQ"
     name    = "staging-smarthr-lp.com"
