@@ -1285,18 +1285,6 @@ resource "aws_route53_record" "staging-smarthr-lp-com-SOA" {
 
 }
 
-resource "aws_route53_record" "jekins-staging-smarthr-lp-com-A" {
-    zone_id = "ZTS5ADHRRDLJQ"
-    name    = "jekins.staging-smarthr-lp.com"
-    type    = "A"
-
-    alias {
-        name    = "dualstack.new-internal-2093570042.ap-northeast-1.elb.amazonaws.com"
-        zone_id = "Z14GRHDCWA56QT"
-        evaluate_target_health = false
-    }
-}
-
 resource "aws_route53_record" "kokeshi-biz-NS" {
     zone_id = "ZBO83EMKHTTDB"
     name    = "kokeshi.biz"
