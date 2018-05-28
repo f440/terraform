@@ -1367,16 +1367,7 @@ resource "aws_route53_record" "asterisk-akeome-cc-CNAME" {
     zone_id = "Z116S8B7W8HALH"
     name    = "*.akeome.cc"
     type    = "CNAME"
-    records = ["wildcard.akeome.cc.herokudns.com."]
-    ttl     = "60"
-
-}
-
-resource "aws_route53_record" "www-akeome-cc-CNAME" {
-    zone_id = "Z116S8B7W8HALH"
-    name    = "www.akeome.cc"
-    type    = "CNAME"
-    records = ["akeome.cc.herokudns.com."]
+    records = ["blooming-spire-1723.thawing-headland-5882.herokuspace.com."]
     ttl     = "60"
 
 }
