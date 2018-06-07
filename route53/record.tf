@@ -330,7 +330,7 @@ resource "aws_route53_record" "asterisk-hanica-me-A" {
     type    = "A"
 
     alias {
-        name    = "hanica-staging-app.22pcpprwmz.ap-northeast-1.elasticbeanstalk.com"
+        name    = "hanica-staging-readonly-app.ap-northeast-1.elasticbeanstalk.com"
         zone_id = "Z1R25G3KIG2GBW"
         evaluate_target_health = false
     }
@@ -913,29 +913,11 @@ resource "aws_route53_record" "relay1-production-hanica-local-CNAME" {
 
 }
 
-resource "aws_route53_record" "relay1-staging-hanica-local-CNAME" {
-    zone_id = "ZLIRD0XRN4QQM"
-    name    = "relay1-staging.hanica.local"
-    type    = "CNAME"
-    records = ["ip-10-0-200-129.ap-northeast-1.compute.internal"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "relay2-production-hanica-local-CNAME" {
     zone_id = "ZLIRD0XRN4QQM"
     name    = "relay2-production.hanica.local"
     type    = "CNAME"
     records = ["ip-10-0-200-100.ap-northeast-1.compute.internal"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "relay2-staging-hanica-local-CNAME" {
-    zone_id = "ZLIRD0XRN4QQM"
-    name    = "relay2-staging.hanica.local"
-    type    = "CNAME"
-    records = ["ip-10-0-200-129.ap-northeast-1.compute.internal"]
     ttl     = "300"
 
 }
