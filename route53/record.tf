@@ -330,7 +330,7 @@ resource "aws_route53_record" "asterisk-hanica-me-A" {
     type    = "A"
 
     alias {
-        name    = "hanica-staging-app.22pcpprwmz.ap-northeast-1.elasticbeanstalk.com"
+        name    = "hanica-staging-readonly-app.ap-northeast-1.elasticbeanstalk.com"
         zone_id = "Z1R25G3KIG2GBW"
         evaluate_target_health = false
     }
