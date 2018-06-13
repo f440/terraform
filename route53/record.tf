@@ -565,18 +565,6 @@ resource "aws_route53_record" "asterisk-smarthr-jp-A" {
 
 }
 
-resource "aws_route53_record" "app-smarthr-jp-A" {
-    zone_id = "Z38IZYREYRKWXV"
-    name    = "app.smarthr.jp"
-    type    = "A"
-    alias {
-        name    = "hanica-prod-app.ap-northeast-1.elasticbeanstalk.com"
-        zone_id = "Z1R25G3KIG2GBW"
-        evaluate_target_health = false
-    }
-
-}
-
 resource "aws_route53_record" "intercom-_domainkey-smarthr-jp-CNAME" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "intercom._domainkey.smarthr.jp"
