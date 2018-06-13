@@ -74,24 +74,8 @@ resource "aws_route53_zone" "daruma-local-private" {
     }
 }
 
-resource "aws_route53_zone" "rumpes-co-uk-public" {
-    name       = "rumpes.co.uk"
-    comment    = "HostedZone created by Route53 Registrar"
-
-    tags {
-    }
-}
-
 resource "aws_route53_zone" "udemushi-com-public" {
     name       = "udemushi.com"
-    comment    = "HostedZone created by Route53 Registrar"
-
-    tags {
-    }
-}
-
-resource "aws_route53_zone" "the-yellow-meads-of-asphodel-click-public" {
-    name       = "the-yellow-meads-of-asphodel.click"
     comment    = "HostedZone created by Route53 Registrar"
 
     tags {

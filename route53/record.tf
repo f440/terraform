@@ -1030,24 +1030,6 @@ resource "aws_route53_record" "redis-volatile-sandbox-daruma-local-CNAME" {
 
 }
 
-resource "aws_route53_record" "rumpes-co-uk-NS" {
-    zone_id = "Z105MD7LRN2YR3"
-    name    = "rumpes.co.uk"
-    type    = "NS"
-    records = ["bella.ns.cloudflare.com.", "guy.ns.cloudflare.com."]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "rumpes-co-uk-SOA" {
-    zone_id = "Z105MD7LRN2YR3"
-    name    = "rumpes.co.uk"
-    type    = "SOA"
-    records = ["ns-1309.awsdns-35.org. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
-    ttl     = "900"
-
-}
-
 resource "aws_route53_record" "udemushi-com-MX" {
     zone_id = "Z2O12CF0N1E9JW"
     name    = "udemushi.com"
@@ -1106,75 +1088,6 @@ resource "aws_route53_record" "app-udemushi-com-A" {
         zone_id = "Z1R25G3KIG2GBW"
         evaluate_target_health = false
     }
-}
-
-resource "aws_route53_record" "the-yellow-meads-of-asphodel-click-MX" {
-    zone_id = "Z3J95TKFY9KJCT"
-    name    = "the-yellow-meads-of-asphodel.click"
-    type    = "MX"
-    records = ["10 mx.zoho.com", "20 mx2.zoho.com"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "the-yellow-meads-of-asphodel-click-NS" {
-    zone_id = "Z3J95TKFY9KJCT"
-    name    = "the-yellow-meads-of-asphodel.click"
-    type    = "NS"
-    records = ["ns-1643.awsdns-13.co.uk.", "ns-31.awsdns-03.com.", "ns-777.awsdns-33.net.", "ns-1422.awsdns-49.org."]
-    ttl     = "172800"
-
-}
-
-resource "aws_route53_record" "the-yellow-meads-of-asphodel-click-SOA" {
-    zone_id = "Z3J95TKFY9KJCT"
-    name    = "the-yellow-meads-of-asphodel.click"
-    type    = "SOA"
-    records = ["ns-1643.awsdns-13.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
-    ttl     = "900"
-
-}
-
-resource "aws_route53_record" "the-yellow-meads-of-asphodel-click-TXT" {
-    zone_id = "Z3J95TKFY9KJCT"
-    name    = "the-yellow-meads-of-asphodel.click"
-    type    = "TXT"
-    records = ["zoho-verification=zb14990754.zmverify.zoho.com"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "asterisk-the-yellow-meads-of-asphodel-click-A" {
-    zone_id = "Z3J95TKFY9KJCT"
-    name    = "*.the-yellow-meads-of-asphodel.click"
-    type    = "A"
-
-    alias {
-        name    = "hanica-staging-app.22pcpprwmz.ap-northeast-1.elasticbeanstalk.com"
-        zone_id = "Z1R25G3KIG2GBW"
-        evaluate_target_health = false
-    }
-}
-
-resource "aws_route53_record" "app-the-yellow-meads-of-asphodel-click-A" {
-    zone_id = "Z3J95TKFY9KJCT"
-    name    = "app.the-yellow-meads-of-asphodel.click"
-    type    = "A"
-
-    alias {
-        name    = "hanica-staging-app.22pcpprwmz.ap-northeast-1.elasticbeanstalk.com"
-        zone_id = "Z1R25G3KIG2GBW"
-        evaluate_target_health = false
-    }
-}
-
-resource "aws_route53_record" "smarthr-test-the-yellow-meads-of-asphodel-click-CNAME" {
-    zone_id = "Z3J95TKFY9KJCT"
-    name    = "smarthr.test.the-yellow-meads-of-asphodel.click"
-    type    = "CNAME"
-    records = ["google.co.jp"]
-    ttl     = "300"
-
 }
 
 resource "aws_route53_record" "smarthr-plus-NS" {
@@ -1408,25 +1321,13 @@ resource "aws_route53_record" "arigata-me-SOA" {
 
 }
 
-resource "aws_route53_record" "_f28c4b14a62fbfd62fa88de3039821ac-arigata-me-CNAME" {
-    zone_id = "Z1OXYS5OD2PLTY"
-    name    = "_f28c4b14a62fbfd62fa88de3039821ac.arigata.me"
-    type    = "CNAME"
-    records = ["_4f7551644f7ae9169f7030bcef3dd4b2.acm-validations.aws"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "asterisk-arigata-me-A" {
+resource "aws_route53_record" "asterisk-arigata-me-CNAME" {
     zone_id = "Z1OXYS5OD2PLTY"
     name    = "*.arigata.me"
-    type    = "A"
+    type    = "CNAME"
+    records = ["wildcard.arigata.me.herokudns.com"]
+    ttl     = "60"
 
-    alias {
-        name    = "hanica-qa-app.ap-northeast-1.elasticbeanstalk.com"
-        zone_id = "Z1R25G3KIG2GBW"
-        evaluate_target_health = false
-    }
 }
 
 resource "aws_route53_record" "cs-smarthr-jp-MX" {
