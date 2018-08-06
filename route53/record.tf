@@ -384,6 +384,54 @@ resource "aws_route53_record" "rundeck-hanica-me-A" {
     }
 }
 
+resource "aws_route53_record" "digdag-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "digdag.hanica.me"
+    type    = "A"
+
+    alias {
+        name    = "dualstack.new-internal-2093570042.ap-northeast-1.elb.amazonaws.com"
+        zone_id = "Z14GRHDCWA56QT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "grafana-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "grafana.hanica.me"
+    type    = "A"
+
+    alias {
+        name    = "dualstack.new-internal-2093570042.ap-northeast-1.elb.amazonaws.com"
+        zone_id = "Z14GRHDCWA56QT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "prometheus-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "prometheus.hanica.me"
+    type    = "A"
+
+    alias {
+        name    = "dualstack.new-internal-2093570042.ap-northeast-1.elb.amazonaws.com"
+        zone_id = "Z14GRHDCWA56QT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "stg-logtracer-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "stg-logtracer.hanica.me"
+    type    = "A"
+
+    alias {
+        name    = "dualstack.new-internal-2093570042.ap-northeast-1.elb.amazonaws.com"
+        zone_id = "Z14GRHDCWA56QT"
+        evaluate_target_health = false
+    }
+}
+
 resource "aws_route53_record" "hackmd-hanica-me-CNAME" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "hackmd.hanica.me"
@@ -429,16 +477,21 @@ resource "aws_route53_record" "daruma-space-SOA" {
 
 }
 
-resource "aws_route53_record" "asterisk-daruma-space-A" {
+resource "aws_route53_record" "_acme-challenge-daruma-space-TXT" {
+    zone_id = "Z2IE6RW5PM57F5"
+    name    = "_acme-challenge.daruma.space"
+    type    = "TXT"
+    records = ["UKuxczlqxaloR0c_9B21R3zsnjgmeAbHjBudItQHFw4"]
+    ttl     = "30"
+
+}
+
+resource "aws_route53_record" "asterisk-daruma-space-CNAME" {
     zone_id = "Z2IE6RW5PM57F5"
     name    = "*.daruma.space"
-    type    = "A"
-
-    alias {
-        name    = "hanica-sandbox-app.ap-northeast-1.elasticbeanstalk.com"
-        zone_id = "Z1R25G3KIG2GBW"
-        evaluate_target_health = false
-    }
+    type    = "CNAME"
+    records = ["wildcard.daruma.space.herokudns.com"]
+    ttl     = "60"
 }
 
 
@@ -458,18 +511,6 @@ resource "aws_route53_record" "s2-_domainkey-daruma-space-CNAME" {
     records = ["s2.domainkey.u2787976.wl227.sendgrid.net"]
     ttl     = "300"
 
-}
-
-resource "aws_route53_record" "app-daruma-space-A" {
-    zone_id = "Z2IE6RW5PM57F5"
-    name    = "app.daruma.space"
-    type    = "A"
-
-    alias {
-        name    = "hanica-sandbox-app.ap-northeast-1.elasticbeanstalk.com"
-        zone_id = "Z1R25G3KIG2GBW"
-        evaluate_target_health = false
-    }
 }
 
 resource "aws_route53_record" "em-daruma-space-CNAME" {
@@ -973,6 +1014,30 @@ resource "aws_route53_record" "db-qa-hanica-local-CNAME" {
 
 }
 
+resource "aws_route53_record" "relay1-staging-hanica-local-A" {
+    zone_id = "ZLIRD0XRN4QQM"
+    name    = "relay1-staging.hanica.local"
+    type    = "A"
+
+    alias {
+        name    = "fluentd-0c535aa76ad319b5.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "relay2-staging-hanica-local-A" {
+    zone_id = "ZLIRD0XRN4QQM"
+    name    = "relay2-staging.hanica.local"
+    type    = "A"
+
+    alias {
+        name    = "fluentd-0c535aa76ad319b5.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
+}
+
 resource "aws_route53_record" "daruma-local-NS" {
     zone_id = "Z1YXIDFKK62OT2"
     name    = "daruma.local"
@@ -1105,6 +1170,15 @@ resource "aws_route53_record" "keiyaku-smarthr-plus-CNAME" {
 
 }
 
+resource "aws_route53_record" "kingoftime-smarthr-plus-CNAME" {
+    zone_id = "Z1XLEN8BSTM9ZS"
+    name    = "kingoftime.smarthr.plus"
+    type    = "CNAME"
+    records = ["evening-sands-1274.thawing-headland-5882.herokuspace.com"]
+    ttl     = "300"
+
+}
+
 resource "aws_route53_record" "aoyagi-farm-NS" {
     zone_id = "Z2R8KLE7JC3PK7"
     name    = "aoyagi.farm"
@@ -1129,6 +1203,33 @@ resource "aws_route53_record" "oke-aoyagi-farm-CNAME" {
     type    = "CNAME"
     records = ["oke.aoyagi.farm.herokudns.com"]
     ttl     = "60"
+
+}
+
+resource "aws_route53_record" "oke-staging-aoyagi-farm-CNAME" {
+    zone_id = "Z2R8KLE7JC3PK7"
+    name    = "oke-staging.aoyagi.farm"
+    type    = "CNAME"
+    records = ["arcane-waters-1575.thawing-headland-5882.herokuspace.com"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "koban-staging-aoyagi-farm-CNAME" {
+    zone_id = "Z2R8KLE7JC3PK7"
+    name    = "koban-staging.aoyagi.farm"
+    type    = "CNAME"
+    records = ["koban-staging.aoyagi.farm.herokudns.com"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "ayatori-aoyagi-farm-CNAME" {
+    zone_id = "Z2R8KLE7JC3PK7"
+    name    = "ayatori.aoyagi.farm"
+    type    = "CNAME"
+    records = ["stark-shelf-4703.thawing-headland-5882.herokuspace.com"]
+    ttl     = "300"
 
 }
 
@@ -1251,6 +1352,15 @@ resource "aws_route53_record" "asterisk-akeome-cc-CNAME" {
     name    = "*.akeome.cc"
     type    = "CNAME"
     records = ["blooming-spire-1723.thawing-headland-5882.herokuspace.com."]
+    ttl     = "60"
+
+}
+
+resource "aws_route53_record" "_acme-challenge-akeome-cc-TXT" {
+    zone_id = "Z116S8B7W8HALH"
+    name    = "_acme-challenge.akeome.cc"
+    type    = "TXT"
+    records = ["Io4Q0sxpmhPEhYgt_kjedIKPPdMrMZQ2XyMZyR9ezk0"]
     ttl     = "60"
 
 }
@@ -1460,5 +1570,92 @@ resource "aws_route53_record" "redis-volatile-staging-hanica-internal-CNAME" {
     records = ["docker-volatile.eigvkv.0001.apne1.cache.amazonaws.com"]
     ttl     = "300"
 
+}
+
+resource "aws_route53_record" "db-sandbox-hanica-internal-CNAME" {
+    zone_id = "Z1PQTFX60IR924"
+    name    = "db.sandbox.hanica.internal"
+    type    = "CNAME"
+    records = ["hanica-sandbox-new.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "aggregate-prod-hanica-internal-A" {
+    zone_id = "Z1PQTFX60IR924"
+    name    = "aggregate.prod.hanica.internal"
+    type    = "A"
+
+    alias {
+        name    = "hanica-prod-fluentd-aggregate-547a91d5b4645b69.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "aggregate-staging-hanica-internal-A" {
+    zone_id = "Z1PQTFX60IR924"
+    name    = "aggregate.staging.hanica.internal"
+    type    = "A"
+
+    alias {
+        name    = "aggregater-621d8ff8cc600229.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "relay-prod-hanica-internal-A" {
+    zone_id = "Z1PQTFX60IR924"
+    name    = "relay.prod.hanica.internal"
+    type    = "A"
+
+    alias {
+        name    = "hanica-prod-fluentd-relay-e2f9fb6715254c74.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "relay-staging-hanica-internal-A" {
+    zone_id = "Z1PQTFX60IR924"
+    name    = "relay.staging.hanica.internal"
+    type    = "A"
+
+    alias {
+        name    = "fluentd-0c535aa76ad319b5.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "relay1-staging-hanica-internal-A" {
+    zone_id = "Z1PQTFX60IR924"
+    name    = "relay1.staging.hanica.internal"
+    type    = "A"
+
+    alias {
+        name    = "fluentd-0c535aa76ad319b5.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "relay2-staging-hanica-internal-A" {
+    zone_id = "Z1PQTFX60IR924"
+    name    = "relay2.staging.hanica.internal"
+    type    = "A"
+
+    records = ["10.0.128.36"]
+    ttl     = "300"
+}
+
+resource "aws_route53_record" "rundeck-hanica-internal-A" {
+    zone_id = "Z1PQTFX60IR924"
+    name    = "rundeck.hanica.internal"
+    type    = "A"
+
+    records = ["10.0.128.101"]
+    ttl     = "300"
 }
 
