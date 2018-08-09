@@ -798,6 +798,15 @@ resource "aws_route53_record" "google-_domainkey-smarthr-co-jp-TXT" {
 
 }
 
+resource "aws_route53_record" "_github-challenge-kufu-smarthr-co-jp-TXT" {
+    zone_id = "Z3DXBKTQH0S7UN"
+    name    = "_github-challenge-kufu.smarthr.co.jp"
+    type    = "TXT"
+    records = ["bda7bbf6a2"]
+    ttl     = "3600"
+
+}
+
 resource "aws_route53_record" "ue3v7tkoinyk-smarthr-co-jp-CNAME" {
     zone_id = "Z3DXBKTQH0S7UN"
     name    = "ue3v7tkoinyk.smarthr.co.jp"
