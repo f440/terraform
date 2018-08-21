@@ -1188,6 +1188,15 @@ resource "aws_route53_record" "kingoftime-smarthr-plus-CNAME" {
 
 }
 
+resource "aws_route53_record" "nencho-smarthr-plus-CNAME" {
+    zone_id = "Z1XLEN8BSTM9ZS"
+    name    = "nencho.smarthr.plus"
+    type    = "CNAME"
+    records = ["secret-ridge-6744.thawing-headland-5882.herokuspace.com"]
+    ttl     = "300"
+
+}
+
 resource "aws_route53_record" "aoyagi-farm-NS" {
     zone_id = "Z2R8KLE7JC3PK7"
     name    = "aoyagi.farm"
