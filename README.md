@@ -55,3 +55,11 @@ $ bash terraform.sh apply
 ```
 $ bash terraform.sh format
 ```
+
+## import
+
+terraformのオプションがそのまま引き渡せます
+
+```
+$ bash terraform.sh import aws_elasticache_parameter_group.plus-ayatori-redis-32 ayatori-redis-32
+```
