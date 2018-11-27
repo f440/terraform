@@ -2,7 +2,6 @@
 
 set -e
 
-declare -r AWS_REGION=ap-northeast-1
 declare -r TERRAFORM_VERSION=v0.11.10
 declare -r TERRAFORM_PLAN_PATH=.terraform/terraform.plan
 declare -r TERRAFORM_TFSTATE_PATH=.terraform/terraform.tfstate
@@ -48,9 +47,8 @@ function apply() {
 }
 
 function import() {
-    terraform get && terraform remote pull
+    terraform get && terraform state pull
 
-    export AWS_DEFAULT_REGION=$AWS_REGION
     terraform import $1 $2
 }
 
@@ -59,9 +57,8 @@ function remove-resource() {
         echo "invalid argument."
         exit
     fi
-    terraform get && terraform remote pull
+    terraform get && terraform state pull
 
-    export AWS_DEFAULT_REGION=$AWS_REGION
     terraform state rm $1
 }
 
