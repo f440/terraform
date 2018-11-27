@@ -28,13 +28,13 @@ resource "aws_elasticache_replication_group" "plus-ayatori-production" {
 
   parameter_group_name = "${aws_elasticache_parameter_group.plus-ayatori-redis-32.name}"
 
-  maintenance_window = "mon:14:30-mon:15:30"
-  snapshot_window    = "18:00-19:00"
+  maintenance_window       = "mon:14:30-mon:15:30"
+  snapshot_window          = "18:00-19:00"
   snapshot_retention_limit = "1"
 }
 
 resource "aws_elasticache_parameter_group" "plus-ayatori-redis-32" {
-  name = "ayatori-redis-32"
-  family = "redis3.2"
+  name        = "ayatori-redis-32"
+  family      = "redis3.2"
   description = "Redis 3.2 parameter group for ayatori"
 }
