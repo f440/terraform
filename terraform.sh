@@ -86,7 +86,8 @@ function _main() {
 
     # selectorに表示されて困るディレクトリを除外
     echo "Please select service to apply terraform"
-    aws_services=$(find . -type d -name '.git*' -prune -o -type d -maxdepth 1 -mindepth 1 -print| awk -F/ '{print $NF}')
+    aws_services=($(find . -type d -name '.git*' -prune -o -type d -maxdepth 1 -mindepth 1 -print| awk -F/ '{print $NF}'))
+
     ITER=0
     for service in ${aws_services[@]}
     do
