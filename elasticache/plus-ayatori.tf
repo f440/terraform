@@ -29,6 +29,7 @@ resource "aws_elasticache_replication_group" "plus-ayatori-production" {
   parameter_group_name = "${aws_elasticache_parameter_group.plus-ayatori-redis-32.name}"
 
   maintenance_window = "mon:14:30-mon:15:30"
+  snapshot_window    = "18:00-19:00"
 }
 
 resource "aws_elasticache_parameter_group" "plus-ayatori-redis-32" {
