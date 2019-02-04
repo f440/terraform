@@ -336,6 +336,39 @@ resource "aws_route53_record" "asterisk-hanica-me-A" {
     }
 }
 
+resource "aws_route53_record" "digdag-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "digdag.hanica.me"
+    type    = "A"
+
+    alias {
+        name    = "dualstack.new-internal-2093570042.ap-northeast-1.elb.amazonaws.com"
+        zone_id = "Z14GRHDCWA56QT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "grafana-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "grafana.hanica.me"
+    type    = "A"
+
+    alias {
+        name    = "dualstack.new-internal-2093570042.ap-northeast-1.elb.amazonaws.com"
+        zone_id = "Z14GRHDCWA56QT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "hackmd-hanica-me-CNAME" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "hackmd.hanica.me"
+    type    = "CNAME"
+    records = ["hackmd.hanica.me.herokudns.com."]
+    ttl     = "60"
+
+}
+
 resource "aws_route53_record" "jenkins-hanica-me-A" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "jenkins.hanica.me"
@@ -372,45 +405,21 @@ resource "aws_route53_record" "new-rundeck-hanica-me-A" {
     }
 }
 
-resource "aws_route53_record" "rundeck-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "rundeck.hanica.me"
-    type    = "A"
-
-    alias {
-        name    = "dualstack.new-internal-2093570042.ap-northeast-1.elb.amazonaws.com"
-        zone_id = "Z14GRHDCWA56QT"
-        evaluate_target_health = false
-    }
-}
-
-resource "aws_route53_record" "digdag-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "digdag.hanica.me"
-    type    = "A"
-
-    alias {
-        name    = "dualstack.new-internal-2093570042.ap-northeast-1.elb.amazonaws.com"
-        zone_id = "Z14GRHDCWA56QT"
-        evaluate_target_health = false
-    }
-}
-
-resource "aws_route53_record" "grafana-hanica-me-A" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "grafana.hanica.me"
-    type    = "A"
-
-    alias {
-        name    = "dualstack.new-internal-2093570042.ap-northeast-1.elb.amazonaws.com"
-        zone_id = "Z14GRHDCWA56QT"
-        evaluate_target_health = false
-    }
-}
-
 resource "aws_route53_record" "prometheus-hanica-me-A" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "prometheus.hanica.me"
+    type    = "A"
+
+    alias {
+        name    = "dualstack.new-internal-2093570042.ap-northeast-1.elb.amazonaws.com"
+        zone_id = "Z14GRHDCWA56QT"
+        evaluate_target_health = false
+    }
+}
+
+resource "aws_route53_record" "rundeck-hanica-me-A" {
+    zone_id = "ZTGHQY50Y0K1C"
+    name    = "rundeck.hanica.me"
     type    = "A"
 
     alias {
@@ -432,29 +441,11 @@ resource "aws_route53_record" "stg-logtracer-hanica-me-A" {
     }
 }
 
-resource "aws_route53_record" "hackmd-hanica-me-CNAME" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "hackmd.hanica.me"
-    type    = "CNAME"
-    records = ["hackmd.hanica.me.herokudns.com."]
-    ttl     = "60"
-
-}
-
 resource "aws_route53_record" "vpn-hanica-me-A" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "vpn.hanica.me"
     type    = "A"
     records = ["54.65.102.6"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "daruma-space-MX" {
-    zone_id = "Z2IE6RW5PM57F5"
-    name    = "daruma.space"
-    type    = "MX"
-    records = ["10 mx.zoho.com.", "20 mx2.zoho.com.", "30 mx3.zoho.com."]
     ttl     = "300"
 
 }
@@ -477,23 +468,32 @@ resource "aws_route53_record" "daruma-space-SOA" {
 
 }
 
-resource "aws_route53_record" "_acme-challenge-daruma-space-TXT" {
-    zone_id = "Z2IE6RW5PM57F5"
-    name    = "_acme-challenge.daruma.space"
-    type    = "TXT"
-    records = ["UKuxczlqxaloR0c_9B21R3zsnjgmeAbHjBudItQHFw4"]
-    ttl     = "30"
-
-}
-
 resource "aws_route53_record" "asterisk-daruma-space-CNAME" {
     zone_id = "Z2IE6RW5PM57F5"
     name    = "*.daruma.space"
     type    = "CNAME"
-    records = ["wildcard.daruma.space.herokudns.com"]
+    records = ["stormy-tundra-6703.thawing-headland-5882.herokuspace.com"]
     ttl     = "60"
+
 }
 
+resource "aws_route53_record" "_acme-challenge-daruma-space-TXT" {
+    zone_id = "Z2IE6RW5PM57F5"
+    name    = "_acme-challenge.daruma.space"
+    type    = "TXT"
+    records = ["pMlx2JnrUOxmEaC1ja_lRBmi-CLokpax9-jdtQd4bys"]
+    ttl     = "30"
+
+}
+
+resource "aws_route53_record" "_amazonses-daruma-space-TXT" {
+    zone_id = "Z2IE6RW5PM57F5"
+    name    = "_amazonses.daruma.space"
+    type    = "TXT"
+    records = ["PZgyzI5B1NJPnmleXW5ev7S4vWbn6/n4XfgdoZYa44U="]
+    ttl     = "1800"
+
+}
 
 resource "aws_route53_record" "s1-_domainkey-daruma-space-CNAME" {
     zone_id = "Z2IE6RW5PM57F5"
@@ -553,7 +553,7 @@ resource "aws_route53_record" "smarthr-jp-NS" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "smarthr.jp"
     type    = "NS"
-    records = ["ns-103.awsdns-12.com.", "ns-1432.awsdns-51.org.", "ns-1603.awsdns-08.co.uk.", "ns-655.awsdns-17.net."]
+    records = ["ns-1432.awsdns-51.org.", "ns-103.awsdns-12.com.", "ns-1603.awsdns-08.co.uk.", "ns-655.awsdns-17.net."]
     ttl     = "172800"
 
 }
@@ -585,24 +585,24 @@ resource "aws_route53_record" "0e2ec3229d46ff2dbc9d2240f2cc8b44-smarthr-jp-CNAME
 
 }
 
-resource "aws_route53_record" "o1-sg-smarthr-jp-A" {
-    zone_id = "Z38IZYREYRKWXV"
-    name    = "o1.sg.smarthr.jp"
-    type    = "A"
-    records = ["168.245.113.131"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "asterisk-smarthr-jp-A" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "*.smarthr.jp"
     type    = "A"
+
     alias {
         name    = "hanica-prod-app.ap-northeast-1.elasticbeanstalk.com"
         zone_id = "Z1R25G3KIG2GBW"
         evaluate_target_health = false
     }
+}
+
+resource "aws_route53_record" "_a8c84229433b1d58185af97e191be56d-smarthr-jp-CNAME" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "_a8c84229433b1d58185af97e191be56d.smarthr.jp"
+    type    = "CNAME"
+    records = ["_71daf99dd13ab372ad5a353dc116cb9b.tljzshvwok.acm-validations.aws."]
+    ttl     = "300"
 
 }
 
@@ -615,20 +615,20 @@ resource "aws_route53_record" "intercom-_domainkey-smarthr-jp-CNAME" {
 
 }
 
-resource "aws_route53_record" "m1-_domainkey-smarthr-jp-TXT" {
-    zone_id = "Z38IZYREYRKWXV"
-    name    = "m1._domainkey.smarthr.jp"
-    type    = "TXT"
-    records = ["v=DKIM1;k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCUMniujh1X0S0c0Ujf/UyACMkvQfkrBpN7vlonzPEbk12T4U83swCaqeKiHWJoLfnHzWc/Gyoaazd2Fo2yZBs/ximtqmVFLbTs2Sn5e4Q2CB1STc2dJYR1J9q6Wo+Hk9dXooZB/j1GFsg1lJlOajzLyrmNRiFg8G2VUZLWYtaJPQIDAQAB"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "k1-_domainkey-smarthr-jp-CNAME" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "k1._domainkey.smarthr.jp"
     type    = "CNAME"
     records = ["dkim.mcsv.net"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "m1-_domainkey-smarthr-jp-TXT" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "m1._domainkey.smarthr.jp"
+    type    = "TXT"
+    records = ["v=DKIM1;k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCUMniujh1X0S0c0Ujf/UyACMkvQfkrBpN7vlonzPEbk12T4U83swCaqeKiHWJoLfnHzWc/Gyoaazd2Fo2yZBs/ximtqmVFLbTs2Sn5e4Q2CB1STc2dJYR1J9q6Wo+Hk9dXooZB/j1GFsg1lJlOajzLyrmNRiFg8G2VUZLWYtaJPQIDAQAB"]
     ttl     = "300"
 
 }
@@ -681,15 +681,6 @@ resource "aws_route53_record" "em-smarthr-jp-CNAME" {
 
 }
 
-resource "aws_route53_record" "payment-smarthr-jp-CNAME" {
-    zone_id = "Z38IZYREYRKWXV"
-    name    = "payment.smarthr.jp"
-    type    = "CNAME"
-    records = ["payment.smarthr.jp.herokudns.com"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "envy-smarthr-jp-CNAME" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "envy.smarthr.jp"
@@ -699,11 +690,38 @@ resource "aws_route53_record" "envy-smarthr-jp-CNAME" {
 
 }
 
+resource "aws_route53_record" "asterisk-event-smarthr-jp-CNAME" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "*.event.smarthr.jp"
+    type    = "CNAME"
+    records = ["secure.pageserve.co"]
+    ttl     = "300"
+
+}
+
 resource "aws_route53_record" "mag-smarthr-jp-A" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "mag.smarthr.jp"
     type    = "A"
     records = ["150.95.225.254"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "payment-smarthr-jp-CNAME" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "payment.smarthr.jp"
+    type    = "CNAME"
+    records = ["payment.smarthr.jp.herokudns.com"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "o1-sg-smarthr-jp-A" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "o1.sg.smarthr.jp"
+    type    = "A"
+    records = ["168.245.113.131"]
     ttl     = "300"
 
 }
@@ -722,15 +740,6 @@ resource "aws_route53_record" "tech-smarthr-jp-CNAME" {
     name    = "tech.smarthr.jp"
     type    = "CNAME"
     records = ["hatenablog.com"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "asterisk-event-smarthr-jp-CNAME" {
-    zone_id = "Z38IZYREYRKWXV"
-    name    = "*.event.smarthr.jp"
-    type    = "CNAME"
-    records = ["secure.pageserve.co"]
     ttl     = "300"
 
 }
@@ -766,7 +775,7 @@ resource "aws_route53_record" "smarthr-co-jp-NS" {
     zone_id = "Z3DXBKTQH0S7UN"
     name    = "smarthr.co.jp"
     type    = "NS"
-    records = ["ns-209.awsdns-26.com.", "ns-970.awsdns-57.net.", "ns-1194.awsdns-21.org.", "ns-1786.awsdns-31.co.uk."]
+    records = ["ns-209.awsdns-26.com.", "ns-970.awsdns-57.net.", "ns-1786.awsdns-31.co.uk.", "ns-1194.awsdns-21.org."]
     ttl     = "172800"
 
 }
@@ -838,7 +847,7 @@ resource "aws_route53_record" "kufuinc-com-NS" {
     zone_id = "Z2FX40IGX7ZAHW"
     name    = "kufuinc.com"
     type    = "NS"
-    records = ["ns-1697.awsdns-20.co.uk.", "ns-272.awsdns-34.com.", "ns-1310.awsdns-35.org.", "ns-702.awsdns-23.net."]
+    records = ["ns-1697.awsdns-20.co.uk.", "ns-702.awsdns-23.net.", "ns-1310.awsdns-35.org.", "ns-272.awsdns-34.com."]
     ttl     = "172800"
 
 }
@@ -888,15 +897,6 @@ resource "aws_route53_record" "db-docker-hanica-local-CNAME" {
 
 }
 
-resource "aws_route53_record" "redis-persistent-docker-hanica-local-CNAME" {
-    zone_id = "ZLIRD0XRN4QQM"
-    name    = "redis.persistent.docker.hanica.local"
-    type    = "CNAME"
-    records = ["hanicastg-persistent.eigvkv.0001.apne1.cache.amazonaws.com"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "redis-volatile-docker-hanica-local-CNAME" {
     zone_id = "ZLIRD0XRN4QQM"
     name    = "redis.volatile.docker.hanica.local"
@@ -942,6 +942,15 @@ resource "aws_route53_record" "production-aggregate-hanica-local-CNAME" {
 
 }
 
+resource "aws_route53_record" "db-qa-hanica-local-CNAME" {
+    zone_id = "ZLIRD0XRN4QQM"
+    name    = "db.qa.hanica.local"
+    type    = "CNAME"
+    records = ["hanica-qa.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
+    ttl     = "300"
+
+}
+
 resource "aws_route53_record" "relay1-production-hanica-local-CNAME" {
     zone_id = "ZLIRD0XRN4QQM"
     name    = "relay1-production.hanica.local"
@@ -951,6 +960,18 @@ resource "aws_route53_record" "relay1-production-hanica-local-CNAME" {
 
 }
 
+resource "aws_route53_record" "relay1-staging-hanica-local-A" {
+    zone_id = "ZLIRD0XRN4QQM"
+    name    = "relay1-staging.hanica.local"
+    type    = "A"
+
+    alias {
+        name    = "fluentd-0c535aa76ad319b5.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
+}
+
 resource "aws_route53_record" "relay2-production-hanica-local-CNAME" {
     zone_id = "ZLIRD0XRN4QQM"
     name    = "relay2-production.hanica.local"
@@ -958,6 +979,18 @@ resource "aws_route53_record" "relay2-production-hanica-local-CNAME" {
     records = ["ip-10-0-200-100.ap-northeast-1.compute.internal"]
     ttl     = "300"
 
+}
+
+resource "aws_route53_record" "relay2-staging-hanica-local-A" {
+    zone_id = "ZLIRD0XRN4QQM"
+    name    = "relay2-staging.hanica.local"
+    type    = "A"
+
+    alias {
+        name    = "fluentd-0c535aa76ad319b5.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
 }
 
 resource "aws_route53_record" "staging-aggregate-hanica-local-CNAME" {
@@ -994,57 +1027,6 @@ resource "aws_route53_record" "redis-volatile-staging-hanica-local-CNAME" {
     records = ["hanicastg-volatile.eigvkv.0001.apne1.cache.amazonaws.com"]
     ttl     = "300"
 
-}
-
-resource "aws_route53_record" "redis-persistent-qa-hanica-local-CNAME" {
-    zone_id = "ZLIRD0XRN4QQM"
-    name    = "redis.persistent.qa.hanica.local"
-    type    = "CNAME"
-    records = ["qa-hanica-persistent.eigvkv.0001.apne1.cache.amazonaws.com"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "redis-volatile-qa-hanica-local-CNAME" {
-    zone_id = "ZLIRD0XRN4QQM"
-    name    = "redis.volatile.qa.hanica.local"
-    type    = "CNAME"
-    records = ["qa-hanica-volatile.eigvkv.0001.apne1.cache.amazonaws.com"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "db-qa-hanica-local-CNAME" {
-    zone_id = "ZLIRD0XRN4QQM"
-    name    = "db.qa.hanica.local"
-    type    = "CNAME"
-    records = ["hanica-qa.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "relay1-staging-hanica-local-A" {
-    zone_id = "ZLIRD0XRN4QQM"
-    name    = "relay1-staging.hanica.local"
-    type    = "A"
-
-    alias {
-        name    = "fluentd-0c535aa76ad319b5.elb.ap-northeast-1.amazonaws.com"
-        zone_id = "Z31USIVHYNEOWT"
-        evaluate_target_health = false
-    }
-}
-
-resource "aws_route53_record" "relay2-staging-hanica-local-A" {
-    zone_id = "ZLIRD0XRN4QQM"
-    name    = "relay2-staging.hanica.local"
-    type    = "A"
-
-    alias {
-        name    = "fluentd-0c535aa76ad319b5.elb.ap-northeast-1.amazonaws.com"
-        zone_id = "Z31USIVHYNEOWT"
-        evaluate_target_health = false
-    }
 }
 
 resource "aws_route53_record" "daruma-local-NS" {
@@ -1096,8 +1078,8 @@ resource "aws_route53_record" "udemushi-com-MX" {
     zone_id = "Z2O12CF0N1E9JW"
     name    = "udemushi.com"
     type    = "MX"
-    records = ["10 mx.zoho.com", "20 mx2.zoho.com"]
-    ttl     = "300"
+    records = ["10 inbound-smtp.us-east-1.amazonaws.com"]
+    ttl     = "1800"
 
 }
 
@@ -1105,7 +1087,7 @@ resource "aws_route53_record" "udemushi-com-NS" {
     zone_id = "Z2O12CF0N1E9JW"
     name    = "udemushi.com"
     type    = "NS"
-    records = ["ns-1834.awsdns-37.co.uk.", "ns-1084.awsdns-07.org.", "ns-831.awsdns-39.net.", "ns-504.awsdns-63.com."]
+    records = ["ns-1084.awsdns-07.org.", "ns-831.awsdns-39.net.", "ns-1834.awsdns-37.co.uk.", "ns-504.awsdns-63.com."]
     ttl     = "172800"
 
 }
@@ -1128,28 +1110,22 @@ resource "aws_route53_record" "udemushi-com-TXT" {
 
 }
 
-resource "aws_route53_record" "asterisk-udemushi-com-A" {
+resource "aws_route53_record" "asterisk-udemushi-com-CNAME" {
     zone_id = "Z2O12CF0N1E9JW"
     name    = "*.udemushi.com"
-    type    = "A"
+    type    = "CNAME"
+    records = ["triangular-kumquat-yyospc1juo6vpk19p2nfyf3z.herokudns.com"]
+    ttl     = "60"
 
-    alias {
-        name    = "hanica-prod-app.ap-northeast-1.elasticbeanstalk.com"
-        zone_id = "Z1R25G3KIG2GBW"
-        evaluate_target_health = false
-    }
 }
 
-resource "aws_route53_record" "app-udemushi-com-A" {
+resource "aws_route53_record" "_amazonses-udemushi-com-TXT" {
     zone_id = "Z2O12CF0N1E9JW"
-    name    = "app.udemushi.com"
-    type    = "A"
+    name    = "_amazonses.udemushi.com"
+    type    = "TXT"
+    records = ["o4+d9MkS3zrQdbTv5s9abKtmMTchEmxNpkGtPxGOrOg="]
+    ttl     = "1800"
 
-    alias {
-        name    = "hanica-prod-app.ap-northeast-1.elasticbeanstalk.com"
-        zone_id = "Z1R25G3KIG2GBW"
-        evaluate_target_health = false
-    }
 }
 
 resource "aws_route53_record" "smarthr-plus-NS" {
@@ -1170,12 +1146,21 @@ resource "aws_route53_record" "smarthr-plus-SOA" {
 
 }
 
+resource "aws_route53_record" "freee-smarthr-plus-CNAME" {
+    zone_id = "Z1XLEN8BSTM9ZS"
+    name    = "freee.smarthr.plus"
+    type    = "CNAME"
+    records = ["pacific-savannah-1783.thawing-headland-5882.herokuspace.com"]
+    ttl     = "300"
+
+}
+
 resource "aws_route53_record" "keiyaku-smarthr-plus-CNAME" {
     zone_id = "Z1XLEN8BSTM9ZS"
     name    = "keiyaku.smarthr.plus"
     type    = "CNAME"
-    records = ["keiyaku.smarthr.plus.herokudns.com"]
-    ttl     = "300"
+    records = ["guarded-harbor-4023.thawing-headland-5882.herokuspace.com"]
+    ttl     = "600"
 
 }
 
@@ -1215,20 +1200,11 @@ resource "aws_route53_record" "aoyagi-farm-SOA" {
 
 }
 
-resource "aws_route53_record" "oke-aoyagi-farm-CNAME" {
+resource "aws_route53_record" "ayatori-aoyagi-farm-CNAME" {
     zone_id = "Z2R8KLE7JC3PK7"
-    name    = "oke.aoyagi.farm"
+    name    = "ayatori.aoyagi.farm"
     type    = "CNAME"
-    records = ["oke.aoyagi.farm.herokudns.com"]
-    ttl     = "60"
-
-}
-
-resource "aws_route53_record" "oke-staging-aoyagi-farm-CNAME" {
-    zone_id = "Z2R8KLE7JC3PK7"
-    name    = "oke-staging.aoyagi.farm"
-    type    = "CNAME"
-    records = ["arcane-waters-1575.thawing-headland-5882.herokuspace.com"]
+    records = ["stark-shelf-4703.thawing-headland-5882.herokuspace.com"]
     ttl     = "300"
 
 }
@@ -1242,12 +1218,30 @@ resource "aws_route53_record" "koban-staging-aoyagi-farm-CNAME" {
 
 }
 
-resource "aws_route53_record" "ayatori-aoyagi-farm-CNAME" {
+resource "aws_route53_record" "kotori-staging-aoyagi-farm-CNAME" {
     zone_id = "Z2R8KLE7JC3PK7"
-    name    = "ayatori.aoyagi.farm"
+    name    = "kotori-staging.aoyagi.farm"
     type    = "CNAME"
-    records = ["stark-shelf-4703.thawing-headland-5882.herokuspace.com"]
+    records = ["gentle-swan-a8wtloiepn1bh3jfvpzt8383.herokudns.com"]
+    ttl     = "60"
+
+}
+
+resource "aws_route53_record" "oke-staging-aoyagi-farm-CNAME" {
+    zone_id = "Z2R8KLE7JC3PK7"
+    name    = "oke-staging.aoyagi.farm"
+    type    = "CNAME"
+    records = ["arcane-waters-1575.thawing-headland-5882.herokuspace.com"]
     ttl     = "300"
+
+}
+
+resource "aws_route53_record" "oke-aoyagi-farm-CNAME" {
+    zone_id = "Z2R8KLE7JC3PK7"
+    name    = "oke.aoyagi.farm"
+    type    = "CNAME"
+    records = ["oke.aoyagi.farm.herokudns.com"]
+    ttl     = "60"
 
 }
 
@@ -1260,20 +1254,11 @@ resource "aws_route53_record" "staging-smarthr-lp-com-A" {
 
 }
 
-resource "aws_route53_record" "corporate-staging-smarthr-lp-com-A" {
-    zone_id = "ZTS5ADHRRDLJQ"
-    name    = "corporate.staging-smarthr-lp.com"
-    type    = "A"
-    records = ["157.7.188.212"]
-    ttl     = "300"
-
-}
-
 resource "aws_route53_record" "staging-smarthr-lp-com-NS" {
     zone_id = "ZTS5ADHRRDLJQ"
     name    = "staging-smarthr-lp.com"
     type    = "NS"
-    records = ["ns-1845.awsdns-38.co.uk.", "ns-1146.awsdns-15.org.", "ns-817.awsdns-38.net.", "ns-467.awsdns-58.com."]
+    records = ["ns-1146.awsdns-15.org.", "ns-817.awsdns-38.net.", "ns-1845.awsdns-38.co.uk.", "ns-467.awsdns-58.com."]
     ttl     = "172800"
 
 }
@@ -1284,6 +1269,33 @@ resource "aws_route53_record" "staging-smarthr-lp-com-SOA" {
     type    = "SOA"
     records = ["ns-1845.awsdns-38.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
     ttl     = "900"
+
+}
+
+resource "aws_route53_record" "corporate-staging-smarthr-lp-com-A" {
+    zone_id = "ZTS5ADHRRDLJQ"
+    name    = "corporate.staging-smarthr-lp.com"
+    type    = "A"
+    records = ["157.7.188.212"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "mag-staging-smarthr-lp-com-A" {
+    zone_id = "ZTS5ADHRRDLJQ"
+    name    = "mag.staging-smarthr-lp.com"
+    type    = "A"
+    records = ["157.7.188.212"]
+    ttl     = "300"
+
+}
+
+resource "aws_route53_record" "renewal201904-staging-smarthr-lp-com-A" {
+    zone_id = "ZTS5ADHRRDLJQ"
+    name    = "renewal201904.staging-smarthr-lp.com"
+    type    = "A"
+    records = ["157.7.188.212"]
+    ttl     = "60"
 
 }
 
@@ -1450,7 +1462,7 @@ resource "aws_route53_record" "cs-smarthr-jp-MX" {
     zone_id = "Z3MCH2A0C8IVX8"
     name    = "cs.smarthr.jp"
     type    = "MX"
-    records = ["10 mxa.mailgun.org.", "10 mxb.mailgun.org."]
+    records = ["10 mxb.mailgun.org.", "10 mxa.mailgun.org."]
     ttl     = "300"
 
 }
@@ -1459,7 +1471,7 @@ resource "aws_route53_record" "cs-smarthr-jp-NS-1" {
     zone_id = "Z3MCH2A0C8IVX8"
     name    = "cs.smarthr.jp"
     type    = "NS"
-    records = ["ns-904.awsdns-49.net.", "ns-151.awsdns-18.com.", "ns-1934.awsdns-49.co.uk.", "ns-1464.awsdns-55.org."]
+    records = ["ns-151.awsdns-18.com.", "ns-904.awsdns-49.net.", "ns-1934.awsdns-49.co.uk.", "ns-1464.awsdns-55.org."]
     ttl     = "172800"
 
 }
@@ -1509,6 +1521,18 @@ resource "aws_route53_record" "hanica-internal-SOA" {
 
 }
 
+resource "aws_route53_record" "aggregate-prod-hanica-internal-A" {
+    zone_id = "Z1PQTFX60IR924"
+    name    = "aggregate.prod.hanica.internal"
+    type    = "A"
+
+    alias {
+        name    = "hanica-prod-fluentd-aggregate-547a91d5b4645b69.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
+}
+
 resource "aws_route53_record" "db-prod-hanica-internal-CNAME" {
     zone_id = "Z1PQTFX60IR924"
     name    = "db.prod.hanica.internal"
@@ -1525,6 +1549,18 @@ resource "aws_route53_record" "redis-persistent-prod-hanica-internal-CNAME" {
     records = ["nh-prod-persistent-001.eigvkv.0001.apne1.cache.amazonaws.com"]
     ttl     = "300"
 
+}
+
+resource "aws_route53_record" "relay-prod-hanica-internal-A" {
+    zone_id = "Z1PQTFX60IR924"
+    name    = "relay.prod.hanica.internal"
+    type    = "A"
+
+    alias {
+        name    = "hanica-prod-fluentd-relay-e2f9fb6715254c74.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
 }
 
 resource "aws_route53_record" "redis-volatile-prod-hanica-internal-CNAME" {
@@ -1545,22 +1581,34 @@ resource "aws_route53_record" "db-qa-hanica-internal-CNAME" {
 
 }
 
-resource "aws_route53_record" "redis-persistent-qa-hanica-internal-CNAME" {
+resource "aws_route53_record" "rundeck-hanica-internal-A" {
     zone_id = "Z1PQTFX60IR924"
-    name    = "redis.persistent.qa.hanica.internal"
-    type    = "CNAME"
-    records = ["nh-qa-persistent.eigvkv.0001.apne1.cache.amazonaws.com"]
+    name    = "rundeck.hanica.internal"
+    type    = "A"
+    records = ["10.0.128.101"]
     ttl     = "300"
 
 }
 
-resource "aws_route53_record" "redis-volatile-qa-hanica-internal-CNAME" {
+resource "aws_route53_record" "db-sandbox-hanica-internal-CNAME" {
     zone_id = "Z1PQTFX60IR924"
-    name    = "redis.volatile.qa.hanica.internal"
+    name    = "db.sandbox.hanica.internal"
     type    = "CNAME"
-    records = ["nh-qa-volatile.eigvkv.0001.apne1.cache.amazonaws.com"]
+    records = ["hanica-sandbox-new.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
     ttl     = "300"
 
+}
+
+resource "aws_route53_record" "aggregate-staging-hanica-internal-A" {
+    zone_id = "Z1PQTFX60IR924"
+    name    = "aggregate.staging.hanica.internal"
+    type    = "A"
+
+    alias {
+        name    = "aggregater-621d8ff8cc600229.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
 }
 
 resource "aws_route53_record" "db-staging-hanica-internal-CNAME" {
@@ -1579,60 +1627,6 @@ resource "aws_route53_record" "redis-persistent-staging-hanica-internal-CNAME" {
     records = ["docker-persistent.eigvkv.0001.apne1.cache.amazonaws.com"]
     ttl     = "300"
 
-}
-
-resource "aws_route53_record" "redis-volatile-staging-hanica-internal-CNAME" {
-    zone_id = "Z1PQTFX60IR924"
-    name    = "redis.volatile.staging.hanica.internal"
-    type    = "CNAME"
-    records = ["docker-volatile.eigvkv.0001.apne1.cache.amazonaws.com"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "db-sandbox-hanica-internal-CNAME" {
-    zone_id = "Z1PQTFX60IR924"
-    name    = "db.sandbox.hanica.internal"
-    type    = "CNAME"
-    records = ["hanica-sandbox-new.cdsshzjynb4i.ap-northeast-1.rds.amazonaws.com"]
-    ttl     = "300"
-
-}
-
-resource "aws_route53_record" "aggregate-prod-hanica-internal-A" {
-    zone_id = "Z1PQTFX60IR924"
-    name    = "aggregate.prod.hanica.internal"
-    type    = "A"
-
-    alias {
-        name    = "hanica-prod-fluentd-aggregate-547a91d5b4645b69.elb.ap-northeast-1.amazonaws.com"
-        zone_id = "Z31USIVHYNEOWT"
-        evaluate_target_health = false
-    }
-}
-
-resource "aws_route53_record" "aggregate-staging-hanica-internal-A" {
-    zone_id = "Z1PQTFX60IR924"
-    name    = "aggregate.staging.hanica.internal"
-    type    = "A"
-
-    alias {
-        name    = "aggregater-621d8ff8cc600229.elb.ap-northeast-1.amazonaws.com"
-        zone_id = "Z31USIVHYNEOWT"
-        evaluate_target_health = false
-    }
-}
-
-resource "aws_route53_record" "relay-prod-hanica-internal-A" {
-    zone_id = "Z1PQTFX60IR924"
-    name    = "relay.prod.hanica.internal"
-    type    = "A"
-
-    alias {
-        name    = "hanica-prod-fluentd-relay-e2f9fb6715254c74.elb.ap-northeast-1.amazonaws.com"
-        zone_id = "Z31USIVHYNEOWT"
-        evaluate_target_health = false
-    }
 }
 
 resource "aws_route53_record" "relay-staging-hanica-internal-A" {
@@ -1664,16 +1658,18 @@ resource "aws_route53_record" "relay2-staging-hanica-internal-A" {
     name    = "relay2.staging.hanica.internal"
     type    = "A"
 
-    records = ["10.0.128.36"]
-    ttl     = "300"
+    alias {
+        name    = "fluentd-0c535aa76ad319b5.elb.ap-northeast-1.amazonaws.com"
+        zone_id = "Z31USIVHYNEOWT"
+        evaluate_target_health = false
+    }
 }
 
-resource "aws_route53_record" "rundeck-hanica-internal-A" {
+resource "aws_route53_record" "redis-volatile-staging-hanica-internal-CNAME" {
     zone_id = "Z1PQTFX60IR924"
-    name    = "rundeck.hanica.internal"
-    type    = "A"
-
-    records = ["10.0.128.101"]
+    name    = "redis.volatile.staging.hanica.internal"
+    type    = "CNAME"
+    records = ["docker-volatile.eigvkv.0001.apne1.cache.amazonaws.com"]
     ttl     = "300"
-}
 
+}
