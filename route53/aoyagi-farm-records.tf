@@ -44,6 +44,7 @@ resource "aws_route53_record" "ayatori-aoyagi-farm-CNAME" {
     type    = "CNAME"
     records = ["stark-shelf-4703.thawing-headland-5882.herokuspace.com"]
     ttl     = "300"
+    allow_overwrite = "true"
 }
 
 resource "aws_route53_record" "kotori-staging-aoyagi-farm-CNAME" {
