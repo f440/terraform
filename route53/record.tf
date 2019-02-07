@@ -753,6 +753,15 @@ resource "aws_route53_record" "www-smarthr-jp-CNAME" {
 
 }
 
+resource "aws_route53_record" "soroban-smarthr-jp-CNAME" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "soroban.smarthr.jp"
+    type    = "CNAME"
+    records = ["current-stork-hckh3bq5y8phnn9nraugmy4g.herokudns.com"]
+    ttl     = "60"
+
+}
+
 resource "aws_route53_record" "smarthr-co-jp-A" {
     zone_id = "Z3DXBKTQH0S7UN"
     name    = "smarthr.co.jp"
