@@ -130,7 +130,7 @@ resource "aws_route53_record" "y-knot-jp-A" {
 
     alias {
         name    = "awseb-e-f-awsebloa-frzel35gze7n-543220949.ap-northeast-1.elb.amazonaws.com"
-        zone_id = "Z2YN17T5R711GT"
+        zone_id = "Z14GRHDCWA56QT"
         evaluate_target_health = false
     }
 }
@@ -232,7 +232,7 @@ resource "aws_route53_record" "ops-y-knot-jp-A" {
 
     alias {
         name    = "yknot-ops-lb-822993030.ap-northeast-1.elb.amazonaws.com"
-        zone_id = "Z2YN17T5R711GT"
+        zone_id = "Z14GRHDCWA56QT"
         evaluate_target_health = false
     }
 }
@@ -244,7 +244,7 @@ resource "aws_route53_record" "staging-y-knot-jp-A" {
 
     alias {
         name    = "awseb-e-w-awsebloa-1dg2whr480r4a-2020563221.ap-northeast-1.elb.amazonaws.com"
-        zone_id = "Z2YN17T5R711GT"
+        zone_id = "Z14GRHDCWA56QT"
         evaluate_target_health = false
     }
 }
@@ -265,7 +265,7 @@ resource "aws_route53_record" "www-y-knot-jp-A" {
 
     alias {
         name    = "awseb-e-f-awsebloa-frzel35gze7n-543220949.ap-northeast-1.elb.amazonaws.com"
-        zone_id = "Z2YN17T5R711GT"
+        zone_id = "Z14GRHDCWA56QT"
         evaluate_target_health = false
     }
 }
@@ -750,6 +750,15 @@ resource "aws_route53_record" "www-smarthr-jp-CNAME" {
     type    = "CNAME"
     records = ["smarthr.jp"]
     ttl     = "300"
+
+}
+
+resource "aws_route53_record" "soroban-smarthr-jp-CNAME" {
+    zone_id = "Z38IZYREYRKWXV"
+    name    = "soroban.smarthr.jp"
+    type    = "CNAME"
+    records = ["current-stork-hckh3bq5y8phnn9nraugmy4g.herokudns.com"]
+    ttl     = "60"
 
 }
 
