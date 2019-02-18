@@ -802,7 +802,7 @@ resource "aws_route53_record" "smarthr-co-jp-TXT" {
     zone_id = "Z3DXBKTQH0S7UN"
     name    = "smarthr.co.jp"
     type    = "TXT"
-    records = ["google-site-verification=xjPWNP88eZtrZ9uPTEPF7DjzT_ITudjnC3PfpnlYJh8", "MS=ms20000937"]
+    records = ["google-site-verification=xjPWNP88eZtrZ9uPTEPF7DjzT_ITudjnC3PfpnlYJh8", "MS=ms20000937", "v=spf1 include:_spf.google.com ~all"]
     ttl     = "3600"
 
 }
