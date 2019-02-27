@@ -70,3 +70,11 @@ resource "aws_route53_record" "omen-api-staging-aoyagi-farm-CNAME" {
     records = ["polar-bastion-0fb9poudvfaayct798fqvd9m.herokudns.com"]
     ttl     = "60"
 }
+
+resource "aws_route53_record" "maizo-staging-aoyagi-farm-CNAME" {
+    zone_id = "${var.aoyagi_farm_zone_id}"
+    name    = "maizo-staging.aoyagi.farm"
+    type    = "CNAME"
+    records = ["pure-hare-sml1yd2g5tirti7zqg6xsz1r.herokudns.com"]
+    ttl     = "60"
+}
