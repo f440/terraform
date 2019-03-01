@@ -45,3 +45,11 @@ resource "aws_route53_record" "freee-smarthr-plus-CNAME" {
     records = ["pacific-savannah-1783.thawing-headland-5882.herokuspace.com"]
     ttl     = "300"
 }
+
+resource "aws_route53_record" "report-smarthr-plus-CNAME" {
+    zone_id = "${var.smarthr_plus_zone_id}"
+    name    = "report.smarthr.plus"
+    type    = "CNAME"
+    records = ["aqueous-tundra-2163.thawing-headland-5882.herokuspace.com"]
+    ttl     = "300"
+}
