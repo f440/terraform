@@ -83,6 +83,6 @@ resource "aws_route53_record" "shiritori-staging-aoyagi-farm-CNAME" {
     zone_id = "${var.aoyagi_farm_zone_id}"
     name    = "shiritori-staging.aoyagi.farm"
     type    = "CNAME"
-    records = ["lively-chickpea-49ni9xgcmqtsl1ps8fp5aiu8.herokudns.com"]
+    records = ["stormy-pinchusion-24o4ky5j933w976ph3pvcode.herokudns.com"]
     ttl     = "60"
 }
