@@ -78,3 +78,11 @@ resource "aws_route53_record" "maizo-staging-aoyagi-farm-CNAME" {
     records = ["pure-hare-sml1yd2g5tirti7zqg6xsz1r.herokudns.com"]
     ttl     = "60"
 }
+
+resource "aws_route53_record" "shiritori-staging-aoyagi-farm-CNAME" {
+    zone_id = "${var.aoyagi_farm_zone_id}"
+    name    = "shiritori-staging.aoyagi.farm"
+    type    = "CNAME"
+    records = ["lively-chickpea-49ni9xgcmqtsl1ps8fp5aiu8.herokudns.com"]
+    ttl     = "60"
+}
