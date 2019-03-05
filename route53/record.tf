@@ -1123,7 +1123,7 @@ resource "aws_route53_record" "asterisk-udemushi-com-CNAME" {
     zone_id = "Z2O12CF0N1E9JW"
     name    = "*.udemushi.com"
     type    = "CNAME"
-    records = ["triangular-kumquat-yyospc1juo6vpk19p2nfyf3z.herokudns.com"]
+    records = ["cubed-mink-de3zsk7j81laypj8h7h45js9.herokudns.com"]
     ttl     = "60"
 
 }
