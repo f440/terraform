@@ -571,7 +571,7 @@ resource "aws_route53_record" "smarthr-jp-TXT" {
     zone_id = "Z38IZYREYRKWXV"
     name    = "smarthr.jp"
     type    = "TXT"
-    records = ["google-site-verification=H_4Xzz8vDzjNoCyuJyo5EmkAOTTt-E5Hg3BULxNnzMQ", "v=spf1 include:servers.mcsv.net include:mktomail.com mx ip4:64.79.155.0/24 ip4:207.218.90.0/24 -all"]
+    records = ["google-site-verification=H_4Xzz8vDzjNoCyuJyo5EmkAOTTt-E5Hg3BULxNnzMQ", "v=spf1 include:servers.mcsv.net include:mktomail.com include:u2787976.wl227.sendgrid.net mx ip4:64.79.155.0/24 ip4:207.218.90.0/24 -all"]
     ttl     = "300"
 
 }
