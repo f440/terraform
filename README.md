@@ -8,11 +8,12 @@ terraformでよく使うであろうコマンドをラップしたshellがあり
 
 ## インストール
 
-terraform v0.11.10が動作対象
+terraform v0.11.11が動作対象
 
 ```
-$ brew install terraform -v 0.11.10
+$ brew install terraform -v 0.11.11
 ```
+- これだと入らないかも..
 
 ## 実行方法
 
