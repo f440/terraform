@@ -360,15 +360,6 @@ resource "aws_route53_record" "grafana-hanica-me-A" {
     }
 }
 
-resource "aws_route53_record" "hackmd-hanica-me-CNAME" {
-    zone_id = "ZTGHQY50Y0K1C"
-    name    = "hackmd.hanica.me"
-    type    = "CNAME"
-    records = ["hackmd.hanica.me.herokudns.com."]
-    ttl     = "60"
-
-}
-
 resource "aws_route53_record" "jenkins-hanica-me-A" {
     zone_id = "ZTGHQY50Y0K1C"
     name    = "jenkins.hanica.me"
