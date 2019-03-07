@@ -545,7 +545,7 @@ resource "aws_route53_record" "smarthr-jp-NS" {
     name    = "smarthr.jp"
     type    = "NS"
     records = ["ns-1432.awsdns-51.org.", "ns-103.awsdns-12.com.", "ns-1603.awsdns-08.co.uk.", "ns-655.awsdns-17.net."]
-    ttl     = "172800"
+    ttl     = "3600"
 
 }
 
@@ -1140,8 +1140,8 @@ resource "aws_route53_record" "staging-smarthr-lp-com-NS" {
     zone_id = "ZTS5ADHRRDLJQ"
     name    = "staging-smarthr-lp.com"
     type    = "NS"
-    records = ["ns-1146.awsdns-15.org.", "ns-817.awsdns-38.net.", "ns-1845.awsdns-38.co.uk.", "ns-467.awsdns-58.com."]
-    ttl     = "172800"
+    records = ["bella.ns.cloudflare.com.", "guy.ns.cloudflare.com."]
+    ttl     = "3600"
 
 }
 
