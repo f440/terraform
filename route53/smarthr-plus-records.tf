@@ -53,3 +53,11 @@ resource "aws_route53_record" "report-smarthr-plus-CNAME" {
     records = ["aqueous-tundra-2163.thawing-headland-5882.herokuspace.com"]
     ttl     = "300"
 }
+
+resource "aws_route53_record" "kinkakuji-smarthr-plus-CNAME" {
+    zone_id = "${var.smarthr_plus_zone_id}"
+    name    = "kinkakuji.smarthr.plus"
+    type    = "CNAME"
+    records = ["guarded-everglades-9737.thawing-headland-5882.herokuspace.com"]
+    ttl     = "300"
+}
