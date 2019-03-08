@@ -86,3 +86,11 @@ resource "aws_route53_record" "shiritori-staging-aoyagi-farm-CNAME" {
     records = ["stormy-pinchusion-24o4ky5j933w976ph3pvcode.herokudns.com"]
     ttl     = "60"
 }
+
+resource "aws_route53_record" "sekitori-staging-aoyagi-farm-CNAME" {
+    zone_id = "${var.aoyagi_farm_zone_id}"
+    name    = "sekitori-staging.aoyagi.farm"
+    type    = "CNAME"
+    records = ["dimensional-yucca-wzzpto8omn61zzl1ow41dn98.herokudns.com"]
+    ttl     = "60"
+}
