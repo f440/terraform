@@ -54,6 +54,14 @@ resource "aws_route53_record" "report-smarthr-plus-CNAME" {
     ttl     = "300"
 }
 
+resource "aws_route53_record" "touchontime-smarthr-plus-CNAME" {
+    zone_id = "${var.smarthr_plus_zone_id}"
+    name    = "touchontime.smarthr.plus"
+    type    = "CNAME"
+    records = ["tranquil-ravine-7091.thawing-headland-5882.herokuspace.com"]
+    ttl     = "300"
+}
+
 resource "aws_route53_record" "kinkakuji-smarthr-plus-CNAME" {
     zone_id = "${var.smarthr_plus_zone_id}"
     name    = "kinkakuji.smarthr.plus"
