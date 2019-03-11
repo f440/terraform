@@ -1,24 +1,25 @@
 resource "aws_s3_bucket" "bak-20170208-smarthr-production" {
-    bucket = "bak-20170208-smarthr-production"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "bak-20170208-smarthr-production"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "cf-templates-5sy5m8ovfkzr-ap-northeast-1" {
-    bucket = "cf-templates-5sy5m8ovfkzr-ap-northeast-1"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "cf-templates-5sy5m8ovfkzr-ap-northeast-1"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "elasticbeanstalk-ap-northeast-1-736134917012" {
-    bucket = "elasticbeanstalk-ap-northeast-1-736134917012"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "elasticbeanstalk-ap-northeast-1-736134917012"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket_policy" "elasticbeanstalk-ap-northeast-1-736134917012" {
-    bucket = "elasticbeanstalk-ap-northeast-1-736134917012"
-    policy = <<POLICY
+  bucket = "elasticbeanstalk-ap-northeast-1-736134917012"
+
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Statement": [
@@ -67,14 +68,15 @@ POLICY
 }
 
 resource "aws_s3_bucket" "cloudtrail-test-kufu" {
-    bucket = "cloudtrail-test-kufu"
-    acl = "private"
-    force_destroy = ""
+  bucket        = "cloudtrail-test-kufu"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket_policy" "cloudtrail-test-kufu" {
-    bucket = "cloudtrail-test-kufu"
-    policy = <<POLICY
+  bucket = "cloudtrail-test-kufu"
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -107,14 +109,15 @@ POLICY
 }
 
 resource "aws_s3_bucket" "hanica-logbucket-1ev0czxrupen3" {
-    bucket = "hanica-logbucket-1ev0czxrupen3"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "hanica-logbucket-1ev0czxrupen3"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket_policy" "hanica-logbucket-1ev0czxrupen3" {
-    bucket = "hanica-logbucket-1ev0czxrupen3"
-    policy = <<POLICY
+  bucket = "hanica-logbucket-1ev0czxrupen3"
+
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Id": "LogBucketPolicy",
@@ -134,14 +137,15 @@ POLICY
 }
 
 resource "aws_s3_bucket" "hanica-logbucket-1ljc24gzg76i7" {
-    bucket = "hanica-logbucket-1ljc24gzg76i7"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "hanica-logbucket-1ljc24gzg76i7"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket_policy" "hanica-logbucket-1ljc24gzg76i7" {
-    bucket = "hanica-logbucket-1ljc24gzg76i7"
-    policy = <<POLICY
+  bucket = "hanica-logbucket-1ljc24gzg76i7"
+
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Id": "LogBucketPolicy",
@@ -161,14 +165,15 @@ POLICY
 }
 
 resource "aws_s3_bucket" "hanica-logbucket-cxc8o6o2ehgm" {
-    bucket = "hanica-logbucket-cxc8o6o2ehgm"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "hanica-logbucket-cxc8o6o2ehgm"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket_policy" "hanica-logbucket-cxc8o6o2ehgm" {
-    bucket = "hanica-logbucket-cxc8o6o2ehgm"
-    policy = <<POLICY
+  bucket = "hanica-logbucket-cxc8o6o2ehgm"
+
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Id": "LogBucketPolicy",
@@ -188,14 +193,15 @@ POLICY
 }
 
 resource "aws_s3_bucket" "hanica-logbucket-yy53p0g4qopp" {
-    bucket = "hanica-logbucket-yy53p0g4qopp"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "hanica-logbucket-yy53p0g4qopp"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket_policy" "hanica-logbucket-yy53p0g4qopp" {
-    bucket = "hanica-logbucket-yy53p0g4qopp"
-    policy = <<POLICY
+  bucket = "hanica-logbucket-yy53p0g4qopp"
+
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Id": "LogBucketPolicy",
@@ -215,14 +221,15 @@ POLICY
 }
 
 resource "aws_s3_bucket" "kokeshi-elb-logs" {
-    bucket = "kokeshi-elb-logs"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "kokeshi-elb-logs"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket_policy" "kokeshi-elb-logs" {
-    bucket = "kokeshi-elb-logs"
-    policy = <<POLICY
+  bucket = "kokeshi-elb-logs"
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Id": "AWSConsole-AccessLogs-Policy-1492738217415",
@@ -242,89 +249,89 @@ POLICY
 }
 
 resource "aws_s3_bucket" "kokeshi-space" {
-    bucket = "kokeshi.space"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "kokeshi.space"
+  acl           = "private"
+  force_destroy = ""
 
-    website {
-      index_document = "index.html"
-    }
+  website {
+    index_document = "index.html"
+  }
 }
 
 resource "aws_s3_bucket" "kufu-terraform-state" {
-    bucket = "kufu-terraform-state"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "kufu-terraform-state"
+  acl           = "private"
+  force_destroy = ""
 
-    versioning {
-      enabled = true
-    }
+  versioning {
+    enabled = true
+  }
 }
 
 resource "aws_s3_bucket" "kufu-test-redshift" {
-    bucket = "kufu-test-redshift"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "kufu-test-redshift"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "maintenance-smarthr" {
-    bucket = "maintenance-smarthr"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "maintenance-smarthr"
+  acl           = "private"
+  force_destroy = ""
 
-    website {
-      index_document = "maintenance.html"
-    }
+  website {
+    index_document = "maintenance.html"
+  }
 }
 
 resource "aws_s3_bucket" "mstyle-client" {
-    bucket = "mstyle-client"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "mstyle-client"
+  acl           = "private"
+  force_destroy = ""
 
-    website {
-      index_document = "index.html"
-    }
+  website {
+    index_document = "index.html"
+  }
 }
 
 resource "aws_s3_bucket" "s3-backup-skillsand-me" {
-    bucket = "s3.backup.skillsand.me"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "s3.backup.skillsand.me"
+  acl           = "private"
+  force_destroy = ""
 
-    lifecycle_rule {
-      id      = "60days-to-gracier"
-      prefix  = ""
-      enabled = true
+  lifecycle_rule {
+    id      = "60days-to-gracier"
+    prefix  = ""
+    enabled = true
 
-      transition {
-        days          = 60
-        storage_class = "GLACIER"
-      }
+    transition {
+      days          = 60
+      storage_class = "GLACIER"
     }
+  }
 }
 
 resource "aws_s3_bucket" "skillsand-me" {
-    bucket = "skillsand.me"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "skillsand.me"
+  acl           = "private"
+  force_destroy = ""
 
-    website {
-      error_document = "503.html"
-      index_document = "503.html"
-    }
+  website {
+    error_document = "503.html"
+    index_document = "503.html"
+  }
 }
 
-
 resource "aws_s3_bucket" "smarthr-api-lp" {
-    bucket = "smarthr-api-lp"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-api-lp"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket_policy" "smarthr-api-lp" {
-    bucket = "smarthr-api-lp"
-    policy = <<POLICY
+  bucket = "smarthr-api-lp"
+
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Statement": [
@@ -343,26 +350,27 @@ POLICY
 }
 
 resource "aws_s3_bucket" "smarthr-development" {
-    bucket = "smarthr-development"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-development"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "smarthr-letter-opener" {
-    bucket = "smarthr-letter-opener"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-letter-opener"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "smarthr-notification-integration" {
-    bucket = "smarthr-notification-integration"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-notification-integration"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket_policy" "smarthr-notification-integration" {
-    bucket = "smarthr-notification-integration"
-    policy = <<POLICY
+  bucket = "smarthr-notification-integration"
+
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Statement": [
@@ -381,27 +389,28 @@ POLICY
 }
 
 resource "aws_s3_bucket" "smarthr-production" {
-    bucket = "smarthr-production"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-production"
+  acl           = "private"
+  force_destroy = ""
 
-    cors_rule {
-      allowed_headers = ["Content-*", "Host", "*"]
-      allowed_methods = ["GET", "HEAD"]
-      allowed_origins = ["*"]
-      max_age_seconds = 3000
-    }
+  cors_rule {
+    allowed_headers = ["Content-*", "Host", "*"]
+    allowed_methods = ["GET", "HEAD"]
+    allowed_origins = ["*"]
+    max_age_seconds = 3000
+  }
 }
 
 resource "aws_s3_bucket" "smarthr-qiita-images" {
-    bucket = "smarthr-qiita-images"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-qiita-images"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket_policy" "smarthr-qiita-images" {
-    bucket = "smarthr-qiita-images"
-    policy = <<POLICY
+  bucket = "smarthr-qiita-images"
+
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Id": "PolicyForCloudFrontPrivateContent",
@@ -429,87 +438,88 @@ POLICY
 }
 
 resource "aws_s3_bucket" "smarthr-redis-persistent-snapshot" {
-    bucket = "smarthr-redis-persistent-snapshot"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-redis-persistent-snapshot"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "smarthr-sandbox" {
-    bucket = "smarthr-sandbox"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-sandbox"
+  acl           = "private"
+  force_destroy = ""
 
-    cors_rule {
-      allowed_headers = ["Content-*", "Host", "*"]
-      allowed_methods = ["GET", "HEAD"]
-      allowed_origins = ["*"]
-      max_age_seconds = 3000
-    }
+  cors_rule {
+    allowed_headers = ["Content-*", "Host", "*"]
+    allowed_methods = ["GET", "HEAD"]
+    allowed_origins = ["*"]
+    max_age_seconds = 3000
+  }
 }
 
 resource "aws_s3_bucket" "smarthr-staging" {
-    bucket = "smarthr-staging"
-    acl    = "private"
+  bucket = "smarthr-staging"
+  acl    = "private"
 
-    cors_rule {
-      allowed_headers = ["Content-*", "Host", "*"]
-      allowed_methods = ["GET", "HEAD"]
-      allowed_origins = ["*"]
-      max_age_seconds = 3000
-    }
+  cors_rule {
+    allowed_headers = ["Content-*", "Host", "*"]
+    allowed_methods = ["GET", "HEAD"]
+    allowed_origins = ["*"]
+    max_age_seconds = 3000
+  }
 }
 
 resource "aws_s3_bucket" "smarthr-tmp-development" {
-    bucket = "smarthr-tmp-development"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-tmp-development"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "smarthr-tmp-kokeshi" {
-    bucket = "smarthr-tmp-kokeshi"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-tmp-kokeshi"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "smarthr-tmp-production" {
-    bucket = "smarthr-tmp-production"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-tmp-production"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "smarthr-tmp-sandbox" {
-    bucket = "smarthr-tmp-sandbox"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-tmp-sandbox"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "smarthr-tmp-staging" {
-    bucket = "smarthr-tmp-staging"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "smarthr-tmp-staging"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "sorry-hanica-me" {
-    bucket = "sorry-hanica-me"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "sorry-hanica-me"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "yknot-development" {
-    bucket = "yknot-development"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "yknot-development"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "yknot-logbucket-8zjh0y3c37jt" {
-    bucket = "yknot-logbucket-8zjh0y3c37jt"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "yknot-logbucket-8zjh0y3c37jt"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket_policy" "yknot-logbucket-8zjh0y3c37jt" {
-    bucket = "yknot-logbucket-8zjh0y3c37jt"
-    policy = <<POLICY
+  bucket = "yknot-logbucket-8zjh0y3c37jt"
+
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Id": "LogBucketPolicy",
@@ -529,17 +539,19 @@ POLICY
 }
 
 resource "aws_s3_bucket" "yknot-prod-logbucket-70gexro70itw" {
-    bucket = "yknot-prod-logbucket-70gexro70itw"
-    acl    = "private"
-    force_destroy = ""
-    tags {
-      cf = "yknot-prod"
-    }
+  bucket        = "yknot-prod-logbucket-70gexro70itw"
+  acl           = "private"
+  force_destroy = ""
+
+  tags {
+    cf = "yknot-prod"
+  }
 }
 
 resource "aws_s3_bucket_policy" "yknot-prod-logbucket-70gexro70itw" {
-    bucket = "yknot-prod-logbucket-70gexro70itw"
-    policy = <<POLICY
+  bucket = "yknot-prod-logbucket-70gexro70itw"
+
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Id": "LogBucketPolicy",
@@ -559,14 +571,15 @@ POLICY
 }
 
 resource "aws_s3_bucket" "yknot-prod-logbucket-9rd76kpls3hc" {
-    bucket = "yknot-prod-logbucket-9rd76kpls3hc"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "yknot-prod-logbucket-9rd76kpls3hc"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket_policy" "yknot-prod-logbucket-9rd76kpls3hc" {
-    bucket = "yknot-prod-logbucket-9rd76kpls3hc"
-    policy = <<POLICY
+  bucket = "yknot-prod-logbucket-9rd76kpls3hc"
+
+  policy = <<POLICY
 {
   "Version": "2008-10-17",
   "Id": "LogBucketPolicy",
@@ -586,26 +599,27 @@ POLICY
 }
 
 resource "aws_s3_bucket" "yknot-production" {
-    bucket = "yknot-production"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "yknot-production"
+  acl           = "private"
+  force_destroy = ""
 
-    cors_rule {
-      allowed_headers = ["Authorization", "Content-*", "Host", "*"]
-      allowed_methods = ["GET", "HEAD"]
-      allowed_origins = ["*"]
-      max_age_seconds = 3000
-    }
+  cors_rule {
+    allowed_headers = ["Authorization", "Content-*", "Host", "*"]
+    allowed_methods = ["GET", "HEAD"]
+    allowed_origins = ["*"]
+    max_age_seconds = 3000
+  }
 
-    logging {
-      target_bucket = "yknot-production"
-      target_prefix = "s3-logs/"
-    }
+  logging {
+    target_bucket = "yknot-production"
+    target_prefix = "s3-logs/"
+  }
 }
 
 resource "aws_s3_bucket_policy" "yknot-production" {
-    bucket = "yknot-production"
-    policy = <<POLICY
+  bucket = "yknot-production"
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -622,27 +636,28 @@ POLICY
 }
 
 resource "aws_s3_bucket" "yknot-production-backup" {
-    bucket = "yknot-production-backup"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "yknot-production-backup"
+  acl           = "private"
+  force_destroy = ""
 }
 
 resource "aws_s3_bucket" "yknot-staging" {
-    bucket = "yknot-staging"
-    acl    = "private"
-    force_destroy = ""
+  bucket        = "yknot-staging"
+  acl           = "private"
+  force_destroy = ""
 
-    cors_rule {
-      allowed_headers = ["Authorization", "Content-*", "Host", "*"]
-      allowed_methods = ["GET", "HEAD"]
-      allowed_origins = ["*"]
-      max_age_seconds = 3000
-    }
+  cors_rule {
+    allowed_headers = ["Authorization", "Content-*", "Host", "*"]
+    allowed_methods = ["GET", "HEAD"]
+    allowed_origins = ["*"]
+    max_age_seconds = 3000
+  }
 }
 
 resource "aws_s3_bucket_policy" "yknot-staging" {
-    bucket = "yknot-staging"
-    policy = <<POLICY
+  bucket = "yknot-staging"
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -659,6 +674,6 @@ POLICY
 }
 
 resource "aws_s3_bucket" "smarthr-mackerel-agent-plugins" {
-    bucket = "smarthr-mackerel-agent-plugins"
-    acl    = "public-read"
+  bucket = "smarthr-mackerel-agent-plugins"
+  acl    = "public-read"
 }
