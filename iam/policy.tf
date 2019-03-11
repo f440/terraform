@@ -1,8 +1,9 @@
 resource "aws_iam_policy" "AWSLambdaInvocation-201703281916" {
-    name        = "AWSLambdaInvocation-201703281916"
-    path        = "/"
-    description = "Provides invoke to Lambda function."
-    policy      = <<POLICY
+  name        = "AWSLambdaInvocation-201703281916"
+  path        = "/"
+  description = "Provides invoke to Lambda function."
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -19,10 +20,11 @@ POLICY
 }
 
 resource "aws_iam_policy" "hanica-jobs_lambda_logs" {
-    name        = "hanica-jobs_lambda_logs"
-    path        = "/"
-    description = "Allow lambda_function to utilize CloudWatchLogs. Created by apex(1)."
-    policy      = <<POLICY
+  name        = "hanica-jobs_lambda_logs"
+  path        = "/"
+  description = "Allow lambda_function to utilize CloudWatchLogs. Created by apex(1)."
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -39,10 +41,11 @@ POLICY
 }
 
 resource "aws_iam_policy" "hanica-job_lambda_logs" {
-    name        = "hanica-job_lambda_logs"
-    path        = "/"
-    description = "Allow lambda_function to utilize CloudWatchLogs. Created by apex(1)."
-    policy      = <<POLICY
+  name        = "hanica-job_lambda_logs"
+  path        = "/"
+  description = "Allow lambda_function to utilize CloudWatchLogs. Created by apex(1)."
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -59,10 +62,11 @@ POLICY
 }
 
 resource "aws_iam_policy" "hanica_lambda_logs" {
-    name        = "hanica_lambda_logs"
-    path        = "/"
-    description = "Allow lambda_function to utilize CloudWatchLogs. Created by apex(1)."
-    policy      = <<POLICY
+  name        = "hanica_lambda_logs"
+  path        = "/"
+  description = "Allow lambda_function to utilize CloudWatchLogs. Created by apex(1)."
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -79,10 +83,11 @@ POLICY
 }
 
 resource "aws_iam_policy" "policy-s3-hanica-development" {
-    name        = "policy-s3-hanica-development"
-    path        = "/"
-    description = "Allow S3 access for smarthr-development, smarthr-tmp-development bucket."
-    policy      = <<POLICY
+  name        = "policy-s3-hanica-development"
+  path        = "/"
+  description = "Allow S3 access for smarthr-development, smarthr-tmp-development bucket."
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -114,10 +119,11 @@ POLICY
 }
 
 resource "aws_iam_policy" "policy-s3-hanica-kokeshi" {
-    name        = "policy-s3-hanica-kokeshi"
-    path        = "/"
-    description = "Allow S3 access for smarthr-tmp-kokeshi bucket."
-    policy      = <<POLICY
+  name        = "policy-s3-hanica-kokeshi"
+  path        = "/"
+  description = "Allow S3 access for smarthr-tmp-kokeshi bucket."
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -140,10 +146,11 @@ POLICY
 }
 
 resource "aws_iam_policy" "policy-s3-hanica-production" {
-    name        = "policy-s3-hanica-production"
-    path        = "/"
-    description = "Allow S3 access for smarthr-production, smarthr-tmp-production bucket."
-    policy      = <<POLICY
+  name        = "policy-s3-hanica-production"
+  path        = "/"
+  description = "Allow S3 access for smarthr-production, smarthr-tmp-production bucket."
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -175,10 +182,11 @@ POLICY
 }
 
 resource "aws_iam_policy" "policy-s3-hanica-sandbox" {
-    name        = "policy-s3-hanica-sandbox"
-    path        = "/"
-    description = "Allow S3 access for smarthr-sandbox, smarthr-tmp-sandbox bucket."
-    policy      = <<POLICY
+  name        = "policy-s3-hanica-sandbox"
+  path        = "/"
+  description = "Allow S3 access for smarthr-sandbox, smarthr-tmp-sandbox bucket."
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -210,10 +218,11 @@ POLICY
 }
 
 resource "aws_iam_policy" "policy-s3-hanica-staging" {
-    name        = "policy-s3-hanica-staging"
-    path        = "/"
-    description = "Allow S3 access for smarthr-staging, smarthr-tmp-staging bucket."
-    policy      = <<POLICY
+  name        = "policy-s3-hanica-staging"
+  path        = "/"
+  description = "Allow S3 access for smarthr-staging, smarthr-tmp-staging bucket."
+
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -243,4 +252,3 @@ resource "aws_iam_policy" "policy-s3-hanica-staging" {
 }
 POLICY
 }
-

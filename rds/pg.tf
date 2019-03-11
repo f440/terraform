@@ -1,7 +1,6 @@
-
 resource "aws_db_parameter_group" "hanica-dbparamgroup-1b4u7fzreb186" {
-  name   = "hanica-dbparamgroup-1b4u7fzreb186"
-  family = "mysql5.6"
+  name        = "hanica-dbparamgroup-1b4u7fzreb186"
+  family      = "mysql5.6"
   description = "Default parameter group for Portnoy"
 
   parameter {
@@ -33,12 +32,11 @@ resource "aws_db_parameter_group" "hanica-dbparamgroup-1b4u7fzreb186" {
     name  = "skip-character-set-client-handshake"
     value = "1"
   }
-
 }
 
 resource "aws_db_parameter_group" "hanica-dbparamgroup-20161222" {
-  name   = "hanica-dbparamgroup-20161222"
-  family = "mysql5.6"
+  name        = "hanica-dbparamgroup-20161222"
+  family      = "mysql5.6"
   description = "utf8mb4"
 
   parameter {
@@ -95,12 +93,11 @@ resource "aws_db_parameter_group" "hanica-dbparamgroup-20161222" {
     name  = "wait_timeout"
     value = "10800"
   }
-
 }
 
 resource "aws_db_parameter_group" "hanica-dbparamgroup-20170509" {
-  name   = "hanica-dbparamgroup-20170509"
-  family = "mysql5.7"
+  name        = "hanica-dbparamgroup-20170509"
+  family      = "mysql5.7"
   description = "for mysql 5.7"
 
   parameter {
@@ -142,12 +139,11 @@ resource "aws_db_parameter_group" "hanica-dbparamgroup-20170509" {
     name  = "performance_schema"
     value = "1"
   }
-
 }
 
 resource "aws_db_parameter_group" "yknot-dbparamgroup-1dyv9fxio3ler" {
-  name   = "yknot-dbparamgroup-1dyv9fxio3ler"
-  family = "mysql5.6"
+  name        = "yknot-dbparamgroup-1dyv9fxio3ler"
+  family      = "mysql5.6"
   description = "Default parameter group for Portnoy"
 
   parameter {
@@ -179,5 +175,4 @@ resource "aws_db_parameter_group" "yknot-dbparamgroup-1dyv9fxio3ler" {
     name  = "skip-character-set-client-handshake"
     value = "1"
   }
-
 }
