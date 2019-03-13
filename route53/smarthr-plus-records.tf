@@ -46,6 +46,22 @@ resource "aws_route53_record" "freee-smarthr-plus-CNAME" {
   ttl     = "300"
 }
 
+resource "aws_route53_record" "custom-meibo-api-smarthr-plus-CNAME" {
+  zone_id = "${var.smarthr_plus_zone_id}"
+  name    = "custom-meibo-api.smarthr.plus"
+  type    = "CNAME"
+  records = ["stark-journey-8805.thawing-headland-5882.herokuspace.com"]
+  ttl     = "300"
+}
+
+resource "aws_route53_record" "custom-meibo-smarthr-plus-CNAME" {
+  zone_id = "${var.smarthr_plus_zone_id}"
+  name    = "custom-meibo.smarthr.plus"
+  type    = "CNAME"
+  records = ["ancient-escarpment-8056.thawing-headland-5882.herokuspace.com"]
+  ttl     = "300"
+}
+
 resource "aws_route53_record" "report-smarthr-plus-CNAME" {
   zone_id = "${var.smarthr_plus_zone_id}"
   name    = "report.smarthr.plus"
