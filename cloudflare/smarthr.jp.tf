@@ -339,7 +339,7 @@ resource "cloudflare_record" "TXT_smarthr_jp_888e081ceb7bf635f5f1d749cc48b92c" {
   ttl     = "1"
   proxied = "false"
 
-  value = "v=spf1 include:servers.mcsv.net include:mktomail.com mx ip4:64.79.155.0/24 ip4:207.218.90.0/24 -all"
+  value = "v=spf1 include:servers.mcsv.net include:mktomail.com include:u2787976.wl227.sendgrid.net mx ip4:64.79.155.0/24 ip4:207.218.90.0/24 -all"
 }
 
 resource "cloudflare_zone_settings_override" "84e0a4b3e2c4524d58f3c86efa49eaa2" {
