@@ -42,7 +42,7 @@ resource "aws_route53_record" "ayatori-aoyagi-farm-CNAME" {
   zone_id         = "${var.aoyagi_farm_zone_id}"
   name            = "ayatori.aoyagi.farm"
   type            = "CNAME"
-  records         = ["stark-shelf-4703.thawing-headland-5882.herokuspace.com"]
+  records         = ["octagonal-dromiceiomimus-qtwabk05kjnpttmgehd2cjt5.herokudns.com"]
   ttl             = "300"
   allow_overwrite = "true"
 }
