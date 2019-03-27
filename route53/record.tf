@@ -762,6 +762,30 @@ resource "aws_route53_record" "ue3v7tkoinyk-smarthr-co-jp-CNAME" {
   ttl     = "3600"
 }
 
+resource "aws_route53_record" "shanaiho-smarthr-co-jp-A" {
+  zone_id = "Z3DXBKTQH0S7UN"
+  name    = "shanaiho.smarthr.co.jp"
+  type    = "A"
+  records = ["52.196.12.12", "52.198.177.221"]
+  ttl     = "300"
+}
+
+resource "aws_route53_record" "shanaiho-smarthr-co-jp-TXT" {
+  zone_id = "Z3DXBKTQH0S7UN"
+  name    = "shanaiho.smarthr.co.jp"
+  type    = "TXT"
+  records = ["google-site-verification=9YVgt1_sROulOo5R7J2THaE07u4r2lsssr9gCkffcLI"]
+  ttl     = "300"
+}
+
+resource "aws_route53_record" "_646bb4a62864a78858efca446d793860-shanaiho-smarthr-co-jp-CNAME" {
+  zone_id = "Z3DXBKTQH0S7UN"
+  name    = "shanaiho.smarthr.co.jp"
+  type    = "CNAME"
+  records = ["9208432fd429c435339d139174f56feb.905eb14d9f9cdb39001d7f00638acda4.5c9b35c103741.comodoca.com"]
+  ttl     = "300"
+}
+
 resource "aws_route53_record" "kufuinc-com-A" {
   zone_id = "Z2FX40IGX7ZAHW"
   name    = "kufuinc.com"
