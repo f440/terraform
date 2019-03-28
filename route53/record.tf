@@ -766,7 +766,7 @@ resource "aws_route53_record" "shanaiho-smarthr-co-jp-A" {
   zone_id = "Z3DXBKTQH0S7UN"
   name    = "shanaiho.smarthr.co.jp"
   type    = "A"
-  records = ["52.196.12.12", "52.198.177.221"]
+  records = ["52.199.100.148"]
   ttl     = "300"
 }
 
