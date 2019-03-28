@@ -780,7 +780,7 @@ resource "aws_route53_record" "shanaiho-smarthr-co-jp-TXT" {
 
 resource "aws_route53_record" "_646bb4a62864a78858efca446d793860-shanaiho-smarthr-co-jp-CNAME" {
   zone_id = "Z3DXBKTQH0S7UN"
-  name    = "shanaiho.smarthr.co.jp"
+  name    = "_646bb4a62864a78858efca446d793860.shanaiho.smarthr.co.jp"
   type    = "CNAME"
   records = ["9208432fd429c435339d139174f56feb.905eb14d9f9cdb39001d7f00638acda4.5c9b35c103741.comodoca.com"]
   ttl     = "300"
