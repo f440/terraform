@@ -94,3 +94,11 @@ resource "aws_route53_record" "sekitori-staging-aoyagi-farm-CNAME" {
   records = ["dimensional-yucca-wzzpto8omn61zzl1ow41dn98.herokudns.com"]
   ttl     = "60"
 }
+
+resource "aws_route53_record" "shittori-staging-aoyagi-farm-CNAME" {
+  zone_id = "${var.aoyagi_farm_zone_id}"
+  name    = "shittori-staging.aoyagi.farm"
+  type    = "CNAME"
+  records = ["tropical-puffin-eputd3gsy6wbcbjkcx60zn7n.herokudns.com"]
+  ttl     = "60"
+}
