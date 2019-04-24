@@ -137,7 +137,14 @@ resource "aws_db_parameter_group" "hanica-dbparamgroup-20170509" {
 
   parameter {
     name  = "performance_schema"
+    value = "0"
+    apply_method = "immediate"
+  }
+
+  parameter {
+    name  = "log_bin_trust_function_creators"
     value = "1"
+    apply_method = "immediate"
   }
 }
 
