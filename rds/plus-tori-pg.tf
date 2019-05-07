@@ -25,3 +25,10 @@ resource "aws_db_parameter_group" "sekitori-dbparamgroup" {
 
   description = "PostgreSQL 11 Parameter Groups for sekitori"
 }
+
+resource "aws_db_parameter_group" "shittori-dbparamgroup" {
+  name   = "shittori-dbparamgroup"
+  family = "postgres11"
+
+  description = "PostgreSQL 11 Parameter Groups for shittori"
+}
