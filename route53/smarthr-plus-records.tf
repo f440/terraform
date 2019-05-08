@@ -85,3 +85,11 @@ resource "aws_route53_record" "kinkakuji-smarthr-plus-CNAME" {
   records = ["guarded-everglades-9737.thawing-headland-5882.herokuspace.com"]
   ttl     = "300"
 }
+
+resource "aws_route53_record" "shittori-smarthr-plus-CNAME" {
+  zone_id = "${var.smarthr_plus_zone_id}"
+  name    = "jobcan.smarthr.plus"
+  type    = "CNAME"
+  records = ["damp-brushlands-6351.thawing-headland-5882.herokuspace.com"]
+  ttl     = "300"
+}
