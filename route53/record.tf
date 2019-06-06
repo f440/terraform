@@ -1162,6 +1162,14 @@ resource "aws_route53_record" "app-kokeshi-biz-A" {
   }
 }
 
+resource "aws_route53_record" "akeome-cc-MX" {
+  zone_id = "Z116S8B7W8HALH"
+  name    = "akeome.cc"
+  type    = "MX"
+  records = ["10 inbound-smtp.us-east-1.amazonaws.com"]
+  ttl     = "1800"
+}
+
 resource "aws_route53_record" "akeome-cc-NS" {
   zone_id = "Z116S8B7W8HALH"
   name    = "akeome.cc"
@@ -1182,7 +1190,7 @@ resource "aws_route53_record" "asterisk-akeome-cc-CNAME" {
   zone_id = "Z116S8B7W8HALH"
   name    = "*.akeome.cc"
   type    = "CNAME"
-  records = ["blooming-spire-1723.thawing-headland-5882.herokuspace.com."]
+  records = ["convex-mockingbird-xau9yo4f7zwu2b31gzobwuxx.herokudns.com"]
   ttl     = "60"
 }
 
