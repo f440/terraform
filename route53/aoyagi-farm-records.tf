@@ -22,11 +22,12 @@ resource "aws_route53_record" "koban-staging-aoyagi-farm-CNAME" {
   ttl     = "300"
 }
 
+// Memo: 他とドメインの付け方が異なるので削除する
 resource "aws_route53_record" "oke-aoyagi-farm-CNAME" {
   zone_id = "${var.aoyagi_farm_zone_id}"
   name    = "oke.aoyagi.farm"
   type    = "CNAME"
-  records = ["oke.aoyagi.farm.herokudns.com"]
+  records = ["tranquil-olive-zojtnz92vfayroeh7i6b2kau.herokudns.com"]
   ttl     = "60"
 }
 
@@ -34,7 +35,7 @@ resource "aws_route53_record" "oke-staging-aoyagi-farm-CNAME" {
   zone_id = "${var.aoyagi_farm_zone_id}"
   name    = "oke-staging.aoyagi.farm"
   type    = "CNAME"
-  records = ["arcane-waters-1575.thawing-headland-5882.herokuspace.com"]
+  records = ["secret-turnip-qm5gr2xr3php1jiusxh3gdq3.herokudns.com"]
   ttl     = "300"
 }
 

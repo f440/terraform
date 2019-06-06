@@ -2,7 +2,7 @@
 
 set -e
 
-declare -r TERRAFORM_VERSION=v0.11.11
+declare -r TERRAFORM_VERSION=v0.11.13
 declare -r TERRAFORM_PLAN_PATH=.terraform/terraform.plan
 declare -r TERRAFORM_TFSTATE_PATH=.terraform/terraform.tfstate
 
