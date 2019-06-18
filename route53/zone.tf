@@ -79,22 +79,8 @@ resource "aws_route53_zone" "staging-smarthr-lp-com-public" {
   tags {}
 }
 
-resource "aws_route53_zone" "kokeshi-biz-public" {
-  name    = "kokeshi.biz"
-  comment = "HostedZone created by Route53 Registrar"
-
-  tags {}
-}
-
 resource "aws_route53_zone" "akeome-cc-public" {
   name    = "akeome.cc"
-  comment = "HostedZone created by Route53 Registrar"
-
-  tags {}
-}
-
-resource "aws_route53_zone" "hanica-zuora-qa-com-public" {
-  name    = "hanica-zuora-qa.com"
   comment = "HostedZone created by Route53 Registrar"
 
   tags {}
