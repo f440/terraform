@@ -1,17 +1,3 @@
-resource "aws_route53_zone" "skillsand-me-public" {
-  name    = "skillsand.me"
-  comment = ""
-
-  tags {}
-}
-
-resource "aws_route53_zone" "y-knot-jp-public" {
-  name    = "y-knot.jp"
-  comment = ""
-
-  tags {}
-}
-
 resource "aws_route53_zone" "hanica-me-public" {
   name    = "hanica.me"
   comment = ""
