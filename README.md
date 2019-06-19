@@ -8,7 +8,7 @@ terraformでよく使うであろうコマンドをラップしたshellがあり
 
 ## インストール
 
-terraform v0.11.11 が動作対象。
+terraform v0.11.13 が動作対象。
 tfenv をいれるとスムーズ。
 
 ```
