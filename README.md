@@ -8,12 +8,13 @@ terraformでよく使うであろうコマンドをラップしたshellがあり
 
 ## インストール
 
-terraform v0.11.11が動作対象
+terraform v0.11.13 が動作対象。
+tfenv をいれるとスムーズ。
 
 ```
-$ brew install terraform -v 0.11.11
+$ brew install tfenv
+$ tfenv install 0.11.13
 ```
-- これだと入らないかも..
 
 ## 実行方法
 

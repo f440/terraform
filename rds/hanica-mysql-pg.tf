@@ -147,39 +147,3 @@ resource "aws_db_parameter_group" "hanica-dbparamgroup-20170509" {
     apply_method = "immediate"
   }
 }
-
-resource "aws_db_parameter_group" "yknot-dbparamgroup-1dyv9fxio3ler" {
-  name        = "yknot-dbparamgroup-1dyv9fxio3ler"
-  family      = "mysql5.6"
-  description = "Default parameter group for Portnoy"
-
-  parameter {
-    name  = "character_set_client"
-    value = "utf8mb4"
-  }
-
-  parameter {
-    name  = "character_set_connection"
-    value = "utf8mb4"
-  }
-
-  parameter {
-    name  = "character_set_database"
-    value = "utf8mb4"
-  }
-
-  parameter {
-    name  = "character_set_results"
-    value = "utf8mb4"
-  }
-
-  parameter {
-    name  = "character_set_server"
-    value = "utf8mb4"
-  }
-
-  parameter {
-    name  = "skip-character-set-client-handshake"
-    value = "1"
-  }
-}

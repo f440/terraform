@@ -1,17 +1,3 @@
-resource "aws_route53_zone" "skillsand-me-public" {
-  name    = "skillsand.me"
-  comment = ""
-
-  tags {}
-}
-
-resource "aws_route53_zone" "y-knot-jp-public" {
-  name    = "y-knot.jp"
-  comment = ""
-
-  tags {}
-}
-
 resource "aws_route53_zone" "hanica-me-public" {
   name    = "hanica.me"
   comment = ""
@@ -93,22 +79,8 @@ resource "aws_route53_zone" "staging-smarthr-lp-com-public" {
   tags {}
 }
 
-resource "aws_route53_zone" "kokeshi-biz-public" {
-  name    = "kokeshi.biz"
-  comment = "HostedZone created by Route53 Registrar"
-
-  tags {}
-}
-
 resource "aws_route53_zone" "akeome-cc-public" {
   name    = "akeome.cc"
-  comment = "HostedZone created by Route53 Registrar"
-
-  tags {}
-}
-
-resource "aws_route53_zone" "hanica-zuora-qa-com-public" {
-  name    = "hanica-zuora-qa.com"
   comment = "HostedZone created by Route53 Registrar"
 
   tags {}
