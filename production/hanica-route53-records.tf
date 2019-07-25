@@ -266,7 +266,7 @@ resource "aws_route53_record" "smarthr-jp-TXT" {
   ttl     = "300"
 }
 
-resource "aws_route53_record" "0e2ec3229d46ff2dbc9d2240f2cc8b44-smarthr-jp-CNAME" {
+resource "aws_route53_record" "_0e2ec3229d46ff2dbc9d2240f2cc8b44-smarthr-jp-CNAME" {
   zone_id = "Z38IZYREYRKWXV"
   name    = "0e2ec3229d46ff2dbc9d2240f2cc8b44.smarthr.jp"
   type    = "CNAME"
