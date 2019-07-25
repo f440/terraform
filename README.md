@@ -23,13 +23,9 @@ $ tfenv install 0.11.13
 ```
 $bash terraform.sh format
 Please select service to apply terraform
-0 : s3
-1 : cloudfront
-2 : iam
-3 : elasticache
-4 : rds
-5 : route53
-Select AWS Service Number > 3
+0 : cloudflare
+1 : production
+Select AWS Service Number > 1
 
 <実行ログの表示>
 ```
