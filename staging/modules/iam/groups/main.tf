@@ -15,7 +15,7 @@ resource "aws_iam_group" "main" {
 resource "aws_iam_group_membership" "main" {
   name  = "${aws_iam_group.main.name}"
   group = "${aws_iam_group.main.name}"
-  users = ["${var.users}"]
+  users = "${var.users}"
 }
 
 resource "aws_iam_group_policy" "main" {
