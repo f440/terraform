@@ -5,7 +5,7 @@ resource "aws_iam_role" "administrator" {
 
 resource "aws_iam_policy_attachment" "administrator-role-attachment" {
   name       = "administrator-role-attachment"
-  roles      = ["${aws_iam_role.developer.name}"]
+  roles      = ["${aws_iam_role.administrator.name}"]
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
 
