@@ -5,3 +5,7 @@ terraform {
     region = "ap-northeast-1"
   }
 }
+
+provider "cloudflare" {
+  version = "~> 1.12"
+}

@@ -1,0 +1,32 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "NotAction": [
+                "iam:*",
+                "sts:AssumeRole"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:Get*",
+                "iam:List*",
+                "iam:PassRole",
+                "iam:CreateLoginProfile"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "sts:AssumeRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::736134917012:role/developer"
+            ]
+        }
+    ]
+}
