@@ -1,17 +1,16 @@
 terraform {
-  required_version = "~> 0.11.13"
+  required_version = "~> 0.12.5"
 
   backend "s3" {
-    bucket = "kufu-terraform-state"
-    key    = "terraform"
+    bucket = "smarthr-staging-terraform-state"
+    key    = "staging-terraform.tfstate"
     region = "ap-northeast-1"
   }
 }
 
 provider "aws" {
-  version = "~> 2.19.0"
+  version = "~> 2.20.0"
   region  = "ap-northeast-1"
-  profile = "smarthr-development"
 }
 
 provider "template" {
