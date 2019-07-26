@@ -5,14 +5,17 @@ terraform {
     bucket = "kufu-terraform-state"
     key    = "production-terraform.tfstate"
     region = "ap-northeast-1"
-    # TODO : IAM Roleベースで適用する際に利用する
-    # role_arn = "arn:aws:iam::ACCOUNT_ID:role/terraform"
+    role_arn = "arn:aws:iam::736134917012:role/administrator"
   }
 }
 
 provider "aws" {
   version = "~> 2.20.0"
   region  = "ap-northeast-1"
+
+  assume_role {
+    role_arn = "arn:aws:iam::736134917012:role/administrator"
+  }
 }
 
 provider "template" {
