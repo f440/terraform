@@ -15,7 +15,10 @@
                 "iam:Get*",
                 "iam:List*",
                 "iam:PassRole",
-                "iam:CreateLoginProfile"
+                "iam:CreateLoginProfile",
+                "iam:ChangePassword",
+                "iam:CreateVirtualMFADevice",
+                "iam:EnableMFADevice"
             ],
             "Resource": "*"
         },
