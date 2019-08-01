@@ -8,12 +8,13 @@ terraformでよく使うであろうコマンドをラップしたshellがあり
 
 ## インストール
 
-terraform v0.11.13 が動作対象。
+動作対象の terraform バージョンは .terraform-version を参照。
 tfenv をいれるとスムーズ。
 
 ```
 $ brew install tfenv
-$ tfenv install 0.11.13
+$ cd kufu/terraform
+$ tfenv install
 ```
 
 ## 実行方法
