@@ -1,6 +1,6 @@
-resource "aws_elasticache_replication_group" "plus-shittori-production" {
-  replication_group_id          = "shittori-production"
-  replication_group_description = "Redis instance for shittori-production"
+resource "aws_elasticache_replication_group" "plus-shiritori-production" {
+  replication_group_id          = "shiritori-production"
+  replication_group_description = "Redis instance for shiritori-production"
 
   number_cache_clusters      = 2
   node_type                  = "cache.m3.medium"
@@ -26,15 +26,22 @@ resource "aws_elasticache_replication_group" "plus-shittori-production" {
     "${var.sg-default}",
   ]
 
-  parameter_group_name = "${aws_elasticache_parameter_group.plus-shittori-redis-32.name}"
+  parameter_group_name = "${aws_elasticache_parameter_group.plus-shiritori-redis-32.name}"
 
   maintenance_window       = "mon:14:30-mon:15:30"
   snapshot_window          = "18:00-19:00"
   snapshot_retention_limit = "1"
 }
 
-resource "aws_elasticache_parameter_group" "plus-shittori-redis-32" {
-  name        = "shittori-redis-32"
+resource "aws_elasticache_parameter_group" "plus-shiritori-redis-32" {
+  name        = "shiritori-redis-32"
   family      = "redis3.2"
-  description = "Redis 3.2 parameter group for shittori"
+  description = "Redis 3.2 parameter group for shiritori"
+}
+
+resource "aws_db_parameter_group" "shiritori-dbparamgroup" {
+  name   = "shiritori-dbparamgroup"
+  family = "postgres11"
+
+  description = "PostgreSQL 11 Parameter Groups for shiritori"
 }
