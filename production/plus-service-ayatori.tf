@@ -1,6 +1,6 @@
-resource "aws_elasticache_replication_group" "plus-kotori-production" {
-  replication_group_id          = "kotori-production"
-  replication_group_description = "Redis instance for kotori-production"
+resource "aws_elasticache_replication_group" "plus-ayatori-production" {
+  replication_group_id          = "ayatori-production"
+  replication_group_description = "Redis instance for ayatori-production"
 
   number_cache_clusters      = 2
   node_type                  = "cache.m3.medium"
@@ -26,15 +26,22 @@ resource "aws_elasticache_replication_group" "plus-kotori-production" {
     "${var.sg-default}",
   ]
 
-  parameter_group_name = "${aws_elasticache_parameter_group.plus-kotori-redis-32.name}"
+  parameter_group_name = "${aws_elasticache_parameter_group.plus-ayatori-redis-32.name}"
 
   maintenance_window       = "mon:14:30-mon:15:30"
   snapshot_window          = "18:00-19:00"
   snapshot_retention_limit = "1"
 }
 
-resource "aws_elasticache_parameter_group" "plus-kotori-redis-32" {
-  name        = "kotori-redis-32"
+resource "aws_elasticache_parameter_group" "plus-ayatori-redis-32" {
+  name        = "ayatori-redis-32"
   family      = "redis3.2"
-  description = "Redis 3.2 parameter group for kotori"
+  description = "Redis 3.2 parameter group for ayatori"
+}
+
+resource "aws_db_parameter_group" "ayatori-dbparamgroup" {
+  name   = "ayatori-dbparamgroup"
+  family = "postgres10"
+
+  description = "PostgreSQL 10 Parameter Groups for ayatori"
 }
