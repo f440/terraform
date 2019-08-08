@@ -6,7 +6,12 @@
             "NotAction": [
                 "sts:AssumeRole"
             ],
-            "Resource": "*"
+            "Resource": "*",
+            "Condition" : {
+                "Bool" : {
+                    "aws:MultiFactorAuthPresent" : true
+                }
+            }
         },
         {
             "Effect": "Deny",
