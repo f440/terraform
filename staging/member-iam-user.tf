@@ -17,3 +17,9 @@ module "iam-user-munehiko-fujimura" {
   source         = "./modules/iam/users"
   name           = "munehiko.fujimura"
 }
+
+## TODO: 検証完了時に削除
+module "iam-user-test-naito" {
+  source         = "./modules/iam/users"
+  name           = "test-naito"
+}
