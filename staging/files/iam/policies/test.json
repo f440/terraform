@@ -11,6 +11,15 @@
         {
             "Effect": "Deny",
             "Action": [
+                "iam:CreateGroup",
+                "iam:DeleteGroup",
+                "iam:UpdateGroup"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Deny",
+            "Action": [
                 "iam:AttachGroupPolicy",
                 "iam:DeleteGroupPolicy",
                 "iam:DetachGroupPolicy",
