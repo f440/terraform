@@ -44,6 +44,15 @@
             ]
         },
         {
+            "Effect": "Deny",
+            "Action": [
+                "iam:AttachUserPolicy",
+                "iam:DetachUserPolicy",
+                "iam:PutUserPolicy"
+            ],
+            "Resource": "*"
+        },
+        {
             "Effect": "Allow",
             "Action": [
                 "sts:AssumeRole"
