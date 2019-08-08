@@ -4,8 +4,23 @@
         {
             "Effect": "Allow",
             "NotAction": [
-                "iam:*",
                 "sts:AssumeRole"
+            ],
+            "Resource": "*",
+            "Condition" : {
+                "Bool" : {
+                    "aws:MultiFactorAuthPresent" : true
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:ListAccountAliases",
+                "iam:ListUsers",
+                "iam:ListVirtualMFADevices",
+                "iam:GetAccountPasswordPolicy",
+                "iam:GetAccountSummary"
             ],
             "Resource": "*"
         },
@@ -16,9 +31,75 @@
                 "iam:List*",
                 "iam:PassRole",
                 "iam:CreateLoginProfile",
-                "iam:ChangePassword",
-                "iam:CreateVirtualMFADevice",
-                "iam:EnableMFADevice"
+                "iam:ChangePassword"
+            ],
+            "Resource": [
+                "arn:aws:iam::*:user/${aws:username}"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:EnableMFADevice",
+                "iam:DeactivateMFADevice",
+                "iam:ResyncMFADevice",
+                "iam:ListMFADevices"
+            ],
+            "Resource": [
+                "arn:aws:iam::*:user/${aws:username}"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:DeleteVirtualMFADevice",
+                "iam:CreateVirtualMFADevice"
+            ],
+            "Resource": [
+                "arn:aws:iam::*:mfa/${aws:username}"
+            ]
+        },
+        {
+            "Effect": "Deny",
+            "Action": [
+                "iam:CreateGroup",
+                "iam:DeleteGroup",
+                "iam:UpdateGroup"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Deny",
+            "Action": [
+                "iam:AttachGroupPolicy",
+                "iam:DeleteGroupPolicy",
+                "iam:DetachGroupPolicy",
+                "iam:PutGroupPolicy"
+            ],
+            "Resource": [
+                "arn:aws:iam::121659688561:group/developer"
+            ]
+        },
+        {
+            "Effect": "Deny",
+            "Action": [
+                "iam:AddUserToGroup",
+                "iam:AttachGroupPolicy",
+                "iam:DeleteGroupPolicy",
+                "iam:DetachGroupPolicy",
+                "iam:PutGroupPolicy",
+                "iam:RemoveUserFromGroup"
+            ],
+            "Resource": [
+                "arn:aws:iam::121659688561:group/administrator"
+            ]
+        },
+        {
+            "Effect": "Deny",
+            "Action": [
+                "iam:AttachUserPolicy",
+                "iam:DetachUserPolicy",
+                "iam:PutUserPolicy"
             ],
             "Resource": "*"
         },
@@ -29,7 +110,12 @@
             ],
             "Resource": [
                 "arn:aws:iam::736134917012:role/developer"
-            ]
+            ],
+            "Condition" : {
+                "Bool" : {
+                    "aws:MultiFactorAuthPresent" : true
+                }
+            }
         }
     ]
 }

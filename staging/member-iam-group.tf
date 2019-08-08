@@ -26,17 +26,6 @@ module "iam-group-developer" {
 
   users = [
     "${module.iam-user-naito-kensuke.name}",
-  ]
-}
-
-
-## 権限テスト
-## TODO: developersのjsonをこちらに差し替える
-module "iam-group-test" {
-  source = "./modules/iam/groups"
-  name   = "test"
-
-  users = [
-    "${module.iam-user-test-naito.name}",
+    "${module.iam-user-test-naito.name}"
   ]
 }
