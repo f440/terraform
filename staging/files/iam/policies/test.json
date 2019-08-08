@@ -64,7 +64,12 @@
             ],
             "Resource": [
                 "arn:aws:iam::736134917012:role/developer"
-            ]
+            ],
+            "Condition" : {
+                "Bool" : {
+                    "aws:MultiFactorAuthPresent" : true
+                }
+            }
         }
     ]
 }
