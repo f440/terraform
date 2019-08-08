@@ -25,7 +25,6 @@ module "iam-group-developer" {
   name   = "developer"
 
   users = [
-    "${module.iam-user-naito-kensuke.name}",
-    "${module.iam-user-test-naito.name}"
+    "${module.iam-user-naito-kensuke.name}"
   ]
 }
