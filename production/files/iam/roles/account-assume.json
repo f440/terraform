@@ -8,7 +8,7 @@
       },
       "Action": "sts:AssumeRole",
       "Condition": {
-        "Bool": {
+        "BoolIfExists": {
           "aws:MultiFactorAuthPresent": "true"
         }
       }
