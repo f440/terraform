@@ -7,7 +7,11 @@
         "AWS": "arn:aws:iam::121659688561:root"
       },
       "Action": "sts:AssumeRole",
-      "Condition": {}
+      "Condition": {
+        "BoolIfExists": {
+          "aws:MultiFactorAuthPresent": "true"
+        }
+      }
     }
   ]
 }

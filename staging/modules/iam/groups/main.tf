@@ -18,6 +18,12 @@ resource "aws_iam_group_membership" "main" {
   users = "${var.users}"
 }
 
+resource "aws_iam_group_policy" "common" {
+  name   = "common"
+  group  = "${aws_iam_group.main.name}"
+  policy = "${file("./files/iam/policies/common.json")}"
+}
+
 resource "aws_iam_group_policy" "main" {
   name   = "${aws_iam_group.main.name}"
   group  = "${aws_iam_group.main.name}"

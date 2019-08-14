@@ -4,7 +4,12 @@
         {
             "Effect": "Allow",
             "Action": "*",
-            "Resource": "*"
+            "Resource": "*",
+            "Condition": {
+                "BoolIfExists": {
+                    "aws:MultiFactorAuthPresent": true
+                }
+            }
         }
     ]
 }
