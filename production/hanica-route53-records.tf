@@ -1126,6 +1126,14 @@ resource "aws_route53_record" "asterisk-smarthr-hack-me-CNAME" {
   zone_id = "${aws_route53_zone.smarthr-hack-me-public.zone_id}"
   name    = "*.smarthr-hack.me"
   type    = "CNAME"
-  records = ["wildcard.smarthr-hack.me.herokudns.com"]
+  records = ["encircled-turnip-12ya3abcfmwrsfo35grkzuuk.herokudns.com"]
+  ttl     = "60"
+}
+
+resource "aws_route53_record" "ssl-smarthr-hack-me-CNAME" {
+  zone_id = "${aws_route53_zone.smarthr-hack-me-public.zone_id}"
+  name    = "_00C03E77274E14F652B5FB508F19084F.smarthr-hack.me"
+  type    = "CNAME"
+  records = ["4F8F3E4E0A555DAD6EDE3132FCAC72B4.EDBBFB0E1079838B9FBCABD5AA59E268.5d5a7cb9542e2.comodoca.com"]
   ttl     = "60"
 }
