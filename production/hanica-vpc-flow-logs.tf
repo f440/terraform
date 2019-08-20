@@ -6,7 +6,7 @@ resource "aws_flow_log" "hanica-vpc-flow-logs" {
 }
 
 resource "aws_cloudwatch_log_group" "cloudwatch-log-group-for-hanica-vpc-flow-logs" {
-  name = "vpcFlowLogsGroup"
+  name = "/aws/vpc/hanica-new-vpc-flow-logs"
 }
 
 resource "aws_iam_role" "iam-role-for-hanica-vpc-flow-logs" {
