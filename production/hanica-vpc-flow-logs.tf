@@ -6,11 +6,11 @@ resource "aws_flow_log" "hanica-vpc-flow-logs" {
 }
 
 resource "aws_cloudwatch_log_group" "cloudwatch-log-group-for-hanica-vpc-flow-logs" {
-  name = "vpcFlowlogsGroup"
+  name = "vpcFlowLogsGroup"
 }
 
 resource "aws_iam_role" "iam-role-for-hanica-vpc-flow-logs" {
-  name = "vpcFlowlogsRole"
+  name = "vpcFlowLogsRole"
 
   assume_role_policy = <<EOF
 {
@@ -20,7 +20,7 @@ resource "aws_iam_role" "iam-role-for-hanica-vpc-flow-logs" {
       "Sid": "",
       "Effect": "Allow",
       "Principal": {
-        "Service": "vpc-flow-logss.amazonaws.com"
+        "Service": "vpc-flow-logs.amazonaws.com"
       },
       "Action": "sts:AssumeRole"
     }
