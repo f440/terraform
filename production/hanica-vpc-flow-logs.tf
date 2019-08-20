@@ -29,9 +29,9 @@ resource "aws_iam_role" "iam-role-for-hanica-vpc-flow-logs" {
 EOF
 }
 
-resource "aws_iam_role_policy" "iam-role-policy-for-hanica-vpc-flow-logs" {
-  name = "vpcFlowLogsRolePolicy"
-  role = "${aws_iam_role.example.id}"
+resource "aws_iam_policy" "iam-policy-for-hanica-vpc-flow-logs" {
+  name = "VPCFlowLogsPolicy"
+  description = "A policy for VPC Flow Logs operations"
 
   policy = <<EOF
 {
@@ -51,4 +51,9 @@ resource "aws_iam_role_policy" "iam-role-policy-for-hanica-vpc-flow-logs" {
   ]
 }
 EOF
+}
+
+resource "aws_iam_role_policy_attachment" "iam-role-policy-attachment-for-hanica-vpc-flow-logs" {
+  role       = "${aws_iam_role.iam-role-for-hanica-vpc-flow-logs.name}"
+  policy_arn = "${aws_iam_policy.iam-policy-for-hanica-vpc-flow-logs.arn}"
 }
