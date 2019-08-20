@@ -10,7 +10,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch-log-group-for-hanica-vpc-flow-lo
 }
 
 resource "aws_iam_role" "iam-role-for-hanica-vpc-flow-logs" {
-  name = "vpcFlowLogsRole"
+  name = "VpcFlowLogsRole"
 
   assume_role_policy = <<EOF
 {
