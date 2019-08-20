@@ -1105,3 +1105,35 @@ resource "aws_route53_record" "redis-volatile-staging-hanica-internal-CNAME" {
   records = ["docker-volatile.eigvkv.0001.apne1.cache.amazonaws.com"]
   ttl     = "300"
 }
+
+resource "aws_route53_record" "smarthr-hack-me-NS" {
+  zone_id = "${aws_route53_zone.smarthr-hack-me-public.zone_id}"
+  name    = "smarthr-hack.me"
+  type    = "NS"
+  records = ["ns-70.awsdns-08.com.", "ns-937.awsdns-53.net.", "ns-1177.awsdns-19.org.", "ns-1629.awsdns-11.co.uk."]
+  ttl     = "172800"
+}
+
+resource "aws_route53_record" "smarthr-hack-me-SOA" {
+  zone_id = "${aws_route53_zone.smarthr-hack-me-public.zone_id}"
+  name    = "smarthr-hack.me"
+  type    = "SOA"
+  records = ["ns-70.awsdns-08.com. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
+  ttl     = "900"
+}
+
+resource "aws_route53_record" "asterisk-smarthr-hack-me-CNAME" {
+  zone_id = "${aws_route53_zone.smarthr-hack-me-public.zone_id}"
+  name    = "*.smarthr-hack.me"
+  type    = "CNAME"
+  records = ["encircled-turnip-12ya3abcfmwrsfo35grkzuuk.herokudns.com"]
+  ttl     = "60"
+}
+
+resource "aws_route53_record" "ssl-smarthr-hack-me-CNAME" {
+  zone_id = "${aws_route53_zone.smarthr-hack-me-public.zone_id}"
+  name    = "_00C03E77274E14F652B5FB508F19084F.smarthr-hack.me"
+  type    = "CNAME"
+  records = ["4F8F3E4E0A555DAD6EDE3132FCAC72B4.EDBBFB0E1079838B9FBCABD5AA59E268.5d5a7cb9542e2.comodoca.com"]
+  ttl     = "60"
+}

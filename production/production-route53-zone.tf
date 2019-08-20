@@ -112,3 +112,10 @@ resource "aws_route53_zone" "hanica-internal-private" {
   }
   tags = {}
 }
+
+resource "aws_route53_zone" "smarthr-hack-me-public" {
+  name    = "smarthr-hack.me"
+  comment = "HostedZone created by Route53 Registrar"
+
+  tags = {}
+}
