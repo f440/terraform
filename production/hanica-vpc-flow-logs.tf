@@ -2,7 +2,7 @@ resource "aws_flow_log" "hanica-vpc-flow-logs" {
   iam_role_arn    = "${aws_iam_role.iam-role-for-hanica-vpc-flow-logs.arn}"
   log_destination = "${aws_cloudwatch_log_group.cloudwatch-log-group-for-hanica-vpc-flow-logs.arn}"
   traffic_type    = "ALL"
-  vpc_id          = "vpc-813df2e4"
+  vpc_id          = "vpc-77586713"
 }
 
 resource "aws_cloudwatch_log_group" "cloudwatch-log-group-for-hanica-vpc-flow-logs" {
