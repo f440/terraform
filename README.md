@@ -62,3 +62,13 @@ terraformのオプションがそのまま引き渡せます
 ```
 $ bash terraform.sh import aws_elasticache_parameter_group.plus-ayatori-redis-32 ayatori-redis-32
 ```
+
+
+## heroku
+
+herokuディレクトリにterraform.tfvarsファイルを作成し、下記を入力する
+
+```
+heroku_email="メールアドレス"
+heroku_api_key="herokuのAPIキー"
+```

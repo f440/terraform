@@ -7,3 +7,6 @@ tf
 .terraform/
 
 .DS_Store
+
+heroku/.terraform/**
+heroku/*.tfvars
