@@ -3,6 +3,15 @@
 # SubnetGroup
 #
 ##################################################
+variable "vpc-hanica-new-vpc" {
+  default = "vpc-77586713"
+}
+
+##################################################
+#
+# SubnetGroup
+#
+##################################################
 variable "plus_subnet_group_name" {
   default = "hanica-docker-redis-subnet-group"
 }
