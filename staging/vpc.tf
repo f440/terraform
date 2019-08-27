@@ -22,7 +22,7 @@ resource "aws_subnet" "staging-hanica-external-1a" {
 resource "aws_subnet" "staging-hanica-external-1c" {
   vpc_id            = "${aws_vpc.staging-hanica-new-vpc.id}"
   cidr_block        = "10.0.3.0/24"
-  availability_zone = "ap-northeast-1a"
+  availability_zone = "ap-northeast-1c"
 
   tags = {
     Name = "staging-hanica-external-1c"
@@ -32,7 +32,7 @@ resource "aws_subnet" "staging-hanica-external-1c" {
 resource "aws_subnet" "staging-hanica-internal-1a" {
   vpc_id            = "${aws_vpc.staging-hanica-new-vpc.id}"
   cidr_block        = "10.0.128.0/24"
-  availability_zone = "ap-northeast-1c"
+  availability_zone = "ap-northeast-1a"
 
   tags = {
     Name = "staging-hanica-internal-1a"
