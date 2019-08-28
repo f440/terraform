@@ -1,6 +1,6 @@
 resource "aws_security_group" "sg-service-active-assessment" {
   name   = "service-active-assessment"
-  vpc_id = "${aws_vpc.staging-hanica-new-vpc.id}"
+  vpc_id = "${aws_vpc.staging-hanica-vpc.id}"
 
   egress {
     from_port   = 0
