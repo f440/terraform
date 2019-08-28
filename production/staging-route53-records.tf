@@ -116,6 +116,6 @@ resource "aws_route53_record" "asterisk-tatami-staging-aoyagi-farm-CNAME" {
   zone_id = "${var.aoyagi_farm_zone_id}"
   name    = "*.tatami-staging.aoyagi.farm"
   type    = "CNAME"
-  records = ["pacific-rose-5ztud21qobl3ufuwwprd97dr.herokudns.com"]
+  records = ["reticulated-lettuce-558r487iadiqqxsbhxme8qs3.herokudns.com"]
   ttl     = "60"
 }
