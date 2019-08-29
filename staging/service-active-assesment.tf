@@ -43,6 +43,15 @@ resource "aws_security_group_rule" "sg-service-active-assessment-https-rule" {
   cidr_blocks       = ["${var.office-ip}/32"]
 }
 
+resource "aws_eip" "service-active-assessment" {
+  vpc = true
+  instance = "${aws_instance.service-active-assessment.id}"
+
+  tags = {
+    Name = "service-active-assessment"
+  }
+}
+
 # 秘密鍵とパスフレーズはwillnetさんに提供済み
 # 秘密鍵とパスフレーズは下記を参照
 # https://docs.google.com/spreadsheets/d/1GBRE5YapQWIEfQbcZS66yHEJsOaguxdKIZxe9X-6C48/edit#gid=0
