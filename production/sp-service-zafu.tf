@@ -56,11 +56,11 @@ resource "aws_cloudwatch_event_rule" "zafu-batch-event" {
   # https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
   # 注意: 以下はUTC表記。毎日00:00(JST)
   schedule_expression = "cron(0 15 * * ? *)"
-  is_enabled = "false"
+  is_enabled = "true"
 }
 
 resource "aws_cloudwatch_event_target" "zafu-batch-scheduled-task" {
-  target_id = "zafu-batch-scheduled-task-every-hour"
+  target_id = "zafu-batch-scheduled-task-every-day"
 
   arn       = "${aws_ecs_cluster.zafu-cluster.arn}"
   rule      = "${aws_cloudwatch_event_rule.zafu-batch-event.name}"
