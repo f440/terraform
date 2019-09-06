@@ -16,6 +16,14 @@ variable "plus_subnet_group_name" {
   default = "hanica-docker-redis-subnet-group"
 }
 
+variable "vpc_subnet_hanica_internal_1a_id" {
+  default = "subnet-f6b561bf"
+}
+
+variable "vpc_subnet_hanica_internal_1c_id" {
+  default = "subnet-87e0eedf"
+}
+
 ##################################################
 #
 # SecurityGroup
