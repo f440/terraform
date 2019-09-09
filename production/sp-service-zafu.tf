@@ -19,8 +19,8 @@ resource "aws_ecs_task_definition" "zafu-task-definition" {
   execution_role_arn = "${aws_iam_role.zafu-task-execution-role.arn}"
 
   network_mode             = "awsvpc"
-  cpu                      = "256"
-  memory                   = "512"
+  cpu                      = "1024"
+  memory                   = "4096"
   requires_compatibilities = ["FARGATE"]
 }
 
