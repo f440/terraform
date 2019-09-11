@@ -117,3 +117,8 @@ module "iam-user-shota-takata" {
   source         = "./modules/iam/users"
   name           = "shota.takata"
 }
+
+module "iam-user-yasuhiro-kinoshita" {
+  source         = "./modules/iam/users"
+  name           = "yasuhiro.kinoshita"
+}
