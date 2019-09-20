@@ -14,6 +14,7 @@ resource "aws_iam_group_membership" "plus-app" {
   group = "${aws_iam_group.plus-app.name}"
 
   users = [
+    "plus-service-oke-circleci",
     "${aws_iam_user.plus-service-jougo.name}",
   ]
 }
@@ -30,8 +31,13 @@ resource "aws_iam_user" "plus-service-jougo" {
   force_destroy = "false"
 }
 
-resource "aws_iam_user_policy" "plus-service-jougo" {
+resource "aws_iam_policy" "plus-service-jougo" {
   name   = "PlusServiceJougoPolicy"
-  user   = "${aws_iam_user.plus-service-jougo.name}"
   policy = "${file("./files/iam/policies/plus-service-jougo.json")}"
+}
+
+resource "aws_iam_policy_attachment" "plus-service-jougo" {
+  name       = "plus-service-jougo"
+  users      = ["${aws_iam_user.plus-service-jougo.name}"]
+  policy_arn = "${aws_iam_policy.plus-service-jougo.arn}"
 }
