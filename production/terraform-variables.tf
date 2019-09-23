@@ -1,5 +1,14 @@
 ##################################################
 #
+# IP
+#
+##################################################
+variable "office-ip" {
+  default = "150.249.198.101"
+}
+
+##################################################
+#
 # VPC
 #
 ##################################################
@@ -14,6 +23,14 @@ variable "vpc-hanica-new-vpc" {
 ##################################################
 variable "plus_subnet_group_name" {
   default = "hanica-docker-redis-subnet-group"
+}
+
+variable "vpc_subnet_hanica_external_1a_id" {
+  default = "subnet-258b5f6c"
+}
+
+variable "vpc_subnet_hanica_external_1c_id" {
+  default = "subnet-cbe2ec93"
 }
 
 variable "vpc_subnet_hanica_internal_1a_id" {
