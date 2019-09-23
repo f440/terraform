@@ -89,6 +89,14 @@ resource "aws_cloudwatch_log_group" "zafu-batch" {
   name = "zafu"
 }
 
+resource "aws_cloudwatch_log_group" "zafu-users" {
+  name = "zafu-users"
+}
+
+resource "aws_cloudwatch_log_group" "zafu-organizations" {
+  name = "zafu-organizations"
+}
+
 ##################################################
 #
 # IAM
