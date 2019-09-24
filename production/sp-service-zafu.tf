@@ -11,9 +11,9 @@ resource "aws_ecs_cluster" "zafu-cluster" {
   name = "zafu-cluster"
 }
 
-resource "aws_ecs_task_definition" "zafu-task-definition" {
-  family                = "zafu"
-  container_definitions = "${file("files/ecs/task-definitions/zafu-task.json")}"
+resource "aws_ecs_task_definition" "zafu-users-task-definition" {
+  family                = "zafu-users"
+  container_definitions = "${file("files/ecs/task-definitions/zafu-users-task.json")}"
 
   task_role_arn      = "${aws_iam_role.zafu-task-role.arn}"
   execution_role_arn = "${aws_iam_role.zafu-task-execution-role.arn}"
@@ -24,10 +24,43 @@ resource "aws_ecs_task_definition" "zafu-task-definition" {
   requires_compatibilities = ["FARGATE"]
 }
 
-resource "aws_ecs_service" "zafu-service" {
-  name                               = "zafu"
-  task_definition                    = "${aws_ecs_task_definition.zafu-task-definition.arn}"
-  desired_count                      = 0
+resource "aws_ecs_service" "zafu-users-service" {
+  name                               = "zafu-users"
+  task_definition                    = "${aws_ecs_task_definition.zafu-users-task-definition.arn}"
+  desired_count                      = 1
+  launch_type                        = "FARGATE"
+  scheduling_strategy                = "REPLICA"
+  cluster                            = "${aws_ecs_cluster.zafu-cluster.id}"
+  deployment_maximum_percent         = "200"
+  deployment_minimum_healthy_percent = "50"
+
+  network_configuration {
+    subnets = [
+      "${var.vpc_subnet_hanica_internal_1a_id}",
+      "${var.vpc_subnet_hanica_internal_1c_id}",
+    ]
+
+    assign_public_ip = "false"
+  }
+}
+
+resource "aws_ecs_task_definition" "zafu-organizations-task-definition" {
+  family                = "zafu-organizations"
+  container_definitions = "${file("files/ecs/task-definitions/zafu-organizations-task.json")}"
+
+  task_role_arn      = "${aws_iam_role.zafu-task-role.arn}"
+  execution_role_arn = "${aws_iam_role.zafu-task-execution-role.arn}"
+
+  network_mode             = "awsvpc"
+  cpu                      = "1024"
+  memory                   = "4096"
+  requires_compatibilities = ["FARGATE"]
+}
+
+resource "aws_ecs_service" "zafu-organizations-service" {
+  name                               = "zafu-organizations"
+  task_definition                    = "${aws_ecs_task_definition.zafu-organizations-task-definition.arn}"
+  desired_count                      = 1
   launch_type                        = "FARGATE"
   scheduling_strategy                = "REPLICA"
   cluster                            = "${aws_ecs_cluster.zafu-cluster.id}"
@@ -49,42 +82,7 @@ resource "aws_ecs_service" "zafu-service" {
 # CloudWatch
 #
 ##################################################
-resource "aws_cloudwatch_event_rule" "zafu-batch-event" {
-  name        = "zafu-batch-event"
-  description = "Run import intercom to zendesk"
-
-  # https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
-  # 注意: 以下はUTC表記。毎日00:00(JST)
-  schedule_expression = "cron(0 15 * * ? *)"
-  is_enabled = "false"
-}
-
-resource "aws_cloudwatch_event_target" "zafu-batch-scheduled-task" {
-  target_id = "zafu-batch-scheduled-task-every-day"
-
-  arn       = "${aws_ecs_cluster.zafu-cluster.arn}"
-  rule      = "${aws_cloudwatch_event_rule.zafu-batch-event.name}"
-  role_arn  = "${aws_iam_role.zafu-batch-event-role.arn}"
-
-  ecs_target {
-    group = "zafu"
-    launch_type = "FARGATE"
-
-    network_configuration {
-      subnets = [
-        "${var.vpc_subnet_hanica_internal_1a_id}",
-        "${var.vpc_subnet_hanica_internal_1c_id}",
-      ]
-
-      assign_public_ip = "false"
-    }
-
-    platform_version = "LATEST"
-    task_count = 1
-    task_definition_arn = "${aws_ecs_task_definition.zafu-task-definition.arn}"
-  }
-}
-
+# 旧実行ログで監査対応として残している
 resource "aws_cloudwatch_log_group" "zafu-batch" {
   name = "zafu"
 }
@@ -138,25 +136,6 @@ resource "aws_iam_policy" "zafu-task-execution-policy" {
   path        = "/"
   description = "ZafuTaskExecutionPolicy"
   policy      = "${file("./files/iam/policies/zafu-task-execution-policy.json")}"
-}
-
-### cloudwatch event role
-resource "aws_iam_role" "zafu-batch-event-role" {
-  name               = "ZafuBatchEventRole"
-  assume_role_policy = "${file("./files/iam/roles/events-assume.json")}"
-}
-
-resource "aws_iam_policy_attachment" "zafu-batch-event-role-policy-attachment" {
-  name       = "zafu-batch-event-role-attachment"
-  roles      = ["${aws_iam_role.zafu-batch-event-role.name}"]
-  policy_arn = "${aws_iam_policy.zafu-batch-event-policy.arn}"
-}
-
-resource "aws_iam_policy" "zafu-batch-event-policy" {
-  name        = "ZafuBatchEventPolicy"
-  path        = "/"
-  description = "ZafuBatchEventPolicy"
-  policy      = "${file("./files/iam/policies/zafu-batch-event-policy.json")}"
 }
 
 ### credential(kms)

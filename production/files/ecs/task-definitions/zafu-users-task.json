@@ -1,0 +1,77 @@
+[
+  {
+    "dnsSearchDomains": null,
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "zafu-users",
+        "awslogs-region": "ap-northeast-1",
+        "awslogs-stream-prefix": "ecs"
+      }
+    },
+    "entryPoint": null,
+    "portMappings": [],
+    "command": null,
+    "linuxParameters": null,
+    "cpu": 0,
+    "environment": [
+      {
+        "value": "zendesk_users_config.yml.liquid",
+        "name": "IMPORT_TASK_FILE"
+      }
+    ],
+    "ulimits": null,
+    "dnsServers": null,
+    "mountPoints": [],
+    "workingDirectory": null,
+    "secrets": [
+      {
+        "valueFrom": "zafu_google_private_key_id",
+        "name": "GOOGLE_PRIVATE_KEY_ID"
+      },
+      {
+        "valueFrom": "zafu_google_private_key",
+        "name": "GOOGLE_PRIVATE_KEY"
+      },
+      {
+        "valueFrom": "zafu_google_client_email",
+        "name": "GOOGLE_CLIENT_EMAIL"
+      },
+      {
+        "valueFrom": "zafu_google_client_id",
+        "name": "GOOGLE_CLIENT_ID"
+      },
+      {
+        "valueFrom": "zafu_google_client_x509_cert_url",
+        "name": "GOOGLE_CLIENT_X509_CERT_URL"
+      },
+      {
+        "valueFrom": "zafu_zendesk_user_name",
+        "name": "ZENDESK_USER_NAME"
+      },
+      {
+        "valueFrom": "zafu_zendesk_auth_token",
+        "name": "ZENDESK_AUTH_TOKEN"
+      }
+    ],
+    "dockerSecurityOptions": null,
+    "memory": null,
+    "memoryReservation": null,
+    "volumesFrom": [],
+    "image": "736134917012.dkr.ecr.ap-northeast-1.amazonaws.com/zafu:latest",
+    "disableNetworking": null,
+    "interactive": null,
+    "healthCheck": null,
+    "essential": true,
+    "links": null,
+    "hostname": null,
+    "extraHosts": null,
+    "pseudoTerminal": null,
+    "user": null,
+    "readonlyRootFilesystem": null,
+    "dockerLabels": null,
+    "systemControls": null,
+    "privileged": null,
+    "name": "zafu-users"
+  }
+]
