@@ -66,3 +66,12 @@ variable "aoyagi_farm_zone_id" {
 variable "smarthr_plus_zone_id" {
   default = "Z1XLEN8BSTM9ZS"
 }
+
+##################################################
+#
+# AMI ID
+#
+##################################################
+variable "kiban-service-fivetran-latest-ami-id" {
+  default = "ami-0ff21806645c5e492"
+}

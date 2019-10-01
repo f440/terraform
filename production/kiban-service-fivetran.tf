@@ -31,16 +31,6 @@ resource "aws_security_group_rule" "sg-kiban-service-fivetran-ssh-rule" {
   ]
 }
 
-# fivetranからのssh許可用に設定する
-resource "aws_eip" "kiban-service-fivetran" {
-  vpc = true
-  instance = "${aws_instance.kiban-service-fivetran.id}"
-
-  tags = {
-    Name = "kiban-service-fivetran"
-  }
-}
-
 # 秘密鍵とパスフレーズは下記を参照
 # https://docs.google.com/spreadsheets/d/1GBRE5YapQWIEfQbcZS66yHEJsOaguxdKIZxe9X-6C48/edit#gid=0
 resource "aws_key_pair" "kiban-service-fivetran" {
@@ -48,8 +38,54 @@ resource "aws_key_pair" "kiban-service-fivetran" {
   public_key = "${file("./files/ec2/keys/kiban-service-fivetran.pub")}"
 }
 
-resource "aws_instance" "kiban-service-fivetran" {
-  ami           = "ami-0ff21806645c5e492"
+# fivetranからのssh許可用に設定する
+resource "aws_eip" "kiban-service-fivetran-koban" {
+  vpc = true
+  instance = "${aws_instance.kiban-service-fivetran-koban.id}"
+
+  tags = {
+    Name = "kiban-service-fivetran-koban"
+  }
+}
+
+resource "aws_instance" "kiban-service-fivetran-koban" {
+  ami           = "${var.kiban-service-fivetran-latest-ami-id}"
+  availability_zone = "ap-northeast-1c"
+  instance_type = "t3.large"
+  key_name = "${aws_key_pair.kiban-service-fivetran.key_name}"
+  disable_api_termination = true
+  monitoring           = true
+
+  subnet_id = "${var.vpc_subnet_hanica_external_1c_id}"
+  vpc_security_group_ids  = [
+    "${aws_security_group.sg-kiban-service-fivetran.id}",
+  ]
+  associate_public_ip_address = true
+
+  user_data = "${data.template_cloudinit_config.kiban-service-fivetran-koban.rendered}"
+
+  root_block_device {
+    volume_type           = "gp2"
+    volume_size           = "100"
+    delete_on_termination = true
+  }
+
+  tags = {
+    Name = "kiban-service-fivetran-koban"
+  }
+}
+
+resource "aws_eip" "kiban-service-fivetran-omen" {
+  vpc = true
+  instance = "${aws_instance.kiban-service-fivetran-omen.id}"
+
+  tags = {
+    Name = "kiban-service-fivetran-omen"
+  }
+}
+
+resource "aws_instance" "kiban-service-fivetran-omen" {
+  ami           = "${var.kiban-service-fivetran-latest-ami-id}"
   availability_zone = "ap-northeast-1c"
   instance_type = "t2.large"
   key_name = "${aws_key_pair.kiban-service-fivetran.key_name}"
@@ -62,7 +98,7 @@ resource "aws_instance" "kiban-service-fivetran" {
   ]
   associate_public_ip_address = true
 
-  user_data = "${data.template_cloudinit_config.kiban-service-fivetran.rendered}"
+  user_data = "${data.template_cloudinit_config.kiban-service-fivetran-omen.rendered}"
 
   root_block_device {
     volume_type           = "gp2"
@@ -71,6 +107,6 @@ resource "aws_instance" "kiban-service-fivetran" {
   }
 
   tags = {
-    Name = "kiban-service-fivetran"
+    Name = "kiban-service-fivetran-omen"
   }
 }
