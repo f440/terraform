@@ -14,7 +14,7 @@ resource "heroku_app" "jougo-staging" {
   }
 
   sensitive_config_vars = {
-    LANG = "ja_JP.UTF-8"
+    LANG = "en_US.UTF-8"
     MAINTENANCE_PAGE_URL = "https://smarthr-maintenance.s3-ap-northeast-1.amazonaws.com/503.html"
     RAILS_ENV = "production"
     RACK_ENV = "production"
@@ -60,7 +60,7 @@ resource "heroku_app" "jougo-production" {
   }
 
   sensitive_config_vars = {
-    LANG = "ja_JP.UTF-8"
+    LANG = "en_US.UTF-8"
     MAINTENANCE_PAGE_URL = "https://smarthr-maintenance.s3-ap-northeast-1.amazonaws.com/503.html"
     RAILS_ENV = "production"
     RACK_ENV = "production"
