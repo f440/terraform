@@ -93,3 +93,11 @@ resource "aws_route53_record" "shittori-smarthr-plus-CNAME" {
   records = ["damp-brushlands-6351.thawing-headland-5882.herokuspace.com"]
   ttl     = "300"
 }
+
+resource "aws_route53_record" "jougo-smarthr-plus-CNAME" {
+  zone_id = "${var.smarthr_plus_zone_id}"
+  name    = "fileuploader.smarthr.plus"
+  type    = "CNAME"
+  records = ["morning-plateau-4269.thawing-headland-5882.herokuspace.com"]
+  ttl     = "300"
+}
