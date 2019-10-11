@@ -25,10 +25,8 @@ module "iam-group-administrator" {
   name   = "administrator"
 
   users = [
-    # 責任者
     "${module.iam-user-naito-kensuke.name}",
     "${module.iam-user-serizawa.name}",
-    # エンジニア
     "${module.iam-user-munehiko-fujimura.name}",
     "${module.iam-user-takumi-kanzaki.name}",
     "${module.iam-user-takuya-morizumi.name}",
@@ -39,6 +37,8 @@ module "iam-group-administrator" {
     "${module.iam-user-yoshinari.name}",
     "${module.iam-user-yoshio-fuse.name}",
     "${module.iam-user-yusuke-karakita.name}",
+    "${module.iam-user-yasuhiro-kinoshita.name}",
+    "${module.iam-user-kazuma-watanabe.name}"
   ]
 }
 
@@ -53,7 +53,6 @@ module "iam-group-developer" {
     "${module.iam-user-risa-watanabe.name}",
     "${module.iam-user-takashi-yasuma.name}",
     "${module.iam-user-wataru-miyaguni.name}",
-    "${module.iam-user-yasuhiro-kinoshita.name}",
   ]
 }
 

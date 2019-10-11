@@ -83,11 +83,6 @@ module "iam-user-shun-hikita" {
   name           = "shun.hikita"
 }
 
-module "iam-user-kana-igarashi" {
-  source         = "./modules/iam/users"
-  name           = "kana.igarashi"
-}
-
 module "iam-user-yusuke-karakita" {
   source         = "./modules/iam/users"
   name           = "yusuke.karakita"
@@ -121,4 +116,9 @@ module "iam-user-shota-takata" {
 module "iam-user-yasuhiro-kinoshita" {
   source         = "./modules/iam/users"
   name           = "yasuhiro.kinoshita"
+}
+
+module "iam-user-kazuma-watanabe" {
+  source         = "./modules/iam/users"
+  name           = "kazuma.watanabe"
 }
