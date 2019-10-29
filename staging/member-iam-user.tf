@@ -122,3 +122,8 @@ module "iam-user-kazuma-watanabe" {
   source         = "./modules/iam/users"
   name           = "kazuma.watanabe"
 }
+
+module "iam-user-takashi-arashida" {
+  source         = "./modules/iam/users"
+  name           = "takashi.arashida"
+}
