@@ -127,3 +127,8 @@ module "iam-user-takashi-arashida" {
   source         = "./modules/iam/users"
   name           = "takashi.arashida"
 }
+
+module "iam-user-toshiyuki-iwata" {
+  source         = "./modules/iam/users"
+  name           = "toshiyuki.iwata"
+}
