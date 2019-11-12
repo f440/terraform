@@ -54,6 +54,7 @@ module "iam-group-developer" {
     "${module.iam-user-risa-watanabe.name}",
     "${module.iam-user-takashi-yasuma.name}",
     "${module.iam-user-takashi-arashida.name}",
+    "${module.iam-user-toshiyuki-iwata.name}",
   ]
 }
 
