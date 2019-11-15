@@ -33,3 +33,9 @@ resource "aws_elasticache_parameter_group" "oke-redis-40" {
   family      = "redis4.0"
   description = "Redis 4.0 parameter group for oke"
 }
+
+resource "aws_db_parameter_group" "oke-dbparamgroup" {
+  name   = "oke-dbparamgroup"
+  family = "postgres10"
+  description = "oke-dbparamgroup"
+}
