@@ -31,12 +31,16 @@ resource "aws_route53_record" "oke-aoyagi-farm-CNAME" {
   ttl     = "60"
 }
 
-resource "aws_route53_record" "oke-staging-aoyagi-farm-CNAME" {
+resource "aws_route53_record" "oke-staging-aoyagi-farm-A" {
   zone_id = "${var.aoyagi_farm_zone_id}"
   name    = "oke-staging.aoyagi.farm"
-  type    = "CNAME"
-  records = ["secret-turnip-qm5gr2xr3php1jiusxh3gdq3.herokudns.com"]
-  ttl     = "300"
+  type    = "A"
+
+  alias {
+    name                   = "dualstack.oke-staging-alb-1511983151.ap-northeast-1.elb.amazonaws.com"
+    zone_id                = "Z14GRHDCWA56QT"
+    evaluate_target_health = false
+  }
 }
 
 resource "aws_route53_record" "ayatori-aoyagi-farm-CNAME" {
