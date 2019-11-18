@@ -39,3 +39,39 @@ resource "aws_db_parameter_group" "oke-dbparamgroup" {
   family = "postgres10"
   description = "oke-dbparamgroup"
 }
+
+resource "aws_subnet" "oke-external-1a" {
+  vpc_id = "${var.vpc-hanica-new-vpc}"
+  availability_zone = "ap-northeast-1a"
+  cidr_block = "10.0.30.0/24"
+  tags = {
+    Name = "oke-external-1a"
+  }
+}
+
+resource "aws_subnet" "oke-external-1c" {
+  vpc_id = "${var.vpc-hanica-new-vpc}"
+  availability_zone = "ap-northeast-1c"
+  cidr_block = "10.0.31.0/24"
+  tags = {
+    Name = "oke-external-1c"
+  }
+}
+
+resource "aws_subnet" "oke-internal-1a" {
+  vpc_id = "${var.vpc-hanica-new-vpc}"
+  availability_zone = "ap-northeast-1a"
+  cidr_block = "10.0.32.0/24"
+  tags = {
+    Name = "oke-internal-1a"
+  }
+}
+
+resource "aws_subnet" "oke-internal-1c" {
+  vpc_id = "${var.vpc-hanica-new-vpc}"
+  availability_zone = "ap-northeast-1c"
+  cidr_block = "10.0.33.0/24"
+  tags = {
+    Name = "oke-internal-1c"
+  }
+}
