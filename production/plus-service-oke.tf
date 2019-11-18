@@ -75,3 +75,44 @@ resource "aws_subnet" "oke-internal-1c" {
     Name = "oke-internal-1c"
   }
 }
+
+resource "aws_route_table" "oke-internal-rt" {
+  vpc_id = "${var.vpc-hanica-new-vpc}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = "${aws_nat_gateway.oke-natgw-a.id}"
+  }
+
+  tags = {
+    Name = "oke-internal-rt"
+  }
+}
+
+resource "aws_route_table" "oke-external-rt" {
+  vpc_id = "${var.vpc-hanica-new-vpc}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${var.hanica-new-igw}"
+  }
+
+  tags = {
+    Name = "oke-external-rt"
+  }
+}
+
+resource "aws_nat_gateway" "oke-natgw-a" {
+  allocation_id = "${aws_eip.oke-natgw.id}"
+  subnet_id     = "${aws_subnet.oke-external-1a.id}"
+
+  tags = {
+    Name = "oke-natgw-a"
+  }
+}
+
+resource "aws_eip" "oke-natgw" {
+  tags = {
+    Name = "oke-natgw"
+  }
+}
