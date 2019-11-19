@@ -168,3 +168,10 @@ resource "aws_iam_role_policy_attachment" "oke-production-ecs-task-execution-rol
   role = "${aws_iam_role.oke-production-ecs-task-execution-role.name}"
   policy_arn = "${aws_iam_policy.oke-ssm-get-parameters-policy.arn}"
 }
+
+resource "aws_iam_policy" "oke-ecs-update-service-policy" {
+  name = "OkeEcsUpdateService"
+  path = "/"
+  policy = "${file("./files/iam/policies/oke-ecs-update-service-policy.json")}"
+}
+
