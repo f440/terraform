@@ -175,3 +175,8 @@ resource "aws_iam_policy" "oke-ecs-update-service-policy" {
   policy = "${file("./files/iam/policies/oke-ecs-update-service-policy.json")}"
 }
 
+resource "aws_iam_role" "codebuild-oke-production-database-migration-service-role" {
+  name               = "codebuild-okeProductionDatabaseMigration-service-role"
+  path               = "/service-role/"
+  assume_role_policy = "${file("./files/iam/roles/codebuild-assume.json")}"
+}
