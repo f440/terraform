@@ -116,3 +116,11 @@ resource "aws_eip" "oke-natgw" {
     Name = "oke-natgw"
   }
 }
+
+resource "aws_ecs_cluster" "oke-production" {
+  name = "oke-production"
+}
+
+resource "aws_ecr_repository" "oke" {
+  name = "oke"
+}
