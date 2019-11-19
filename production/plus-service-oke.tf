@@ -146,3 +146,14 @@ resource "aws_iam_policy" "oke-run-one-off-task-policy" {
 
   policy = "${file("./files/iam/policies/oke-run-one-off-task-policy.json")}"
 }
+
+resource "aws_iam_role" "oke-production-ecs-task-execution-role" {
+  name               = "OkeProductionEcsTaskExecutionRole"
+  description        = "Allows ECS tasks to call AWS services on your behalf."
+  assume_role_policy = "${file("./files/iam/roles/ecs-assume.json")}"
+}
+
+resource "aws_iam_role_policy_attachment" "oke-production-ecs-task-execution-role-ecs-task-execution-role-attachment" {
+  role = "${aws_iam_role.oke-production-ecs-task-execution-role.name}"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
