@@ -124,3 +124,25 @@ resource "aws_ecs_cluster" "oke-production" {
 resource "aws_ecr_repository" "oke" {
   name = "oke"
 }
+
+resource "aws_iam_role" "oke-operator" {
+  name               = "OkeOperator"
+  assume_role_policy = "${file("./files/iam/roles/account-assume.json")}"
+}
+
+resource "aws_iam_role_policy_attachment" "oke-operator-ecs-full-access" {
+  role = "${aws_iam_role.oke-operator.name}"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "oke-operator-read-only-attachment" {
+  role = "${aws_iam_role.oke-operator.name}"
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+}
+
+resource "aws_iam_policy" "oke-run-one-off-task-policy" {
+  name = "OkeRunOneOffTask"
+  path = "/"
+
+  policy = "${file("./files/iam/policies/oke-run-one-off-task-policy.json")}"
+}
