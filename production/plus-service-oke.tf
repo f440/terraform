@@ -180,3 +180,10 @@ resource "aws_iam_role" "codebuild-oke-production-database-migration-service-rol
   path               = "/service-role/"
   assume_role_policy = "${file("./files/iam/roles/codebuild-assume.json")}"
 }
+
+resource "aws_iam_policy" "oke-codebuild-base-oke-production-database-migration-policy" {
+  name = "CodeBuildBasePolicy-okeProductionDatabaseMigration-ap-northeast-1"
+  description = "Policy used in trust relationship with CodeBuild"
+  path = "/service-role/"
+  policy = "${file("./files/iam/policies/oke-codebuild-base-policy-database-migration.json")}"
+}
