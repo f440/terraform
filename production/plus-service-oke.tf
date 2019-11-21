@@ -1,3 +1,8 @@
+##################################################
+#
+# ElastiCache
+#
+##################################################
 resource "aws_elasticache_replication_group" "plus-oke-production" {
   replication_group_id          = "oke-production"
   replication_group_description = "Redis instance for oke-production"
@@ -34,12 +39,23 @@ resource "aws_elasticache_parameter_group" "oke-redis-40" {
   description = "Redis 4.0 parameter group for oke"
 }
 
+##################################################
+#
+# RDS
+#
+##################################################
+
 resource "aws_db_parameter_group" "oke-dbparamgroup" {
   name        = "oke-dbparamgroup"
   family      = "postgres10"
   description = "oke-dbparamgroup"
 }
 
+##################################################
+#
+# VPC
+#
+##################################################
 resource "aws_subnet" "oke-external-1a" {
   vpc_id            = "${var.vpc-hanica-new-vpc}"
   availability_zone = "ap-northeast-1a"
@@ -117,6 +133,12 @@ resource "aws_eip" "oke-natgw" {
   }
 }
 
+##################################################
+#
+# ECS / ECR
+#
+##################################################
+
 resource "aws_ecs_cluster" "oke-production" {
   name = "oke-production"
 }
@@ -124,6 +146,12 @@ resource "aws_ecs_cluster" "oke-production" {
 resource "aws_ecr_repository" "oke" {
   name = "oke"
 }
+
+##################################################
+#
+# IAM
+#
+##################################################
 
 resource "aws_iam_role" "oke-operator" {
   name               = "OkeOperator"
