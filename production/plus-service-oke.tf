@@ -35,42 +35,42 @@ resource "aws_elasticache_parameter_group" "oke-redis-40" {
 }
 
 resource "aws_db_parameter_group" "oke-dbparamgroup" {
-  name   = "oke-dbparamgroup"
-  family = "postgres10"
+  name        = "oke-dbparamgroup"
+  family      = "postgres10"
   description = "oke-dbparamgroup"
 }
 
 resource "aws_subnet" "oke-external-1a" {
-  vpc_id = "${var.vpc-hanica-new-vpc}"
+  vpc_id            = "${var.vpc-hanica-new-vpc}"
   availability_zone = "ap-northeast-1a"
-  cidr_block = "10.0.30.0/24"
+  cidr_block        = "10.0.30.0/24"
   tags = {
     Name = "oke-external-1a"
   }
 }
 
 resource "aws_subnet" "oke-external-1c" {
-  vpc_id = "${var.vpc-hanica-new-vpc}"
+  vpc_id            = "${var.vpc-hanica-new-vpc}"
   availability_zone = "ap-northeast-1c"
-  cidr_block = "10.0.31.0/24"
+  cidr_block        = "10.0.31.0/24"
   tags = {
     Name = "oke-external-1c"
   }
 }
 
 resource "aws_subnet" "oke-internal-1a" {
-  vpc_id = "${var.vpc-hanica-new-vpc}"
+  vpc_id            = "${var.vpc-hanica-new-vpc}"
   availability_zone = "ap-northeast-1a"
-  cidr_block = "10.0.32.0/24"
+  cidr_block        = "10.0.32.0/24"
   tags = {
     Name = "oke-internal-1a"
   }
 }
 
 resource "aws_subnet" "oke-internal-1c" {
-  vpc_id = "${var.vpc-hanica-new-vpc}"
+  vpc_id            = "${var.vpc-hanica-new-vpc}"
   availability_zone = "ap-northeast-1c"
-  cidr_block = "10.0.33.0/24"
+  cidr_block        = "10.0.33.0/24"
   tags = {
     Name = "oke-internal-1c"
   }
@@ -80,7 +80,7 @@ resource "aws_route_table" "oke-internal-rt" {
   vpc_id = "${var.vpc-hanica-new-vpc}"
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block     = "0.0.0.0/0"
     nat_gateway_id = "${aws_nat_gateway.oke-natgw-a.id}"
   }
 
@@ -131,12 +131,12 @@ resource "aws_iam_role" "oke-operator" {
 }
 
 resource "aws_iam_role_policy_attachment" "oke-operator-ecs-full-access" {
-  role = "${aws_iam_role.oke-operator.name}"
+  role       = "${aws_iam_role.oke-operator.name}"
   policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "oke-operator-read-only-attachment" {
-  role = "${aws_iam_role.oke-operator.name}"
+  role       = "${aws_iam_role.oke-operator.name}"
   policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
 
@@ -154,24 +154,24 @@ resource "aws_iam_role" "oke-production-ecs-task-execution-role" {
 }
 
 resource "aws_iam_role_policy_attachment" "oke-production-ecs-task-execution-role-ecs-task-execution-role-attachment" {
-  role = "${aws_iam_role.oke-production-ecs-task-execution-role.name}"
+  role       = "${aws_iam_role.oke-production-ecs-task-execution-role.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 resource "aws_iam_policy" "oke-ssm-get-parameters-policy" {
-  name = "OkeSsmGetParameters"
-  path = "/"
+  name   = "OkeSsmGetParameters"
+  path   = "/"
   policy = "${file("./files/iam/policies/oke-ssm-get-parameters-policy.json")}"
 }
 
 resource "aws_iam_role_policy_attachment" "oke-production-ecs-task-execution-role-oke-ssm-get-parameters-policy-attachment" {
-  role = "${aws_iam_role.oke-production-ecs-task-execution-role.name}"
+  role       = "${aws_iam_role.oke-production-ecs-task-execution-role.name}"
   policy_arn = "${aws_iam_policy.oke-ssm-get-parameters-policy.arn}"
 }
 
 resource "aws_iam_policy" "oke-ecs-update-service-policy" {
-  name = "OkeEcsUpdateService"
-  path = "/"
+  name   = "OkeEcsUpdateService"
+  path   = "/"
   policy = "${file("./files/iam/policies/oke-ecs-update-service-policy.json")}"
 }
 
@@ -182,32 +182,32 @@ resource "aws_iam_role" "codebuild-oke-production-database-migration-service-rol
 }
 
 resource "aws_iam_policy" "oke-codebuild-base-oke-production-database-migration-policy" {
-  name = "CodeBuildBasePolicy-okeProductionDatabaseMigration-ap-northeast-1"
+  name        = "CodeBuildBasePolicy-okeProductionDatabaseMigration-ap-northeast-1"
   description = "Policy used in trust relationship with CodeBuild"
-  path = "/service-role/"
-  policy = "${file("./files/iam/policies/oke-codebuild-base-policy-database-migration.json")}"
+  path        = "/service-role/"
+  policy      = "${file("./files/iam/policies/oke-codebuild-base-policy-database-migration.json")}"
 }
 
 resource "aws_iam_role_policy_attachment" "codebuild-oke-production-database-migration-service-role-oke-ssm-get-parameters-policy-attachment" {
-  role = "${aws_iam_role.codebuild-oke-production-database-migration-service-role.name}"
+  role       = "${aws_iam_role.codebuild-oke-production-database-migration-service-role.name}"
   policy_arn = "${aws_iam_policy.oke-ssm-get-parameters-policy.arn}"
 }
 
 resource "aws_iam_role_policy_attachment" "codebuild-oke-production-database-migration-service-role-oke-codebuild-base-oke-production-database-migration-policy-attachment" {
-  role = "${aws_iam_role.codebuild-oke-production-database-migration-service-role.name}"
+  role       = "${aws_iam_role.codebuild-oke-production-database-migration-service-role.name}"
   policy_arn = "${aws_iam_policy.oke-codebuild-base-oke-production-database-migration-policy.arn}"
 }
 
 resource "aws_iam_role_policy_attachment" "codebuild-oke-production-database-migration-service-role-oke-ecs-update-service-policy-attachment" {
-  role = "${aws_iam_role.codebuild-oke-production-database-migration-service-role.name}"
+  role       = "${aws_iam_role.codebuild-oke-production-database-migration-service-role.name}"
   policy_arn = "${aws_iam_policy.oke-ecs-update-service-policy.arn}"
 }
 
 resource "aws_iam_policy" "oke-codebuild-base-oke-production-deploy-worker-policy" {
-  name = "CodeBuildBasePolicy-okeProductionDeployWorker-ap-northeast-1"
+  name        = "CodeBuildBasePolicy-okeProductionDeployWorker-ap-northeast-1"
   description = "Policy used in trust relationship with CodeBuild"
-  path = "/service-role/"
-  policy = "${file("./files/iam/policies/oke-codebuild-base-policy-deploy-worker.json")}"
+  path        = "/service-role/"
+  policy      = "${file("./files/iam/policies/oke-codebuild-base-policy-deploy-worker.json")}"
 }
 
 resource "aws_iam_role" "codebuild-oke-production-deploy-worker-service-role" {
@@ -217,11 +217,11 @@ resource "aws_iam_role" "codebuild-oke-production-deploy-worker-service-role" {
 }
 
 resource "aws_iam_role_policy_attachment" "codebuild-oke-production-deploy-worker-service-role-oke-codebuild-base-oke-production-deploy-worker-policy-attachment" {
-  role = "${aws_iam_role.codebuild-oke-production-deploy-worker-service-role.name}"
+  role       = "${aws_iam_role.codebuild-oke-production-deploy-worker-service-role.name}"
   policy_arn = "${aws_iam_policy.oke-codebuild-base-oke-production-deploy-worker-policy.arn}"
 }
 
 resource "aws_iam_role_policy_attachment" "codebuild-oke-production-deploy-worker-service-role-oke-ecs-update-service-policy-attachment" {
-  role = "${aws_iam_role.codebuild-oke-production-deploy-worker-service-role.name}"
+  role       = "${aws_iam_role.codebuild-oke-production-deploy-worker-service-role.name}"
   policy_arn = "${aws_iam_policy.oke-ecs-update-service-policy.arn}"
 }
