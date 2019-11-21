@@ -209,3 +209,19 @@ resource "aws_iam_policy" "oke-codebuild-base-oke-production-deploy-worker-polic
   path = "/service-role/"
   policy = "${file("./files/iam/policies/oke-codebuild-base-policy-deploy-worker.json")}"
 }
+
+resource "aws_iam_role" "codebuild-oke-production-deploy-worker-service-role" {
+  name               = "codebuild-okeProductionDeployWorker-service-role"
+  path               = "/service-role/"
+  assume_role_policy = "${file("./files/iam/roles/codebuild-assume.json")}"
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild-oke-production-deploy-worker-service-role-oke-codebuild-base-oke-production-deploy-worker-policy-attachment" {
+  role = "${aws_iam_role.codebuild-oke-production-deploy-worker-service-role.name}"
+  policy_arn = "${aws_iam_policy.oke-codebuild-base-oke-production-deploy-worker-policy.arn}"
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild-oke-production-deploy-worker-service-role-oke-ecs-update-service-policy-attachment" {
+  role = "${aws_iam_role.codebuild-oke-production-deploy-worker-service-role.name}"
+  policy_arn = "${aws_iam_policy.oke-ecs-update-service-policy.arn}"
+}
