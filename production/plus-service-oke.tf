@@ -187,3 +187,18 @@ resource "aws_iam_policy" "oke-codebuild-base-oke-production-database-migration-
   path = "/service-role/"
   policy = "${file("./files/iam/policies/oke-codebuild-base-policy-database-migration.json")}"
 }
+
+resource "aws_iam_role_policy_attachment" "codebuild-oke-production-database-migration-service-role-oke-ssm-get-parameters-policy-attachment" {
+  role = "${aws_iam_role.codebuild-oke-production-database-migration-service-role.name}"
+  policy_arn = "${aws_iam_policy.oke-ssm-get-parameters-policy.arn}"
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild-oke-production-database-migration-service-role-oke-codebuild-base-oke-production-database-migration-policy-attachment" {
+  role = "${aws_iam_role.codebuild-oke-production-database-migration-service-role.name}"
+  policy_arn = "${aws_iam_policy.oke-codebuild-base-oke-production-database-migration-policy.arn}"
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild-oke-production-database-migration-service-role-oke-ecs-update-service-policy-attachment" {
+  role = "${aws_iam_role.codebuild-oke-production-database-migration-service-role.name}"
+  policy_arn = "${aws_iam_policy.oke-ecs-update-service-policy.arn}"
+}
