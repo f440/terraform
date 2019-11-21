@@ -202,3 +202,10 @@ resource "aws_iam_role_policy_attachment" "codebuild-oke-production-database-mig
   role = "${aws_iam_role.codebuild-oke-production-database-migration-service-role.name}"
   policy_arn = "${aws_iam_policy.oke-ecs-update-service-policy.arn}"
 }
+
+resource "aws_iam_policy" "oke-codebuild-base-oke-production-deploy-worker-policy" {
+  name = "CodeBuildBasePolicy-okeProductionDeployWorker-ap-northeast-1"
+  description = "Policy used in trust relationship with CodeBuild"
+  path = "/service-role/"
+  policy = "${file("./files/iam/policies/oke-codebuild-base-policy-deploy-worker.json")}"
+}
