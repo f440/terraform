@@ -1,0 +1,38 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": "iam:PassRole",
+      "Resource": "*",
+      "Condition": {
+        "StringLike": {
+          "iam:PassedToService": "ecs-tasks.amazonaws.com"
+        }
+      }
+    },
+    {
+      "Sid": "VisualEditor1",
+      "Effect": "Allow",
+      "Action": [
+        "ecs:UpdateService",
+        "ecs:DescribeServices"
+      ],
+      "Resource": "arn:aws:ecs:ap-northeast-1:736134917012:service/oke-production/*"
+    },
+    {
+      "Sid": "VisualEditor2",
+      "Effect": "Allow",
+      "Action": [
+        "ecs:ListAccountSettings",
+        "ecs:RunTask",
+        "ecs:ListTasks",
+        "ecs:RegisterTaskDefinition",
+        "ecs:DescribeTasks",
+        "ecs:ListTaskDefinitions"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

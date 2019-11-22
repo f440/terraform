@@ -22,12 +22,16 @@ resource "aws_route53_record" "nencho-smarthr-plus-CNAME" {
   ttl     = "300"
 }
 
-resource "aws_route53_record" "keiyaku-smarthr-plus-CNAME" {
+resource "aws_route53_record" "keiyaku-smarthr-plus-A" {
   zone_id = "${var.smarthr_plus_zone_id}"
   name    = "keiyaku.smarthr.plus"
-  type    = "CNAME"
-  records = ["guarded-harbor-4023.thawing-headland-5882.herokuspace.com"]
-  ttl     = "600"
+  type    = "A"
+
+  alias {
+    name                   = "dualstack.oke-production-209986055.ap-northeast-1.elb.amazonaws.com"
+    zone_id                = "Z14GRHDCWA56QT"
+    evaluate_target_health = false
+  }
 }
 
 resource "aws_route53_record" "kingoftime-smarthr-plus-CNAME" {
