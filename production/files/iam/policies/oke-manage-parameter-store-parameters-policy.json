@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ssm:PutParameter",
+        "ssm:DeleteParameter",
+        "ssm:GetParameterHistory",
+        "ssm:GetParametersByPath",
+        "ssm:GetParameters",
+        "ssm:GetParameter",
+        "ssm:DeleteParameters"
+      ],
+      "Resource": "arn:aws:ssm:ap-northeast-1:736134917012:parameter/oke/*"
+    }
+  ]
+}

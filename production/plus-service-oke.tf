@@ -175,6 +175,18 @@ resource "aws_iam_policy" "oke-run-one-off-task-policy" {
   policy = "${file("./files/iam/policies/oke-run-one-off-task-policy.json")}"
 }
 
+resource "aws_iam_policy" "oke-manage-parameter-store-parameters-policy" {
+  name = "OkeManageParameterStoreParameters"
+  path = "/"
+
+  policy = "${file("./files/iam/policies/oke-manage-parameter-store-parameters-policy.json")}"
+}
+
+resource "aws_iam_role_policy_attachment" "oke-operator-oke-manage-parameter-store-parameters-policy-attachment" {
+  role       = "${aws_iam_role.oke-operator.name}"
+  policy_arn = "${aws_iam_policy.oke-manage-parameter-store-parameters-policy.arn}"
+}
+
 resource "aws_iam_role" "oke-production-ecs-task-execution-role" {
   name               = "OkeProductionEcsTaskExecutionRole"
   description        = "Allows ECS tasks to call AWS services on your behalf."
