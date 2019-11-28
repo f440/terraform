@@ -187,6 +187,22 @@ resource "aws_iam_role_policy_attachment" "oke-operator-oke-manage-parameter-sto
   policy_arn = "${aws_iam_policy.oke-manage-parameter-store-parameters-policy.arn}"
 }
 
+resource "aws_iam_policy" "oke-manage-ecr-repository-policy" {
+  name = "OkeManageECRRepository"
+  path = "/"
+  policy = "${file("./files/iam/policies/oke-manage-ecr-repository-policy.json")}"
+}
+
+resource "aws_iam_role_policy_attachment" "oke-operator-oke-manage-ecr-repository-policy-attachment" {
+  role       = "${aws_iam_role.oke-operator.name}"
+  policy_arn = "${aws_iam_policy.oke-manage-ecr-repository-policy.arn}"
+}
+
+resource "aws_iam_role_policy_attachment" "oke-operator-elb-full-access-attachment" {
+  role       = "${aws_iam_role.oke-operator.name}"
+  policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
+}
+
 resource "aws_iam_role" "oke-production-ecs-task-execution-role" {
   name               = "OkeProductionEcsTaskExecutionRole"
   description        = "Allows ECS tasks to call AWS services on your behalf."
