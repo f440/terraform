@@ -7,6 +7,7 @@ resource "heroku_app" "jougo-staging" {
   name   = "jougo-staging"
   region = "us"
   stack = "heroku-18"
+  acm = true
 
   organization {
     name = "smarthr"

@@ -131,3 +131,19 @@ resource "aws_route53_record" "jougo-staging-aoyagi-farm-CNAME" {
   records = ["concentric-gallimimus-damccwc80nxysaoybndxmydq.herokudns.com"]
   ttl     = "60"
 }
+
+resource "aws_route53_record" "sakidori-pca-dx-staging-aoyagi-farm-CNAME" {
+  zone_id = "${var.aoyagi_farm_zone_id}"
+  name    = "sakidori-pca-dx-staging.aoyagi.farm"
+  type    = "CNAME"
+  records = ["cardiovascular-partridge-uflb3y02izgy4ip22zgstdvu.herokudns.com"]
+  ttl     = "60"
+}
+
+resource "aws_route53_record" "sakidori-pca-hyper-staging-aoyagi-farm-CNAME" {
+  zone_id = "${var.aoyagi_farm_zone_id}"
+  name    = "sakidori-pca-hyper-staging.aoyagi.farm"
+  type    = "CNAME"
+  records = ["animate-lobster-7fkyzr3hh5coe6rwj8ta6m0b.herokudns.com"]
+  ttl     = "60"
+}
