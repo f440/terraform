@@ -132,3 +132,8 @@ module "iam-user-toshiyuki-iwata" {
   source         = "./modules/iam/users"
   name           = "toshiyuki.iwata"
 }
+
+module "iam-user-akihiro-anzai" {
+  source         = "./modules/iam/users"
+  name           = "akihiro.anzai"
+}
