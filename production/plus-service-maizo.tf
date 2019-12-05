@@ -38,3 +38,10 @@ resource "aws_elasticache_parameter_group" "plus-maizo-redis-32" {
   family      = "redis3.2"
   description = "Redis 3.2 parameter group for maizo"
 }
+
+resource "aws_db_parameter_group" "maizo-dbparamgroup" {
+  name   = "maizo-dbparamgroup"
+  family = "postgres11"
+
+  description = "PostgreSQL 11 Parameter Groups for maizo"
+}

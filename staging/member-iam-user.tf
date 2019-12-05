@@ -137,3 +137,8 @@ module "iam-user-ryoma-koishi" {
   source         = "./modules/iam/users"
   name           = "ryoma.koishi"
 }
+  
+module "iam-user-akihiro-anzai" {
+  source         = "./modules/iam/users"
+  name           = "akihiro.anzai"
+}

@@ -43,6 +43,7 @@ resource "aws_route53_record" "oke-staging-aoyagi-farm-A" {
   }
 }
 
+// Memo: 他とドメインの付け方が異なるので削除する
 resource "aws_route53_record" "ayatori-aoyagi-farm-CNAME" {
   zone_id         = "${var.aoyagi_farm_zone_id}"
   name            = "ayatori.aoyagi.farm"
@@ -50,6 +51,14 @@ resource "aws_route53_record" "ayatori-aoyagi-farm-CNAME" {
   records         = ["octagonal-dromiceiomimus-qtwabk05kjnpttmgehd2cjt5.herokudns.com"]
   ttl             = "300"
   allow_overwrite = "true"
+}
+
+resource "aws_route53_record" "ayatori-staging-aoyagi-farm-CNAME" {
+  zone_id         = "${var.aoyagi_farm_zone_id}"
+  name            = "ayatori-staging.aoyagi.farm"
+  type            = "CNAME"
+  records         = ["floral-corythosaurus-y789hlhpnjtw52uq55wf7bpz.herokudns.com"]
+  ttl             = "60"
 }
 
 resource "aws_route53_record" "kotori-staging-aoyagi-farm-CNAME" {
@@ -100,6 +109,24 @@ resource "aws_route53_record" "sekitori-staging-aoyagi-farm-CNAME" {
   ttl     = "60"
 }
 
+# Memo: 後々、削除ように対応する
+resource "aws_route53_record" "shiritori-aoyagi-farm-CNAME" {
+  zone_id = "${var.aoyagi_farm_zone_id}"
+  name    = "shiritori.aoyagi.farm"
+  type    = "CNAME"
+  records = ["sleepy-hoverfly-xvsc3q5dwxhld20kcjzskzcg.herokudns.com"]
+  ttl     = "60"
+}
+
+# Memo: 後々、削除するように対応する
+resource "aws_route53_record" "sekitori-aoyagi-farm-CNAME" {
+  zone_id = "${var.aoyagi_farm_zone_id}"
+  name    = "sekitori.aoyagi.farm"
+  type    = "CNAME"
+  records = ["opaque-lemon-98n9ys665q5pta9cvdd3q5oj.herokudns.com"]
+  ttl     = "60"
+}
+
 resource "aws_route53_record" "shittori-staging-aoyagi-farm-CNAME" {
   zone_id = "${var.aoyagi_farm_zone_id}"
   name    = "shittori-staging.aoyagi.farm"
@@ -129,5 +156,21 @@ resource "aws_route53_record" "jougo-staging-aoyagi-farm-CNAME" {
   name    = "jougo-staging.aoyagi.farm"
   type    = "CNAME"
   records = ["concentric-gallimimus-damccwc80nxysaoybndxmydq.herokudns.com"]
+  ttl     = "60"
+}
+
+resource "aws_route53_record" "sakidori-pca-dx-staging-aoyagi-farm-CNAME" {
+  zone_id = "${var.aoyagi_farm_zone_id}"
+  name    = "sakidori-pca-dx-staging.aoyagi.farm"
+  type    = "CNAME"
+  records = ["cardiovascular-partridge-uflb3y02izgy4ip22zgstdvu.herokudns.com"]
+  ttl     = "60"
+}
+
+resource "aws_route53_record" "sakidori-pca-hyper-staging-aoyagi-farm-CNAME" {
+  zone_id = "${var.aoyagi_farm_zone_id}"
+  name    = "sakidori-pca-hyper-staging.aoyagi.farm"
+  type    = "CNAME"
+  records = ["animate-lobster-7fkyzr3hh5coe6rwj8ta6m0b.herokudns.com"]
   ttl     = "60"
 }
