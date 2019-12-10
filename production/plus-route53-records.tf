@@ -108,7 +108,7 @@ resource "aws_route53_record" "jougo-smarthr-plus-CNAME" {
 
 resource "aws_route53_record" "sakidori-pca-pay-dx-smarthr-plus-CNAME" {
   zone_id = "${var.smarthr_plus_zone_id}"
-  name    = "paydx.smarthr.plus"
+  name    = "pca-dx.smarthr.plus"
   type    = "CNAME"
   records = ["salty-ridge-9651.thawing-headland-5882.herokuspace.com"]
   ttl     = "300"
@@ -116,7 +116,7 @@ resource "aws_route53_record" "sakidori-pca-pay-dx-smarthr-plus-CNAME" {
 
 resource "aws_route53_record" "sakidori-pca-pay-hyper-smarthr-plus-CNAME" {
   zone_id = "${var.smarthr_plus_zone_id}"
-  name    = "payhyper.smarthr.plus"
+  name    = "pca-hyper.smarthr.plus"
   type    = "CNAME"
   records = ["warm-cove-5455.thawing-headland-5882.herokuspace.com"]
   ttl     = "300"
