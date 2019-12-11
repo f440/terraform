@@ -96,7 +96,8 @@ resource "heroku_addon" "sakidori-pca-hyper-staging-papertrail" {
 ##################################################
 resource "heroku_app" "sakidori-pca-dx-production" {
   name   = "sakidori-pca-dx-production"
-  region = "us"
+  space = "smarthr-tokyo"
+  region = "tokyo"
   stack = "heroku-18"
   acm = true
 
@@ -129,7 +130,8 @@ resource "heroku_addon" "sakidori-pca-dx-production-papertrail" {
 
 resource "heroku_app" "sakidori-pca-hyper-production" {
   name   = "sakidori-pca-hyper-production"
-  region = "us"
+  space = "smarthr-tokyo"
+  region = "tokyo"
   stack = "heroku-18"
   acm = true
 

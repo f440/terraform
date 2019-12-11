@@ -182,7 +182,7 @@ resource "aws_route53_record" "_acme-challenge-daruma-space-TXT" {
   zone_id = "Z2IE6RW5PM57F5"
   name    = "_acme-challenge.daruma.space"
   type    = "TXT"
-  records = ["pMlx2JnrUOxmEaC1ja_lRBmi-CLokpax9-jdtQd4bys"]
+  records = ["HLYoeZOLUwiNecvLEAn9keNAw4oNvNUHiTMlDCIuRro"]
   ttl     = "30"
 }
 
