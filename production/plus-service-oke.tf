@@ -204,6 +204,12 @@ resource "aws_iam_policy" "oke-manage-elasticache-policy" {
   policy = "${file("./files/iam/policies/oke-manage-elasticache-policy.json")}"
 }
 
+resource "aws_iam_policy" "oke-manage-rds-policy" {
+  name = "OkeManageRDS"
+  path = "/"
+  policy = "${file("./files/iam/policies/oke-manage-rds-policy.json")}"
+}
+
 resource "aws_iam_role_policy_attachment" "oke-operator-elb-full-access-attachment" {
   role       = "${aws_iam_role.oke-operator.name}"
   policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"

@@ -1,0 +1,52 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "rds:StartDBCluster",
+        "rds:ModifyOptionGroup",
+        "rds:RestoreDBClusterFromSnapshot",
+        "rds:RestoreDBInstanceFromS3",
+        "rds:FailoverDBCluster",
+        "rds:ModifyDBParameterGroup",
+        "rds:CopyDBParameterGroup",
+        "rds:ModifyDBInstance",
+        "rds:ModifyDBClusterParameterGroup",
+        "rds:ModifyDBClusterSnapshotAttribute",
+        "rds:ModifyCurrentDBClusterCapacity",
+        "rds:RestoreDBClusterToPointInTime",
+        "rds:CopyDBClusterParameterGroup",
+        "rds:CopyDBSnapshot",
+        "rds:CopyDBClusterSnapshot",
+        "rds:CopyOptionGroup",
+        "rds:PromoteReadReplica",
+        "rds:StartDBInstance",
+        "rds:RestoreDBClusterFromS3",
+        "rds:ModifyDBSnapshot",
+        "rds:RestoreDBInstanceFromDBSnapshot",
+        "rds:RebootDBInstance",
+        "rds:ModifyDBClusterEndpoint",
+        "rds:ModifyDBCluster",
+        "rds:ModifyDBSnapshotAttribute",
+        "rds:ApplyPendingMaintenanceAction",
+        "rds:BacktrackDBCluster",
+        "rds:PromoteReadReplicaDBCluster",
+        "rds:RestoreDBInstanceToPointInTime",
+        "rds:ModifyDBSubnetGroup"
+      ],
+      "Resource": [
+        "arn:aws:rds:ap-northeast-1:736134917012:cluster:oke-production",
+        "arn:aws:rds:ap-northeast-1:736134917012:cluster-snapshot:rds:oke-production*",
+        "arn:aws:rds:ap-northeast-1:736134917012:pg:oke-dbparamgroup",
+        "arn:aws:rds:ap-northeast-1:736134917012:og:default:postgres-10",
+        "arn:aws:rds:ap-northeast-1:736134917012:secgrp:hanica-rds-docker-sg",
+        "arn:aws:rds:ap-northeast-1:736134917012:db:oke-production",
+        "arn:aws:rds:ap-northeast-1:736134917012:cluster-endpoint:*",
+        "arn:aws:rds:ap-northeast-1:736134917012:subgrp:hanica-docker-db-subnet-group",
+        "arn:aws:rds:ap-northeast-1:736134917012:cluster-pg:oke-dbparamgroup ",
+        "arn:aws:rds:ap-northeast-1:736134917012:snapshot:rds:oke-production*"
+      ]
+    }
+  ]
+}
