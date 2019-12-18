@@ -198,6 +198,12 @@ resource "aws_iam_role_policy_attachment" "oke-operator-oke-manage-ecr-repositor
   policy_arn = "${aws_iam_policy.oke-manage-ecr-repository-policy.arn}"
 }
 
+resource "aws_iam_policy" "oke-manage-elasticache-policy" {
+  name = "OkeManageElastiCache"
+  path = "/"
+  policy = "${file("./files/iam/policies/oke-manage-elasticache-policy.json")}"
+}
+
 resource "aws_iam_role_policy_attachment" "oke-operator-elb-full-access-attachment" {
   role       = "${aws_iam_role.oke-operator.name}"
   policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
