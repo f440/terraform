@@ -48,11 +48,6 @@ module "iam-user-motoki-sato" {
   name           = "motoki.sato"
 }
 
-module "iam-user-takeo-kimi" {
-  source         = "./modules/iam/users"
-  name           = "takeo.kimi"
-}
-
 module "iam-user-takashi-yasuma" {
   source         = "./modules/iam/users"
   name           = "takashi.yasuma"
