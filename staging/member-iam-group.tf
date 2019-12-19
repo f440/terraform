@@ -33,7 +33,6 @@ module "iam-group-administrator" {
     "${module.iam-user-teppi-fujii.name}",
     "${module.iam-user-motoki-sato.name}",
     "${module.iam-user-mutsuhisa-suzuki.name}",
-    "${module.iam-user-takeo-kimi.name}",
     "${module.iam-user-yoshinari.name}",
     "${module.iam-user-yoshio-fuse.name}",
     "${module.iam-user-yusuke-karakita.name}",
