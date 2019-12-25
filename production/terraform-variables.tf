@@ -84,3 +84,7 @@ variable "smarthr_plus_zone_id" {
 variable "kiban-service-fivetran-latest-ami-id" {
   default = "ami-0ff21806645c5e492"
 }
+
+variable "hanica-bastion-ami-id" {
+  default = "ami-940cdceb"
+}
