@@ -5,14 +5,14 @@ resource "aws_inspector_resource_group" "group-base" {
 }
 
 resource "aws_inspector_assessment_target" "target-base" {
-  name = "Target for base profile"
+  name               = "Target for base profile"
   resource_group_arn = aws_inspector_resource_group.group-base.arn
 }
 
 resource "aws_inspector_assessment_template" "template-base" {
-  name = "Template for base profile"
+  name       = "Template for base profile"
   target_arn = aws_inspector_assessment_target.target-base.arn
-  duration = 180
+  duration   = 180
 
   # https://docs.aws.amazon.com/inspector/latest/userguide/inspector_rules-arns.html#ap-northeast-1
   rules_package_arns = [
@@ -29,14 +29,14 @@ resource "aws_inspector_resource_group" "group-base-network" {
 }
 
 resource "aws_inspector_assessment_target" "target-base-network" {
-  name = "Target for base+network profile"
+  name               = "Target for base+network profile"
   resource_group_arn = aws_inspector_resource_group.group-base-network.arn
 }
 
 resource "aws_inspector_assessment_template" "template-base-network" {
-  name = "Template for base+network profile"
+  name       = "Template for base+network profile"
   target_arn = aws_inspector_assessment_target.target-base-network.arn
-  duration = 180
+  duration   = 180
 
   # https://docs.aws.amazon.com/inspector/latest/userguide/inspector_rules-arns.html#ap-northeast-1
   rules_package_arns = [
