@@ -52,46 +52,62 @@ resource "aws_instance" "hanica-bastion" {
   subnet_id         = var.vpc_subnet_hanica_external_1a_id
 
   tags = {
-    Name             = "hanica-bastion"
-    InspectorProfile = "base"
+    Name                   = "hanica-bastion"
+    AmazonInspectorProfile = "inspector_base_group"
   }
 
   tenancy = "default"
   vpc_security_group_ids = [
-    aws_security_group.hanica-bastion-aggregated-sg.id
+    aws_security_group.hanica-bastion-sg.id
   ]
 }
 
-# NOTE: hanica-docker-bastion-sgとinternal-sgを集約したSecurity Group
-resource "aws_security_group" "hanica-bastion-aggregated-sg" {
-  description = "Aggregated hanica-docker-bastion-sg and internal-sg"
+resource "aws_security_group" "hanica-bastion-sg" {
+  # NOTE: descriptionやnameを適切に変更したいものの、既存のグループが他のセキュリティグループから
+  #       参照されているため、オリジナルのままで保持
+  description = "launch-wizard-2 created 2017-09-21T17:50:56.604+09:00"
+  name        = "hanica-docker-bastion-sg"
 
-  egress {
-    cidr_blocks = ["0.0.0.0/0"]
-    from_port   = "0"
-    protocol    = "-1"
-    self        = "false"
-    to_port     = "0"
+  # NOTE: 代わりにタグを適切に付けておく
+  tags = {
+    Name        = "hanica-bastion-sg"
+    Description = "Security Group for hancia-bastion instance"
   }
-
-  ingress {
-    cidr_blocks = ["150.249.198.101/32"]
-    description = "RoppongiGrandTower dev_ops"
-    from_port   = "0"
-    protocol    = "-1"
-    self        = "false"
-    to_port     = "0"
-  }
-
-  ingress {
-    cidr_blocks = ["54.65.102.6/32"]
-    description = "vpn"
-    from_port   = "0"
-    protocol    = "-1"
-    self        = "false"
-    to_port     = "0"
-  }
-
-  name   = "hanica-docker-aggregated-sg"
   vpc_id = var.vpc-hanica-new-vpc
+}
+
+resource "aws_security_group_rule" "hanica-bastion-sg" {
+  security_group_id = aws_security_group.hanica-bastion-sg.id
+
+  type        = "ingress"
+  cidr_blocks = ["150.249.198.101/32"]
+  description = "RoppongiGrandTower dev_ops"
+  from_port   = "22"
+  protocol    = "tcp"
+  self        = "false"
+  to_port     = "22"
+}
+
+resource "aws_security_group_rule" "hanica-bastion-sg-1" {
+  security_group_id = aws_security_group.hanica-bastion-sg.id
+
+  type        = "egress"
+  cidr_blocks = ["0.0.0.0/0"]
+  from_port   = "0"
+  protocol    = "-1"
+  self        = "false"
+  to_port     = "0"
+}
+
+# NOTE: internal-sgからマージしたルール
+resource "aws_security_group_rule" "hanica-bastion-sg-2" {
+  security_group_id = aws_security_group.hanica-bastion-sg.id
+
+  type        = "ingress"
+  cidr_blocks = ["54.65.102.6/32"]
+  description = "vpn"
+  from_port   = "22"
+  protocol    = "tcp"
+  self        = "false"
+  to_port     = "22"
 }
