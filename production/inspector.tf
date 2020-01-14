@@ -1,16 +1,16 @@
 resource "aws_inspector_resource_group" "group-base" {
   tags = {
-    InspectorProfile = "base"
+    AmazonInspectorProfile = "base_inspector_group"
   }
 }
 
 resource "aws_inspector_assessment_target" "target-base" {
-  name               = "Target for base profile"
+  name               = "base_inspector_group"
   resource_group_arn = aws_inspector_resource_group.group-base.arn
 }
 
 resource "aws_inspector_assessment_template" "template-base" {
-  name       = "Template for base profile"
+  name       = "base_inspector_group_template"
   target_arn = aws_inspector_assessment_target.target-base.arn
   duration   = 180
 
@@ -24,17 +24,17 @@ resource "aws_inspector_assessment_template" "template-base" {
 
 resource "aws_inspector_resource_group" "group-base-network" {
   tags = {
-    InspectorProfile = "base+network"
+    AmazonInspectorProfile = "base+network_inspector_group"
   }
 }
 
 resource "aws_inspector_assessment_target" "target-base-network" {
-  name               = "Target for base+network profile"
+  name               = "base+network_inspector_group"
   resource_group_arn = aws_inspector_resource_group.group-base-network.arn
 }
 
 resource "aws_inspector_assessment_template" "template-base-network" {
-  name       = "Template for base+network profile"
+  name       = "base+network_inspector_group_template"
   target_arn = aws_inspector_assessment_target.target-base-network.arn
   duration   = 180
 
