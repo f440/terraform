@@ -987,7 +987,7 @@ resource "aws_route53_record" "redis-persistent-prod-hanica-internal-CNAME" {
   name    = "redis.persistent.prod.hanica.internal"
   type    = "CNAME"
   records = ["nh-prod-persistent-001.eigvkv.0001.apne1.cache.amazonaws.com"]
-  ttl     = "300"
+  ttl     = "60"
 }
 
 resource "aws_route53_record" "relay-prod-hanica-internal-A" {
@@ -1007,7 +1007,7 @@ resource "aws_route53_record" "redis-volatile-prod-hanica-internal-CNAME" {
   name    = "redis.volatile.prod.hanica.internal"
   type    = "CNAME"
   records = ["nh-prod-volatile.eigvkv.0001.apne1.cache.amazonaws.com"]
-  ttl     = "300"
+  ttl     = "60"
 }
 
 resource "aws_route53_record" "db-qa-hanica-internal-CNAME" {
@@ -1058,8 +1058,8 @@ resource "aws_route53_record" "redis-persistent-staging-hanica-internal-CNAME" {
   zone_id = "Z1PQTFX60IR924"
   name    = "redis.persistent.staging.hanica.internal"
   type    = "CNAME"
-  records = ["docker-persistent.eigvkv.0001.apne1.cache.amazonaws.com"]
-  ttl     = "300"
+  records = ["hanica-persistent-staging.eigvkv.ng.0001.apne1.cache.amazonaws.com"]
+  ttl     = "60"
 }
 
 resource "aws_route53_record" "relay-staging-hanica-internal-A" {
@@ -1102,8 +1102,8 @@ resource "aws_route53_record" "redis-volatile-staging-hanica-internal-CNAME" {
   zone_id = "Z1PQTFX60IR924"
   name    = "redis.volatile.staging.hanica.internal"
   type    = "CNAME"
-  records = ["docker-volatile.eigvkv.0001.apne1.cache.amazonaws.com"]
-  ttl     = "300"
+  records = ["hanica-volatile-staging.eigvkv.ng.0001.apne1.cache.amazonaws.com"]
+  ttl     = "60"
 }
 
 resource "aws_route53_record" "smarthr-hack-me-NS" {
