@@ -53,7 +53,7 @@ resource "aws_instance" "hanica-bastion" {
 
   tags = {
     Name                   = "hanica-bastion"
-    AmazonInspectorProfile = "inspector_base_group"
+    AmazonInspectorProfile = "base_inspector_group"
   }
 
   tenancy = "default"
