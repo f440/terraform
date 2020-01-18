@@ -7,7 +7,7 @@ resource "aws_elasticache_replication_group" "plus-maizo-production" {
   automatic_failover_enabled = true
   auto_minor_version_upgrade = true
   engine                     = "redis"
-  engine_version             = "3.2.10"
+  engine_version             = "5.0.6"
   port                       = 6379
 
   availability_zones = [
@@ -26,7 +26,7 @@ resource "aws_elasticache_replication_group" "plus-maizo-production" {
     "${var.sg-default}",
   ]
 
-  parameter_group_name = "${aws_elasticache_parameter_group.plus-maizo-redis-32.name}"
+  parameter_group_name = "${aws_elasticache_parameter_group.plus-maizo-redis-50.name}"
 
   maintenance_window       = "mon:14:30-mon:15:30"
   snapshot_window          = "18:00-19:00"
@@ -37,6 +37,12 @@ resource "aws_elasticache_parameter_group" "plus-maizo-redis-32" {
   name        = "maizo-redis-32"
   family      = "redis3.2"
   description = "Redis 3.2 parameter group for maizo"
+}
+
+resource "aws_elasticache_parameter_group" "plus-maizo-redis-50" {
+  name        = "maizo-redis-50"
+  family      = "redis5.0"
+  description = "Redis 5.0 parameter group for maizo"
 }
 
 resource "aws_db_parameter_group" "maizo-dbparamgroup" {
