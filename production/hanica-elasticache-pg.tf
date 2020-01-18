@@ -299,3 +299,15 @@ resource "aws_elasticache_parameter_group" "volatile-32" {
     value = "0"
   }
 }
+
+resource "aws_elasticache_parameter_group" "hanica-redis-50" {
+  name        = "hanica-redis-50"
+  family      = "redis5.0"
+  description = "Redis 5.0 parameter group for hanica"
+}
+
+resource "aws_elasticache_parameter_group" "hanica-persistent-redis-50" {
+  name        = "hanica-persistent-redis-50"
+  family      = "redis5.0"
+  description = "Redis 5.0 parameter group for hanica persistent"
+}

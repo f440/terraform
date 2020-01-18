@@ -986,7 +986,7 @@ resource "aws_route53_record" "redis-persistent-prod-hanica-internal-CNAME" {
   zone_id = "Z1PQTFX60IR924"
   name    = "redis.persistent.prod.hanica.internal"
   type    = "CNAME"
-  records = ["nh-prod-persistent-001.eigvkv.0001.apne1.cache.amazonaws.com"]
+  records = ["hanica-production-persistent.eigvkv.ng.0001.apne1.cache.amazonaws.com"]
   ttl     = "60"
 }
 
@@ -1006,7 +1006,7 @@ resource "aws_route53_record" "redis-volatile-prod-hanica-internal-CNAME" {
   zone_id = "Z1PQTFX60IR924"
   name    = "redis.volatile.prod.hanica.internal"
   type    = "CNAME"
-  records = ["nh-prod-volatile.eigvkv.0001.apne1.cache.amazonaws.com"]
+  records = ["hanica-production-volatile.eigvkv.ng.0001.apne1.cache.amazonaws.com"]
   ttl     = "60"
 }
 

@@ -38,7 +38,7 @@ module "iam-group-administrator" {
     "${module.iam-user-yusuke-karakita.name}",
     "${module.iam-user-yasuhiro-kinoshita.name}",
     "${module.iam-user-kazuma-watanabe.name}",
-    "${module.iam-user-wataru-miyaguni.name}"
+    "${module.iam-user-wataru-miyaguni.name}",
   ]
 }
 
@@ -51,11 +51,11 @@ module "iam-group-developer" {
     "${module.iam-user-shun-hikita.name}",
     "${module.iam-user-shogo-hashimoto.name}",
     "${module.iam-user-risa-watanabe.name}",
-    "${module.iam-user-takashi-yasuma.name}",
     "${module.iam-user-takashi-arashida.name}",
     "${module.iam-user-toshiyuki-iwata.name}",
     "${module.iam-user-ryoma-koishi.name}",
     "${module.iam-user-akihiro-anzai.name}",
+    "${module.iam-user-takashi-yasuma.name}",
   ]
 }
 

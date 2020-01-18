@@ -16,6 +16,7 @@ resource "aws_iam_group_membership" "plus-app" {
   users = [
     "plus-service-oke-circleci",
     "${aws_iam_user.plus-service-jougo.name}",
+    "plus-service-auto-maintenance-tool"
   ]
 }
 
