@@ -329,3 +329,77 @@ resource "cloudflare_record" "tfer--TXT_smarthr-002E-jp_c3b37bc9970f7a343a3b244b
   value    = "google-site-verification=H_4Xzz8vDzjNoCyuJyo5EmkAOTTt-E5Hg3BULxNnzMQ"
 }
 
+# NOTE: cf-terraforming でインポートした設定。
+#       zone_settings_overrideリソースは、現状terraform importがサポートされていないため、
+#       余計な設定変更をしないようにコメントアウト。
+#       今後何かゾーン設定を変更する際に利用する
+#
+#resource "cloudflare_zone_settings_override" "zone_settings_override_84e0a4b3e2c4524d58f3c86efa49eaa2" {
+#  name = "smarthr.jp"
+#  settings {
+#    #zero_rtt                 = "off"
+#    #advanced_ddos            = "on"
+#    always_online            = "on"
+#    always_use_https         = "on"
+#    automatic_https_rewrites = "on"
+#    brotli                   = "on"
+#    browser_cache_ttl        = 14400
+#    browser_check            = "on"
+#    cache_level              = "aggressive"
+#    challenge_ttl            = 1800
+#    #ciphers                  = []
+#    cname_flattening         = "flatten_at_root"
+#    development_mode         = "off"
+#    edge_cache_ttl           = 7200
+#    email_obfuscation        = "on"
+#    hotlink_protection       = "off"
+#    http2                    = "on"
+#    #http3                    = "off"
+#    ip_geolocation           = "on"
+#    ipv6                     = "on"
+#    max_upload               = 100
+#    min_tls_version          = "1.2"
+#    minify {
+#      css  = "on"
+#      html = "on"
+#      js   = "on"
+#    }
+#
+#    mirage = "off"
+#    mobile_redirect {
+#      mobile_subdomain = ""
+#      status           = "off"
+#      strip_uri        = false
+#    }
+#
+#    opportunistic_encryption    = "off"
+#    opportunistic_onion         = "on"
+#    origin_error_page_pass_thru = "off"
+#    polish                      = "lossless"
+#    prefetch_preload            = "off"
+#    privacy_pass                = "on"
+#    pseudo_ipv4                 = "off"
+#    response_buffering          = "off"
+#    rocket_loader               = "off"
+#    security_header {
+#      enabled            = true
+#      include_subdomains = true
+#      max_age            = 0
+#      nosniff            = false
+#      preload            = false
+#    }
+#
+#    security_level              = "medium"
+#    server_side_exclude         = "on"
+#    sort_query_string_for_cache = "off"
+#    ssl                         = "strict"
+#    tls_1_2_only                = "off"
+#    tls_1_3                     = "on"
+#    tls_client_auth             = "off"
+#    true_client_ip_header       = "off"
+#    waf                         = "on"
+#    webp                        = "off"
+#    websockets                  = "on"
+#  }
+#}
+#
