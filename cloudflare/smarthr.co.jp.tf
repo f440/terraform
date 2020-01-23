@@ -238,7 +238,7 @@ resource "cloudflare_record" "tfer--TXT_smarthr-002E-co-002E-jp_6baf82ab757d4e55
   proxied  = "false"
   ttl      = "1"
   type     = "TXT"
-  value    = "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCQMl7yy041apU/MuwHhfKGhWdfaqzrfrboAF2PSXhFb4RxfEb3X4Lz/MoJp0xlGOlLSAt0WUyGc82ThzNwr8Er5BWQXHnkcXgaBe7+gJjYb+tZHQyiiLuXgBOEzR3fZmCHIzyq5XKPTFpspxahFNtZXZ3C6qdeFCxv0NouRV43TwIDAQAB"
+  value    = "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp7H1KmpNLoCrB9oqhjcoT1y700xIp6FmkrI4txSgthLvgdqoW1nvlpGd6g34WnYAhArrC9JeoGn1++aJf5TO4Tw/QgXkPhsI/HobA5IrzM+Jsfo/hfQhndLHlj886ONU2uMe5LTxM/WT6+wu2EKacYlOb34zRjDOI4UzBHFYKXAbAXSSHblwhnS2X/M0PZRfg3szx5iodEDnTcfhZ6d+A32gTl0Ju4TD02oPdLFNzaTu6PBAuFq4id2NTHJniqrtXfy/ey/UX6O1vuxgrQLwAdqNhldIDnAFbKEjH/mY1X4oS8U7V9dEjphP0WOUKs6CofkLJT7QJXLZgJfyzuW/owIDAQAB"
 }
 
 resource "cloudflare_record" "tfer--TXT_smarthr-002E-co-002E-jp_6e9eff13ae02f18a9d81e5db3c6bbb29" {
@@ -269,6 +269,16 @@ resource "cloudflare_record" "tfer--TXT_smarthr-002E-co-002E-jp_85acc24792b028e0
   ttl      = "1"
   type     = "TXT"
   value    = "v=spf1 include:_spf.google.com include:_spf.salesforce.com include:mail.zendesk.com ~all"
+}
+
+resource "cloudflare_record" "TXT-_dmarc_smarthr_co_jp" {
+  domain   = "smarthr.co.jp"
+  name     = "_dmarc.smarthr.co.jp"
+  priority = "0"
+  proxied  = "false"
+  ttl      = "1"
+  type     = "TXT"
+  value    = "v=DMARC1; p=none; rua=mailto:dmarc-report@smarthr.co.jp; ruf=mailto:dmarc-report@smarthr.co.jp"
 }
 
 # NOTE: cf-terraforming でインポートした設定。
