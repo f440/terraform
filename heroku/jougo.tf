@@ -54,6 +54,7 @@ resource "heroku_app" "jougo-production" {
   space = "smarthr-tokyo"
   region = "tokyo"
   stack = "heroku-18"
+  acm = true
 
   organization {
     name = "smarthr"
@@ -77,7 +78,7 @@ resource "heroku_app" "jougo-production" {
 
 resource "heroku_addon" "jougo-production-papertrail" {
   app  = "${heroku_app.jougo-production.name}"
-  plan = "papertrail:choklad"
+  plan = "papertrail:fixa"
 }
 
 ##################################################

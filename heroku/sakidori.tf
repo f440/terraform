@@ -125,7 +125,7 @@ resource "heroku_app" "sakidori-pca-dx-production" {
 
 resource "heroku_addon" "sakidori-pca-dx-production-papertrail" {
   app  = "${heroku_app.sakidori-pca-dx-production.name}"
-  plan = "papertrail:choklad"
+  plan = "papertrail:fixa"
 }
 
 resource "heroku_app" "sakidori-pca-hyper-production" {
@@ -159,7 +159,7 @@ resource "heroku_app" "sakidori-pca-hyper-production" {
 
 resource "heroku_addon" "sakidori-pca-hyper-production-papertrail" {
   app  = "${heroku_app.sakidori-pca-hyper-production.name}"
-  plan = "papertrail:choklad"
+  plan = "papertrail:fixa"
 }
 
 ##################################################
