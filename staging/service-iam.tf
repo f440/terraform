@@ -16,6 +16,7 @@ resource "aws_iam_group_membership" "plus-app" {
   users = [
     "plus-service-oke-circleci",
     "${aws_iam_user.plus-service-jougo.name}",
+    "${aws_iam_user.plus-service-omen.name}",
     "plus-service-auto-maintenance-tool"
   ]
 }
@@ -41,4 +42,20 @@ resource "aws_iam_policy_attachment" "plus-service-jougo" {
   name       = "plus-service-jougo"
   users      = ["${aws_iam_user.plus-service-jougo.name}"]
   policy_arn = "${aws_iam_policy.plus-service-jougo.arn}"
+}
+
+resource "aws_iam_user" "plus-service-omen" {
+  name          = "plus-service-omen"
+  force_destroy = "false"
+}
+
+resource "aws_iam_policy" "plus-service-omen" {
+  name   = "PlusServiceOmenPolicy"
+  policy = "${file("./files/iam/policies/plus-service-omen.json")}"
+}
+
+resource "aws_iam_policy_attachment" "plus-service-omen" {
+  name       = "plus-service-omen"
+  users      = ["${aws_iam_user.plus-service-omen.name}"]
+  policy_arn = "${aws_iam_policy.plus-service-omen.arn}"
 }
