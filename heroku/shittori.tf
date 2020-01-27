@@ -3,8 +3,8 @@
 # staging
 #
 ##################################################
-resource "heroku_app" "ayatori-staging" {
-  name   = "ayatori-staging"
+resource "heroku_app" "shittori-staging" {
+  name   = "shittori-staging"
   region = "us"
   stack = "heroku-18"
   acm = true
@@ -29,18 +29,18 @@ resource "heroku_app" "ayatori-staging" {
   ]
 }
 
-resource "heroku_addon" "ayatori-staging-postgresql" {
-  app  = "${heroku_app.ayatori-staging.name}"
+resource "heroku_addon" "shittori-staging-postgresql" {
+  app  = "${heroku_app.shittori-staging.name}"
   plan = "heroku-postgresql:hobby-basic"
 }
 
-resource "heroku_addon" "ayatori-staging-redis" {
-  app  = "${heroku_app.ayatori-staging.name}"
+resource "heroku_addon" "shittori-staging-redis" {
+  app  = "${heroku_app.shittori-staging.name}"
   plan = "heroku-redis:hobby-dev"
 }
 
-resource "heroku_addon" "ayatori-staging-papertrail" {
-  app  = "${heroku_app.ayatori-staging.name}"
+resource "heroku_addon" "shittori-staging-papertrail" {
+  app  = "${heroku_app.shittori-staging.name}"
   plan = "papertrail:choklad"
 }
 
@@ -49,8 +49,8 @@ resource "heroku_addon" "ayatori-staging-papertrail" {
 # production
 #
 ##################################################
-resource "heroku_app" "ayatori-production" {
-  name   = "ayatori-production"
+resource "heroku_app" "shittori-production" {
+  name   = "shittori-production"
   space = "smarthr-tokyo"
   region = "tokyo"
   stack = "heroku-18"
@@ -76,9 +76,14 @@ resource "heroku_app" "ayatori-production" {
   ]
 }
 
-resource "heroku_addon" "ayatori-production-papertrail" {
-  app  = "${heroku_app.ayatori-production.name}"
+resource "heroku_addon" "shittori-production-papertrail" {
+  app  = "${heroku_app.shittori-production.name}"
   plan = "papertrail:fixa"
+}
+
+resource "heroku_addon" "shittori-production-scout" {
+  app  = "${heroku_app.shittori-production.name}"
+  plan = "scout:chair"
 }
 
 ##################################################
@@ -86,18 +91,18 @@ resource "heroku_addon" "ayatori-production-papertrail" {
 # pipeline
 #
 ##################################################
-resource "heroku_pipeline" "ayatori" {
-  name = "ayatori"
+resource "heroku_pipeline" "shittori" {
+  name = "shittori"
 }
 
-resource "heroku_pipeline_coupling" "ayatori-staging" {
-  app      = "${heroku_app.ayatori-staging.name}"
-  pipeline = "${heroku_pipeline.ayatori.id}"
+resource "heroku_pipeline_coupling" "shittori-staging" {
+  app      = "${heroku_app.shittori-staging.name}"
+  pipeline = "${heroku_pipeline.shittori.id}"
   stage    = "staging"
 }
 
-resource "heroku_pipeline_coupling" "ayatori-production" {
-  app      = "${heroku_app.ayatori-production.name}"
-  pipeline = "${heroku_pipeline.ayatori.id}"
+resource "heroku_pipeline_coupling" "shittori-production" {
+  app      = "${heroku_app.shittori-production.name}"
+  pipeline = "${heroku_pipeline.shittori.id}"
   stage    = "production"
 }
