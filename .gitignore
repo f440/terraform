@@ -8,5 +8,7 @@ tf
 
 .DS_Store
 
+cloudflare/.terraform/**
+cloudflare/*.tfvars
 heroku/.terraform/**
 heroku/*.tfvars
