@@ -898,12 +898,16 @@ resource "aws_route53_record" "arigata-me-SOA" {
   ttl     = "900"
 }
 
-resource "aws_route53_record" "asterisk-arigata-me-CNAME" {
+resource "aws_route53_record" "asterisk-arigata-me-A" {
   zone_id = "Z1OXYS5OD2PLTY"
   name    = "*.arigata.me"
-  type    = "CNAME"
-  records = ["wildcard.arigata.me.herokudns.com"]
-  ttl     = "60"
+  type    = "A"
+
+  alias {
+    name                   = "hanica-citus-app.ap-northeast-1.elasticbeanstalk.com"
+    zone_id                = "Z1R25G3KIG2GBW"
+    evaluate_target_health = false
+  }
 }
 
 resource "aws_route53_record" "cs-smarthr-jp-MX" {
