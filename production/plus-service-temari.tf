@@ -4,7 +4,7 @@ resource "aws_glue_catalog_database" "temari_glue_catalog_database" {
 
 resource "aws_glue_catalog_table" "temari_glue_catalog_table_for_temari_papertrail_athena" {
   name          = "temari_papertrail_logs"
-  database_name = "${aws_glue_catalog_database.temari_glue_catalog_database.name}"
+  database_name = aws_glue_catalog_database.temari_glue_catalog_database.name
 
   table_type = "EXTERNAL_TABLE"
 
@@ -28,8 +28,8 @@ resource "aws_glue_catalog_table" "temari_glue_catalog_table_for_temari_papertra
       serialization_library = "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe"
 
       parameters = {
-        "field.delim"          = "\t"
-        "serialization.format" = "\t"
+        "field.delim"          = "	"
+        "serialization.format" = "	"
       }
     }
 

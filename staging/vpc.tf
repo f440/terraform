@@ -10,7 +10,7 @@ resource "aws_vpc" "staging-hanica-vpc" {
 
 /* subnet */
 resource "aws_subnet" "staging-hanica-external-1a" {
-  vpc_id            = "${aws_vpc.staging-hanica-vpc.id}"
+  vpc_id            = aws_vpc.staging-hanica-vpc.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = "ap-northeast-1a"
 
@@ -20,7 +20,7 @@ resource "aws_subnet" "staging-hanica-external-1a" {
 }
 
 resource "aws_subnet" "staging-hanica-external-1c" {
-  vpc_id            = "${aws_vpc.staging-hanica-vpc.id}"
+  vpc_id            = aws_vpc.staging-hanica-vpc.id
   cidr_block        = "10.0.3.0/24"
   availability_zone = "ap-northeast-1c"
 
@@ -30,7 +30,7 @@ resource "aws_subnet" "staging-hanica-external-1c" {
 }
 
 resource "aws_subnet" "staging-hanica-internal-1a" {
-  vpc_id            = "${aws_vpc.staging-hanica-vpc.id}"
+  vpc_id            = aws_vpc.staging-hanica-vpc.id
   cidr_block        = "10.0.128.0/24"
   availability_zone = "ap-northeast-1a"
 
@@ -40,7 +40,7 @@ resource "aws_subnet" "staging-hanica-internal-1a" {
 }
 
 resource "aws_subnet" "staging-hanica-internal-1c" {
-  vpc_id            = "${aws_vpc.staging-hanica-vpc.id}"
+  vpc_id            = aws_vpc.staging-hanica-vpc.id
   cidr_block        = "10.0.130.0/24"
   availability_zone = "ap-northeast-1c"
 
@@ -51,11 +51,11 @@ resource "aws_subnet" "staging-hanica-internal-1c" {
 
 /* RouteTable */
 resource "aws_route_table" "staging-hanica-external-rt" {
-  vpc_id         = "${aws_vpc.staging-hanica-vpc.id}"
+  vpc_id = aws_vpc.staging-hanica-vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.staging-hanica-igw.id}"
+    gateway_id = aws_internet_gateway.staging-hanica-igw.id
   }
 
   tags = {
@@ -64,26 +64,26 @@ resource "aws_route_table" "staging-hanica-external-rt" {
 }
 
 resource "aws_main_route_table_association" "staging-hanica-external-rt" {
-  vpc_id         = "${aws_vpc.staging-hanica-vpc.id}"
-  route_table_id = "${aws_route_table.staging-hanica-external-rt.id}"
+  vpc_id         = aws_vpc.staging-hanica-vpc.id
+  route_table_id = aws_route_table.staging-hanica-external-rt.id
 }
 
 resource "aws_route_table_association" "staging-hanica-external-1a" {
-  subnet_id      = "${aws_subnet.staging-hanica-external-1a.id}"
-  route_table_id = "${aws_route_table.staging-hanica-external-rt.id}"
+  subnet_id      = aws_subnet.staging-hanica-external-1a.id
+  route_table_id = aws_route_table.staging-hanica-external-rt.id
 }
 
 resource "aws_route_table_association" "staging-hanica-external-1c" {
-  subnet_id      = "${aws_subnet.staging-hanica-external-1c.id}"
-  route_table_id = "${aws_route_table.staging-hanica-external-rt.id}"
+  subnet_id      = aws_subnet.staging-hanica-external-1c.id
+  route_table_id = aws_route_table.staging-hanica-external-rt.id
 }
 
 resource "aws_route_table" "staging-hanica-internal-rt-1a" {
-  vpc_id            = "${aws_vpc.staging-hanica-vpc.id}"
+  vpc_id = aws_vpc.staging-hanica-vpc.id
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = "${aws_nat_gateway.staging-hanica-vpc-1a-ngw.id}"
+    nat_gateway_id = aws_nat_gateway.staging-hanica-vpc-1a-ngw.id
   }
 
   tags = {
@@ -92,16 +92,16 @@ resource "aws_route_table" "staging-hanica-internal-rt-1a" {
 }
 
 resource "aws_route_table_association" "staging-hanica-internal-1a" {
-  subnet_id      = "${aws_subnet.staging-hanica-internal-1a.id}"
-  route_table_id = "${aws_route_table.staging-hanica-internal-rt-1a.id}"
+  subnet_id      = aws_subnet.staging-hanica-internal-1a.id
+  route_table_id = aws_route_table.staging-hanica-internal-rt-1a.id
 }
 
 resource "aws_route_table" "staging-hanica-internal-rt-1c" {
-  vpc_id            = "${aws_vpc.staging-hanica-vpc.id}"
+  vpc_id = aws_vpc.staging-hanica-vpc.id
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = "${aws_nat_gateway.staging-hanica-vpc-1c-ngw.id}"
+    nat_gateway_id = aws_nat_gateway.staging-hanica-vpc-1c-ngw.id
   }
 
   tags = {
@@ -110,13 +110,13 @@ resource "aws_route_table" "staging-hanica-internal-rt-1c" {
 }
 
 resource "aws_route_table_association" "staging-hanica-internal-1c" {
-  subnet_id      = "${aws_subnet.staging-hanica-internal-1c.id}"
-  route_table_id = "${aws_route_table.staging-hanica-internal-rt-1c.id}"
+  subnet_id      = aws_subnet.staging-hanica-internal-1c.id
+  route_table_id = aws_route_table.staging-hanica-internal-rt-1c.id
 }
 
 /* internet gateway */
 resource "aws_internet_gateway" "staging-hanica-igw" {
-  vpc_id = "${aws_vpc.staging-hanica-vpc.id}"
+  vpc_id = aws_vpc.staging-hanica-vpc.id
 
   tags = {
     Name = "staging-hanica-igw"
@@ -134,8 +134,8 @@ resource "aws_vpc_dhcp_options" "staging-hanica-vpc" {
 }
 
 resource "aws_vpc_dhcp_options_association" "staging-hanica-vpc" {
-  vpc_id          = "${aws_vpc.staging-hanica-vpc.id}"
-  dhcp_options_id = "${aws_vpc_dhcp_options.staging-hanica-vpc.id}"
+  vpc_id          = aws_vpc.staging-hanica-vpc.id
+  dhcp_options_id = aws_vpc_dhcp_options.staging-hanica-vpc.id
 }
 
 /* Elastic IP */
@@ -157,8 +157,8 @@ resource "aws_eip" "staging-nat-1c" {
 
 /* NAT Gateway */
 resource "aws_nat_gateway" "staging-hanica-vpc-1a-ngw" {
-  allocation_id = "${aws_eip.staging-nat-1a.id}"
-  subnet_id     = "${aws_subnet.staging-hanica-external-1a.id}"
+  allocation_id = aws_eip.staging-nat-1a.id
+  subnet_id     = aws_subnet.staging-hanica-external-1a.id
 
   tags = {
     Name = "staging-nat-1a"
@@ -166,10 +166,11 @@ resource "aws_nat_gateway" "staging-hanica-vpc-1a-ngw" {
 }
 
 resource "aws_nat_gateway" "staging-hanica-vpc-1c-ngw" {
-  allocation_id = "${aws_eip.staging-nat-1c.id}"
-  subnet_id     = "${aws_subnet.staging-hanica-external-1c.id}"
+  allocation_id = aws_eip.staging-nat-1c.id
+  subnet_id     = aws_subnet.staging-hanica-external-1c.id
 
   tags = {
     Name = "staging-nat-1c"
   }
 }
+

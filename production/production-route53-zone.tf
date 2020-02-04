@@ -34,8 +34,8 @@ resource "aws_route53_zone" "kufuinc-com-public" {
 }
 
 resource "aws_route53_zone" "hanica-local-private" {
-  name       = "hanica.local"
-  comment    = ""
+  name    = "hanica.local"
+  comment = ""
   vpc {
     vpc_id     = "vpc-813df2e4"
     vpc_region = "ap-northeast-1"
@@ -45,8 +45,8 @@ resource "aws_route53_zone" "hanica-local-private" {
 }
 
 resource "aws_route53_zone" "daruma-local-private" {
-  name       = "daruma.local"
-  comment    = ""
+  name    = "daruma.local"
+  comment = ""
   vpc {
     vpc_id     = "vpc-813df2e4"
     vpc_region = "ap-northeast-1"
@@ -104,10 +104,10 @@ resource "aws_route53_zone" "cs-smarthr-jp-public" {
 }
 
 resource "aws_route53_zone" "hanica-internal-private" {
-  name       = "hanica.internal"
-  comment    = ""
+  name    = "hanica.internal"
+  comment = ""
   vpc {
-    vpc_id     = "${var.vpc-hanica-new-vpc}"
+    vpc_id     = var.vpc-hanica-new-vpc
     vpc_region = "ap-northeast-1"
   }
   tags = {}
@@ -119,3 +119,4 @@ resource "aws_route53_zone" "smarthr-hack-me-public" {
 
   tags = {}
 }
+

@@ -1,5 +1,5 @@
 data "template_file" "kiban-service-fivetran-koban" {
-  template = "${file("./files/ec2/user-data/kiban-service-fivetran-koban.cfg.tpl")}"
+  template = file("./files/ec2/user-data/kiban-service-fivetran-koban.cfg.tpl")
 }
 
 data "template_cloudinit_config" "kiban-service-fivetran-koban" {
@@ -8,12 +8,12 @@ data "template_cloudinit_config" "kiban-service-fivetran-koban" {
 
   part {
     content_type = "text/cloud-config"
-    content      = "${data.template_file.kiban-service-fivetran-koban.rendered}"
+    content      = data.template_file.kiban-service-fivetran-koban.rendered
   }
 }
 
 data "template_file" "kiban-service-fivetran-omen" {
-  template = "${file("./files/ec2/user-data/kiban-service-fivetran-omen.cfg.tpl")}"
+  template = file("./files/ec2/user-data/kiban-service-fivetran-omen.cfg.tpl")
 }
 
 data "template_cloudinit_config" "kiban-service-fivetran-omen" {
@@ -22,6 +22,7 @@ data "template_cloudinit_config" "kiban-service-fivetran-omen" {
 
   part {
     content_type = "text/cloud-config"
-    content      = "${data.template_file.kiban-service-fivetran-omen.rendered}"
+    content      = data.template_file.kiban-service-fivetran-omen.rendered
   }
 }
+

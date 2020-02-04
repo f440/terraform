@@ -1,6 +1,6 @@
 resource "aws_security_group" "sg-service-active-assessment" {
   name   = "service-active-assessment"
-  vpc_id = "${aws_vpc.staging-hanica-vpc.id}"
+  vpc_id = aws_vpc.staging-hanica-vpc.id
 
   egress {
     from_port   = 0
@@ -17,7 +17,7 @@ resource "aws_security_group" "sg-service-active-assessment" {
 }
 
 resource "aws_security_group_rule" "sg-service-active-assessment-ssh-rule" {
-  security_group_id = "${aws_security_group.sg-service-active-assessment.id}"
+  security_group_id = aws_security_group.sg-service-active-assessment.id
   type              = "ingress"
   from_port         = 0
   to_port           = 22
@@ -26,7 +26,7 @@ resource "aws_security_group_rule" "sg-service-active-assessment-ssh-rule" {
 }
 
 resource "aws_security_group_rule" "sg-service-active-assessment-http-rule" {
-  security_group_id = "${aws_security_group.sg-service-active-assessment.id}"
+  security_group_id = aws_security_group.sg-service-active-assessment.id
   type              = "ingress"
   from_port         = 0
   to_port           = 80
@@ -35,7 +35,7 @@ resource "aws_security_group_rule" "sg-service-active-assessment-http-rule" {
 }
 
 resource "aws_security_group_rule" "sg-service-active-assessment-https-rule" {
-  security_group_id = "${aws_security_group.sg-service-active-assessment.id}"
+  security_group_id = aws_security_group.sg-service-active-assessment.id
   type              = "ingress"
   from_port         = 0
   to_port           = 443
@@ -44,8 +44,8 @@ resource "aws_security_group_rule" "sg-service-active-assessment-https-rule" {
 }
 
 resource "aws_eip" "service-active-assessment" {
-  vpc = true
-  instance = "${aws_instance.service-active-assessment.id}"
+  vpc      = true
+  instance = aws_instance.service-active-assessment.id
 
   tags = {
     Name = "service-active-assessment"
@@ -57,19 +57,19 @@ resource "aws_eip" "service-active-assessment" {
 # https://docs.google.com/spreadsheets/d/1GBRE5YapQWIEfQbcZS66yHEJsOaguxdKIZxe9X-6C48/edit#gid=0
 resource "aws_key_pair" "service-active-assessment" {
   key_name   = "service-active-assessment-key"
-  public_key = "${file("./files/ec2/active-assessment.pub")}"
+  public_key = file("./files/ec2/active-assessment.pub")
 }
 
 resource "aws_instance" "service-active-assessment" {
-  ami           = "${var.ubuntu-server-1804-ami-id}"
+  ami               = var.ubuntu-server-1804-ami-id
   availability_zone = "ap-northeast-1c"
-  instance_type = "t2.large"
-  key_name = "${aws_key_pair.service-active-assessment.key_name}"
+  instance_type     = "t2.large"
+  key_name          = aws_key_pair.service-active-assessment.key_name
 
-  monitoring           = true
-  subnet_id = "${aws_subnet.staging-hanica-external-1c.id}"
-  vpc_security_group_ids  = [
-    "${aws_security_group.sg-service-active-assessment.id}",
+  monitoring = true
+  subnet_id  = aws_subnet.staging-hanica-external-1c.id
+  vpc_security_group_ids = [
+    aws_security_group.sg-service-active-assessment.id,
   ]
   associate_public_ip_address = true
 
@@ -86,3 +86,4 @@ resource "aws_instance" "service-active-assessment" {
     Name = "service-active-assessment"
   }
 }
+

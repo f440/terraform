@@ -311,3 +311,4 @@ resource "aws_elasticache_parameter_group" "hanica-persistent-redis-50" {
   family      = "redis5.0"
   description = "Redis 5.0 parameter group for hanica persistent"
 }
+

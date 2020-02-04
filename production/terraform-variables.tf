@@ -88,3 +88,4 @@ variable "kiban-service-fivetran-latest-ami-id" {
 variable "hanica-bastion-ami-id" {
   default = "ami-940cdceb"
 }
+
