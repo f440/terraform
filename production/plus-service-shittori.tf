@@ -17,16 +17,16 @@ resource "aws_elasticache_replication_group" "plus-shittori-production" {
 
   # Memo
   # 将来的には「aws_elasticache_subnet_group」リソースで作成したものに入れ替えたい
-  subnet_group_name = "${var.plus_subnet_group_name}"
+  subnet_group_name = var.plus_subnet_group_name
 
   # Memo
   # 将来的には「aws_security_group」リソースで作成したものに入れ替えたい
   security_group_ids = [
-    "${var.sg-heroku-ps-redis}",
-    "${var.sg-default}",
+    var.sg-heroku-ps-redis,
+    var.sg-default,
   ]
 
-  parameter_group_name = "${aws_elasticache_parameter_group.plus-shittori-redis-32.name}"
+  parameter_group_name = aws_elasticache_parameter_group.plus-shittori-redis-32.name
 
   maintenance_window       = "mon:14:30-mon:15:30"
   snapshot_window          = "18:00-19:00"
@@ -45,3 +45,4 @@ resource "aws_db_parameter_group" "shittori-dbparamgroup" {
 
   description = "PostgreSQL 11 Parameter Groups for shittori"
 }
+

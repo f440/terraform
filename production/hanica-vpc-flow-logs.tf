@@ -1,8 +1,8 @@
 resource "aws_flow_log" "hanica-vpc-flow-logs" {
-  iam_role_arn    = "${aws_iam_role.iam-role-for-hanica-vpc-flow-logs.arn}"
-  log_destination = "${aws_cloudwatch_log_group.cloudwatch-log-group-for-hanica-vpc-flow-logs.arn}"
+  iam_role_arn    = aws_iam_role.iam-role-for-hanica-vpc-flow-logs.arn
+  log_destination = aws_cloudwatch_log_group.cloudwatch-log-group-for-hanica-vpc-flow-logs.arn
   traffic_type    = "ALL"
-  vpc_id          = "${var.vpc-hanica-new-vpc}"
+  vpc_id          = var.vpc-hanica-new-vpc
 }
 
 resource "aws_cloudwatch_log_group" "cloudwatch-log-group-for-hanica-vpc-flow-logs" {
@@ -27,6 +27,7 @@ resource "aws_iam_role" "iam-role-for-hanica-vpc-flow-logs" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_policy" "iam-policy-for-hanica-vpc-flow-logs" {
@@ -51,9 +52,11 @@ resource "aws_iam_policy" "iam-policy-for-hanica-vpc-flow-logs" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_role_policy_attachment" "iam-role-policy-attachment-for-hanica-vpc-flow-logs" {
-  role       = "${aws_iam_role.iam-role-for-hanica-vpc-flow-logs.name}"
-  policy_arn = "${aws_iam_policy.iam-policy-for-hanica-vpc-flow-logs.arn}"
+role       = aws_iam_role.iam-role-for-hanica-vpc-flow-logs.name
+policy_arn = aws_iam_policy.iam-policy-for-hanica-vpc-flow-logs.arn
 }
+

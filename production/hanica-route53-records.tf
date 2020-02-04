@@ -238,7 +238,7 @@ resource "aws_route53_record" "smarthr-jp-MX" {
   zone_id = "Z38IZYREYRKWXV"
   name    = "smarthr.jp"
   type    = "MX"
-  records = ["5\talt1.aspmx.l.google.com.", "5\talt2.aspmx.l.google.com.", "10\talt3.aspmx.l.google.com.", "10\talt4.aspmx.l.google.com.", "1\taspmx.l.google.com."]
+  records = ["5	alt1.aspmx.l.google.com.", "5	alt2.aspmx.l.google.com.", "10	alt3.aspmx.l.google.com.", "10	alt4.aspmx.l.google.com.", "1	aspmx.l.google.com."]
   ttl     = "300"
 }
 
@@ -1111,7 +1111,7 @@ resource "aws_route53_record" "redis-volatile-staging-hanica-internal-CNAME" {
 }
 
 resource "aws_route53_record" "smarthr-hack-me-NS" {
-  zone_id = "${aws_route53_zone.smarthr-hack-me-public.zone_id}"
+  zone_id = aws_route53_zone.smarthr-hack-me-public.zone_id
   name    = "smarthr-hack.me"
   type    = "NS"
   records = ["ns-70.awsdns-08.com.", "ns-937.awsdns-53.net.", "ns-1177.awsdns-19.org.", "ns-1629.awsdns-11.co.uk."]
@@ -1119,7 +1119,7 @@ resource "aws_route53_record" "smarthr-hack-me-NS" {
 }
 
 resource "aws_route53_record" "smarthr-hack-me-SOA" {
-  zone_id = "${aws_route53_zone.smarthr-hack-me-public.zone_id}"
+  zone_id = aws_route53_zone.smarthr-hack-me-public.zone_id
   name    = "smarthr-hack.me"
   type    = "SOA"
   records = ["ns-70.awsdns-08.com. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
@@ -1127,7 +1127,7 @@ resource "aws_route53_record" "smarthr-hack-me-SOA" {
 }
 
 resource "aws_route53_record" "asterisk-smarthr-hack-me-CNAME" {
-  zone_id = "${aws_route53_zone.smarthr-hack-me-public.zone_id}"
+  zone_id = aws_route53_zone.smarthr-hack-me-public.zone_id
   name    = "*.smarthr-hack.me"
   type    = "CNAME"
   records = ["encircled-turnip-12ya3abcfmwrsfo35grkzuuk.herokudns.com"]
@@ -1135,9 +1135,10 @@ resource "aws_route53_record" "asterisk-smarthr-hack-me-CNAME" {
 }
 
 resource "aws_route53_record" "ssl-smarthr-hack-me-CNAME" {
-  zone_id = "${aws_route53_zone.smarthr-hack-me-public.zone_id}"
+  zone_id = aws_route53_zone.smarthr-hack-me-public.zone_id
   name    = "_00C03E77274E14F652B5FB508F19084F.smarthr-hack.me"
   type    = "CNAME"
   records = ["4F8F3E4E0A555DAD6EDE3132FCAC72B4.EDBBFB0E1079838B9FBCABD5AA59E268.5d5a7cb9542e2.comodoca.com"]
   ttl     = "60"
 }
+
