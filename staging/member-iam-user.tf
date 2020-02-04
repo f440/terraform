@@ -9,131 +9,132 @@
 #   * IAMユーザーの識別が必要なため、slack名称、渾名、名字のみの使用は禁止(メールアドレスが名字のみの場合除く)
 #   * IAMユーザーの作成は、正社員のみとする(業務委託メンバーには発行しない)
 module "iam-user-naito-kensuke" {
-  source         = "./modules/iam/users"
-  name           = "naito.kensuke"
+  source = "./modules/iam/users"
+  name   = "naito.kensuke"
 }
 
 module "iam-user-munehiko-fujimura" {
-  source         = "./modules/iam/users"
-  name           = "munehiko.fujimura"
+  source = "./modules/iam/users"
+  name   = "munehiko.fujimura"
 }
 
 module "iam-user-serizawa" {
-  source         = "./modules/iam/users"
-  name           = "serizawa"
+  source = "./modules/iam/users"
+  name   = "serizawa"
 }
 
 module "iam-user-takumi-kanzaki" {
-  source         = "./modules/iam/users"
-  name           = "takumi.kanzaki"
+  source = "./modules/iam/users"
+  name   = "takumi.kanzaki"
 }
 
 module "iam-user-yoshio-fuse" {
-  source         = "./modules/iam/users"
-  name           = "yoshio.fuse"
+  source = "./modules/iam/users"
+  name   = "yoshio.fuse"
 }
 
 module "iam-user-teppi-fujii" {
-  source         = "./modules/iam/users"
-  name           = "teppi.fujii"
+  source = "./modules/iam/users"
+  name   = "teppi.fujii"
 }
 
 module "iam-user-takuya-morizumi" {
-  source         = "./modules/iam/users"
-  name           = "takuya.morizumi"
+  source = "./modules/iam/users"
+  name   = "takuya.morizumi"
 }
 
 module "iam-user-motoki-sato" {
-  source         = "./modules/iam/users"
-  name           = "motoki.sato"
+  source = "./modules/iam/users"
+  name   = "motoki.sato"
 }
 
 module "iam-user-takashi-yasuma" {
-  source         = "./modules/iam/users"
-  name           = "takashi.yasuma"
+  source = "./modules/iam/users"
+  name   = "takashi.yasuma"
 }
 
 module "iam-user-mutsuhisa-suzuki" {
-  source         = "./modules/iam/users"
-  name           = "mutsuhisa.suzuki"
+  source = "./modules/iam/users"
+  name   = "mutsuhisa.suzuki"
 }
 
 module "iam-user-risa-watanabe" {
-  source         = "./modules/iam/users"
-  name           = "risa.watanabe"
+  source = "./modules/iam/users"
+  name   = "risa.watanabe"
 }
 
 module "iam-user-wataru-miyaguni" {
-  source         = "./modules/iam/users"
-  name           = "wataru.miyaguni"
+  source = "./modules/iam/users"
+  name   = "wataru.miyaguni"
 }
 
 module "iam-user-yoshinari" {
-  source         = "./modules/iam/users"
-  name           = "yoshinari"
+  source = "./modules/iam/users"
+  name   = "yoshinari"
 }
 
 module "iam-user-shun-hikita" {
-  source         = "./modules/iam/users"
-  name           = "shun.hikita"
+  source = "./modules/iam/users"
+  name   = "shun.hikita"
 }
 
 module "iam-user-yusuke-karakita" {
-  source         = "./modules/iam/users"
-  name           = "yusuke.karakita"
+  source = "./modules/iam/users"
+  name   = "yusuke.karakita"
 }
 
 module "iam-user-shogo-hashimoto" {
-  source         = "./modules/iam/users"
-  name           = "shogo.hashimoto"
+  source = "./modules/iam/users"
+  name   = "shogo.hashimoto"
 }
 
 module "iam-user-muga-tairaku" {
-  source         = "./modules/iam/users"
-  name           = "muga.tairaku"
+  source = "./modules/iam/users"
+  name   = "muga.tairaku"
 }
 
 module "iam-user-atsushi-mizoue" {
-  source         = "./modules/iam/users"
-  name           = "atsushi.mizoue"
+  source = "./modules/iam/users"
+  name   = "atsushi.mizoue"
 }
 
 module "iam-user-hiroki-watanabe" {
-  source         = "./modules/iam/users"
-  name           = "hiroki.watanabe"
+  source = "./modules/iam/users"
+  name   = "hiroki.watanabe"
 }
 
 module "iam-user-shota-takata" {
-  source         = "./modules/iam/users"
-  name           = "shota.takata"
+  source = "./modules/iam/users"
+  name   = "shota.takata"
 }
 
 module "iam-user-yasuhiro-kinoshita" {
-  source         = "./modules/iam/users"
-  name           = "yasuhiro.kinoshita"
+  source = "./modules/iam/users"
+  name   = "yasuhiro.kinoshita"
 }
 
 module "iam-user-kazuma-watanabe" {
-  source         = "./modules/iam/users"
-  name           = "kazuma.watanabe"
+  source = "./modules/iam/users"
+  name   = "kazuma.watanabe"
 }
 
 module "iam-user-takashi-arashida" {
-  source         = "./modules/iam/users"
-  name           = "takashi.arashida"
+  source = "./modules/iam/users"
+  name   = "takashi.arashida"
 }
 
 module "iam-user-toshiyuki-iwata" {
-  source         = "./modules/iam/users"
-  name           = "toshiyuki.iwata"
+  source = "./modules/iam/users"
+  name   = "toshiyuki.iwata"
 }
 
 module "iam-user-ryoma-koishi" {
-  source         = "./modules/iam/users"
-  name           = "ryoma.koishi"
+  source = "./modules/iam/users"
+  name   = "ryoma.koishi"
 }
-  
+
 module "iam-user-akihiro-anzai" {
-  source         = "./modules/iam/users"
-  name           = "akihiro.anzai"
+  source = "./modules/iam/users"
+  name   = "akihiro.anzai"
 }
+

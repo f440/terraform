@@ -25,20 +25,20 @@ module "iam-group-administrator" {
   name   = "administrator"
 
   users = [
-    "${module.iam-user-naito-kensuke.name}",
-    "${module.iam-user-serizawa.name}",
-    "${module.iam-user-munehiko-fujimura.name}",
-    "${module.iam-user-takumi-kanzaki.name}",
-    "${module.iam-user-takuya-morizumi.name}",
-    "${module.iam-user-teppi-fujii.name}",
-    "${module.iam-user-motoki-sato.name}",
-    "${module.iam-user-mutsuhisa-suzuki.name}",
-    "${module.iam-user-yoshinari.name}",
-    "${module.iam-user-yoshio-fuse.name}",
-    "${module.iam-user-yusuke-karakita.name}",
-    "${module.iam-user-yasuhiro-kinoshita.name}",
-    "${module.iam-user-kazuma-watanabe.name}",
-    "${module.iam-user-wataru-miyaguni.name}",
+    module.iam-user-naito-kensuke.name,
+    module.iam-user-serizawa.name,
+    module.iam-user-munehiko-fujimura.name,
+    module.iam-user-takumi-kanzaki.name,
+    module.iam-user-takuya-morizumi.name,
+    module.iam-user-teppi-fujii.name,
+    module.iam-user-motoki-sato.name,
+    module.iam-user-mutsuhisa-suzuki.name,
+    module.iam-user-yoshinari.name,
+    module.iam-user-yoshio-fuse.name,
+    module.iam-user-yusuke-karakita.name,
+    module.iam-user-yasuhiro-kinoshita.name,
+    module.iam-user-kazuma-watanabe.name,
+    module.iam-user-wataru-miyaguni.name,
   ]
 }
 
@@ -48,14 +48,14 @@ module "iam-group-developer" {
   name   = "developer"
 
   users = [
-    "${module.iam-user-shun-hikita.name}",
-    "${module.iam-user-shogo-hashimoto.name}",
-    "${module.iam-user-risa-watanabe.name}",
-    "${module.iam-user-takashi-arashida.name}",
-    "${module.iam-user-toshiyuki-iwata.name}",
-    "${module.iam-user-ryoma-koishi.name}",
-    "${module.iam-user-akihiro-anzai.name}",
-    "${module.iam-user-takashi-yasuma.name}",
+    module.iam-user-shun-hikita.name,
+    module.iam-user-shogo-hashimoto.name,
+    module.iam-user-risa-watanabe.name,
+    module.iam-user-takashi-arashida.name,
+    module.iam-user-toshiyuki-iwata.name,
+    module.iam-user-ryoma-koishi.name,
+    module.iam-user-akihiro-anzai.name,
+    module.iam-user-takashi-yasuma.name,
   ]
 }
 
@@ -65,9 +65,9 @@ module "iam-group-frontend" {
   name   = "frontend"
 
   users = [
-    "${module.iam-user-atsushi-mizoue.name}",
-    "${module.iam-user-hiroki-watanabe.name}",
-    "${module.iam-user-shota-takata.name}",
+    module.iam-user-atsushi-mizoue.name,
+    module.iam-user-hiroki-watanabe.name,
+    module.iam-user-shota-takata.name,
   ]
 }
 
@@ -77,6 +77,7 @@ module "iam-group-qa" {
   name   = "qa"
 
   users = [
-    "${module.iam-user-muga-tairaku.name}",
+    module.iam-user-muga-tairaku.name,
   ]
 }
+
