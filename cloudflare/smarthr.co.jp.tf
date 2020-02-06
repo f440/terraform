@@ -268,7 +268,27 @@ resource "cloudflare_record" "tfer--TXT_smarthr-002E-co-002E-jp_85acc24792b028e0
   proxied  = "false"
   ttl      = "1"
   type     = "TXT"
-  value    = "v=spf1 include:_spf.google.com include:_spf.salesforce.com include:mail.zendesk.com ~all"
+  value    = "v=spf1 include:_spf.google.com include:_spf.salesforce.com include:mail.zendesk.com include:mktomail.com include:servers.mcsv.net ~all"
+}
+
+resource "cloudflare_record" "CNAME-k1_domainkey_smarthr_co_jp" {
+  domain   = "smarthr.co.jp"
+  name     = "k1._domainkey.smarthr.co.jp"
+  priority = "0"
+  proxied  = "false"
+  ttl      = "1"
+  type     = "CNAME"
+  value    = "dkim.mcsv.net"
+}
+
+resource "cloudflare_record" "TXT-m1_domainkey_smarthr_co_jp" {
+  domain   = "smarthr.co.jp"
+  name     = "m1._domainkey.smarthr.co.jp"
+  priority = "0"
+  proxied  = "false"
+  ttl      = "1"
+  type     = "TXT"
+  value    = "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCU0u+WI4xnzvTli1r05TRYXAI9E+ibP8i/3gwen8RZ33/5SYVYkySCCE9SSwMsoUBzjMlaLX7E5bR8qcas1knFSEHLI4ioReV5JWFpsXNNItf7eY8xhEH8XCiYJh5tpP4kN6ityRlWISxLUR19Kr76MChenFK0wkew/vK5l5MKzwIDAQAB"
 }
 
 resource "cloudflare_record" "TXT-_dmarc_smarthr_co_jp" {
