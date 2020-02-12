@@ -81,3 +81,12 @@ module "iam-group-qa" {
   ]
 }
 
+### security
+module "iam-group-security" {
+  source = "./modules/iam/groups"
+  name   = "security"
+
+  users = [
+    module.iam-user-toshiyuki-iwata.name
+  ]
+}
