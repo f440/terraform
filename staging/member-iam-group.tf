@@ -57,7 +57,6 @@ module "iam-group-developer" {
     module.iam-user-shogo-hashimoto.name,
     module.iam-user-risa-watanabe.name,
     module.iam-user-takashi-arashida.name,
-    module.iam-user-toshiyuki-iwata.name,
     module.iam-user-ryoma-koishi.name,
     module.iam-user-akihiro-anzai.name,
     module.iam-user-takashi-yasuma.name,
