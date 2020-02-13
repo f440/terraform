@@ -5,6 +5,7 @@
 # * フロントエンドは「frontend」グループに所属すること
 # * QA/SETは「qa」グループに所属すること
 # * ジュニアメンバーは「junior」グループに所属すること
+# * セキュリティグループは「security」グループに所属すること
 #
 # administrator:
 #   * 開発アカウント: 無制限
@@ -18,6 +19,10 @@
 # frontend:
 #   * 開発アカウント: 無制限
 #   * 本番アカウント: 切り替えられない
+# security:
+#   * 開発アカウント: 無制限
+#   * 本番アカウント: security role (ReadOnly+セキュリティ系サービスのフル権限)　に切り替えられる
+
 
 ### administrator
 module "iam-group-administrator" {
@@ -52,7 +57,6 @@ module "iam-group-developer" {
     module.iam-user-shogo-hashimoto.name,
     module.iam-user-risa-watanabe.name,
     module.iam-user-takashi-arashida.name,
-    module.iam-user-toshiyuki-iwata.name,
     module.iam-user-ryoma-koishi.name,
     module.iam-user-akihiro-anzai.name,
     module.iam-user-takashi-yasuma.name,
@@ -81,3 +85,12 @@ module "iam-group-qa" {
   ]
 }
 
+### security
+module "iam-group-security" {
+  source = "./modules/iam/groups"
+  name   = "security"
+
+  users = [
+    module.iam-user-toshiyuki-iwata.name
+  ]
+}
