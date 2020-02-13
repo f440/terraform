@@ -13,7 +13,7 @@ resource "aws_iam_policy_attachment" "security-role-inspector" {
 
 # GuardDuty
 resource "aws_iam_policy_attachment" "security-role-guardduty" {
-  name       = "security-role-guadduty"
+  name       = "security-role-guarduty"
   roles      = [aws_iam_role.security.name]
   policy_arn = "arn:aws:iam::aws:policy/AmazonGuardDutyFullAccess"
 }
