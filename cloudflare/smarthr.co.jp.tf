@@ -268,7 +268,7 @@ resource "cloudflare_record" "tfer--TXT_smarthr-002E-co-002E-jp_85acc24792b028e0
   proxied  = "false"
   ttl      = "1"
   type     = "TXT"
-  value    = "v=spf1 include:_spf.google.com include:_spf.salesforce.com include:mail.zendesk.com include:mktomail.com include:servers.mcsv.net ~all"
+  value    = "v=spf1 include:_spf.google.com include:_spf.salesforce.com include:mail.zendesk.com include:mktomail.com include:servers.mcsv.net a:zgateway.zuora.com ~all"
 }
 
 resource "cloudflare_record" "CNAME-k1_domainkey_smarthr_co_jp" {
