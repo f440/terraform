@@ -23,8 +23,8 @@ resource "heroku_app" "fivetran-resync-production" {
 
   buildpacks = [
     "heroku/ruby",
-    "heroku/google-chrome",
-    "heroku/chromedriver"
+    "https://buildpack-registry.s3.amazonaws.com/buildpacks/heroku/google-chrome.tgz",
+    "https://buildpack-registry.s3.amazonaws.com/buildpacks/heroku/chromedriver.tgz"
   ]
 }
 
