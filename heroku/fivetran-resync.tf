@@ -33,6 +33,11 @@ resource "heroku_addon" "fivetran-resync-production-scheduler" {
   plan = "scheduler:standard"
 }
 
+resource "heroku_addon" "fivetran-resync-production-papertrail" {
+  app  = heroku_app.fivetran-resync-production.name
+  plan = "papertrail:choklad"
+}
+
 ##################################################
 #
 # pipeline
