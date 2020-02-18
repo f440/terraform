@@ -30,11 +30,6 @@ resource "heroku_app" "tatami-staging" {
   ]
 }
 
-resource "heroku_addon" "tatami-staging-postgresql" {
-  app  = heroku_app.tatami-staging.name
-  plan = "heroku-postgresql:standard-0"
-}
-
 resource "heroku_addon" "tatami-staging-redis" {
   app  = heroku_app.tatami-staging.name
   plan = "heroku-redis:premium-0"
