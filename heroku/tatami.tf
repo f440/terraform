@@ -25,8 +25,8 @@ resource "heroku_app" "tatami-staging" {
   }
 
   buildpacks = [
-    "heroku/ruby",
     "heroku/nodejs",
+    "heroku/ruby",
   ]
 }
 
@@ -78,8 +78,8 @@ resource "heroku_app" "tatami-production" {
   }
 
   buildpacks = [
-    "heroku/ruby",
     "heroku/nodejs",
+    "heroku/ruby",
   ]
 }
 
