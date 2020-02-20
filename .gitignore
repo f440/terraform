@@ -12,3 +12,6 @@ cloudflare/.terraform/**
 cloudflare/*.tfvars
 heroku/.terraform/**
 heroku/*.tfvars
+
+# Lambda zip package
+production/files/lambda/dist/*
