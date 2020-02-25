@@ -11,8 +11,15 @@ def run_command(resource_id:, script:)
     ssm.send_command(
       document_name: "AWS-RunShellScript",
       parameters: {
-        "commands" => [file.read()] 
+        "commands" => [file.read()],
       },
+      cloud_watch_output_config: {
+        cloud_watch_log_group_name: ENV["CLOUDWATCH_LOG_GROUP"],
+        cloud_watch_output_enabled: true
+      },
+      # TODO: 必要ならS3にもログ出力する
+      # output_s3_bucket_name: "S3BucketName",
+      # output_s3_key_prefix: "S3KeyPrefix",
       instance_ids: [resource_id.split("/")[-1]]
     )
   end

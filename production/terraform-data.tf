@@ -26,3 +26,6 @@ data "template_cloudinit_config" "kiban-service-fivetran-omen" {
   }
 }
 
+data "aws_caller_identity" "current" {}
+
+data "aws_region" "current" {}

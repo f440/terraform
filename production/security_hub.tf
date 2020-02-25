@@ -1,6 +1,17 @@
 # TODO: 現状Seucirty HubのカスタムアクションはTerraformがサポートしていないため
 #       手動であらかじめ追加をしておく必要がある
-#       Terraformでサポートされたら、コード化予定。
+#       Terraformでサポートされたら、以下のような形でコード化予定。
+#
+#resource "aws_securityhub_custom_action" "exception-action" {
+#  name = "例外に設定(対応不要)"
+#  action_id = "exception"
+#  description = "低リスクのため対応不要な脆弱性"
+#}
+#resource "aws_securityhub_custom_action" "bestpractice-action" {
+#  name = "Best Practice適用"
+#  action_id = "bestpractice"
+#  description = "Best Practiceで推奨された設定を適用"
+#}
 variable "securityhub-action-exception" {
   default = "arn:aws:securityhub:ap-northeast-1:736134917012:action/custom/exception"
 }
@@ -84,6 +95,57 @@ resource "aws_cloudwatch_event_target" "securityhub-action-exception-target" {
   arn  = aws_lambda_function.securityhub-action-exception.arn
 }
 
+# Run Commandのログ出力用CloudWatch Logs
+
+# NOTE: https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/logs/encrypt-log-data-kms.html
+data "aws_iam_policy_document" "securityhub-log-key-policy" {
+  policy_id = "key-default-1"
+  statement {
+    sid    = "Enable IAM User Permissions"
+    effect = "Allow"
+    principals {
+      type = "AWS"
+      identifiers = [
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/security"
+      ]
+    }
+    actions   = ["kms:*"]
+    resources = ["*"]
+  }
+  statement {
+    effect = "Allow"
+    principals {
+      type = "Service"
+      identifiers = [
+        "logs.${data.aws_region.current.name}.amazonaws.com"
+      ]
+    }
+    actions = [
+      "kms:Encrypt*",
+      "kms:Decrypt*",
+      "kms:ReEncrypt*",
+      "kms:GenerateDataKey*",
+      "kms:Describe*"
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_kms_key" "securityhub-log-key" {
+  description         = "key for SecurityHub log"
+  policy              = data.aws_iam_policy_document.securityhub-log-key-policy.json
+  enable_key_rotation = true
+  tags = {
+    ManagedBy = "SecurityGroup"
+  }
+}
+
+resource "aws_cloudwatch_log_group" "securityhub-log" {
+  name       = "SecurityHubLog"
+  kms_key_id = aws_kms_key.securityhub-log-key.arn
+}
+
 # Best Practice適用のカスタムアクション
 resource "aws_iam_role" "securityhub-action-bestpractice-role" {
   name = "SecurityHubActionBestPracticeRole"
@@ -145,6 +207,12 @@ resource "aws_lambda_function" "securityhub-action-bestpractice" {
 
   role = aws_iam_role.securityhub-action-bestpractice-role.arn
 
+  environment {
+    variables = {
+      CLOUDWATCH_LOG_GROUP = aws_cloudwatch_log_group.securityhub-log.name
+    }
+  }
+
   tags = {
     ManagedBy = "SecurityGroup"
   }
@@ -171,4 +239,3 @@ resource "aws_cloudwatch_event_target" "securityhub-action-bestpractice-target" 
   rule = aws_cloudwatch_event_rule.securityhub-action-bestpractice-event.name
   arn  = aws_lambda_function.securityhub-action-bestpractice.arn
 }
-
