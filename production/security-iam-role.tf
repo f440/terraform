@@ -13,7 +13,7 @@ resource "aws_iam_policy_attachment" "security-role-inspector" {
 
 # GuardDuty
 resource "aws_iam_policy_attachment" "security-role-guardduty" {
-  name       = "security-role-guarduty"
+  name       = "security-role-guardduty"
   roles      = [aws_iam_role.security.name]
   policy_arn = "arn:aws:iam::aws:policy/AmazonGuardDutyFullAccess"
 }
@@ -241,9 +241,40 @@ data "aws_iam_policy_document" "security-role-policy" {
     effect = "Allow"
     actions = [
       "logs:CreateLogGroup",
-      "logs:CreateLogStream"
+      "logs:CreateLogStream",
+      "logs:AssociateKmsKey"
     ]
     resources = ["*"]
+  }
+
+  # Key Management Service
+  statement {
+    effect = "Allow"
+    actions = [
+      "kms:CreateKey",
+      "kms:TagResource"
+    ]
+    resources = ["*"]
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestTag/ManagedBy"
+      values   = ["SecurityGroup"]
+    }
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "kms:EnableKey",
+      "kms:EnableKeyRotation",
+      "kms:PutKeyPolicy",
+      "kms:UpdateKeyDescription"
+    ]
+    resources = ["*"]
+    condition {
+      test     = "StringEquals"
+      variable = "aws:ResourceTag/ManagedBy"
+      values   = ["SecurityGroup"]
+    }
   }
 
   # Chatbot (SecurityHubからのSlack通知用)
