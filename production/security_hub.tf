@@ -22,6 +22,25 @@ variable "securityhub-action-bestpractice" {
 
 resource "aws_securityhub_account" "securityhub" {}
 
+# NOTE: LambdaのコードはTerraformとは別で管理するために、 Terraformではダミーコードをデプロイしておく。
+#       その後、別途実際のコードに差し替える
+#       % aws lambda update-function-code --function-name $function_name --zip-file fileb://$source_path –publish
+#
+#       https://amido.com/blog/terraform-does-not-need-your-code-to-provision-a-lambda-function/
+data "archive_file" "lambda-dummy" {
+  type        = "zip"
+  output_path = "./files/lambda/dummy/lambda_dummy.zip"
+
+  source {
+    content = <<EOF
+      This is dummy content.
+      Please upload your lambda function code.
+      % aws lambda update-function-code --function-name $function_name --zip-file fileb://$source_path –publish
+    EOF
+    filename = ".placeholder"
+  }
+}
+
 # 例外設定のカスタムアクション
 resource "aws_iam_role" "securityhub-action-exception-role" {
   name = "SecurityHubActionExceptionRole"
@@ -34,37 +53,30 @@ resource "aws_iam_role" "securityhub-action-exception-role" {
 }
 
 resource "aws_iam_role_policy_attachment" "securityhub-action-exception-role-policy-attachment" {
-  role       = aws_iam_role.securityhub-action-exception-role.name
+  role = aws_iam_role.securityhub-action-exception-role.name
   policy_arn = "arn:aws:iam::aws:policy/AWSLambdaExecute"
 }
 
 data "aws_iam_policy_document" "securityhub-action-exception-role-policy" {
   statement {
-    effect    = "Allow"
-    actions   = ["securityhub:UpdateFindings"]
+    effect = "Allow"
+    actions = ["securityhub:UpdateFindings"]
     resources = ["*"]
   }
 }
 
 resource "aws_iam_role_policy" "securityhub-action-exception-role-policy" {
-  role   = aws_iam_role.securityhub-action-exception-role.name
+  role = aws_iam_role.securityhub-action-exception-role.name
   policy = data.aws_iam_policy_document.securityhub-action-exception-role-policy.json
-}
-
-data "archive_file" "securityhub-action-exception" {
-  type        = "zip"
-  source_dir  = "./files/lambda/src/securityhub_action_exception"
-  output_path = "./files/lambda/dist/securityhub_action_exception.zip"
 }
 
 resource "aws_lambda_function" "securityhub-action-exception" {
   function_name = "SecurityHubActionException"
 
-  filename         = data.archive_file.securityhub-action-exception.output_path
-  source_code_hash = data.archive_file.securityhub-action-exception.output_base64sha256
-  handler          = "securityhub_action_exception.lambda_handler"
-  runtime          = "ruby2.5"
-  timeout          = 30
+  filename = data.archive_file.lambda-dummy.output_path
+  handler = "securityhub_action_exception.lambda_handler"
+  runtime = "ruby2.5"
+  timeout = 30
 
   role = aws_iam_role.securityhub-action-exception-role.arn
 
@@ -74,7 +86,7 @@ resource "aws_lambda_function" "securityhub-action-exception" {
 }
 
 resource "aws_cloudwatch_event_rule" "securityhub-action-exception-event" {
-  name        = "SecurityHubActionExceptionEvent"
+  name = "SecurityHubActionExceptionEvent"
   description = "Security Hub Custom Action for exception"
 
   event_pattern = templatefile(
@@ -84,15 +96,15 @@ resource "aws_cloudwatch_event_rule" "securityhub-action-exception-event" {
 }
 
 resource "aws_lambda_permission" "securityhub-action-exception-permission" {
-  action        = "lambda:InvokeFunction"
+  action = "lambda:InvokeFunction"
   function_name = aws_lambda_function.securityhub-action-exception.arn
-  principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.securityhub-action-exception-event.arn
+  principal = "events.amazonaws.com"
+  source_arn = aws_cloudwatch_event_rule.securityhub-action-exception-event.arn
 }
 
 resource "aws_cloudwatch_event_target" "securityhub-action-exception-target" {
   rule = aws_cloudwatch_event_rule.securityhub-action-exception-event.name
-  arn  = aws_lambda_function.securityhub-action-exception.arn
+  arn = aws_lambda_function.securityhub-action-exception.arn
 }
 
 # Run Commandのログ出力用CloudWatch Logs
@@ -101,7 +113,7 @@ resource "aws_cloudwatch_event_target" "securityhub-action-exception-target" {
 data "aws_iam_policy_document" "securityhub-log-key-policy" {
   policy_id = "key-default-1"
   statement {
-    sid    = "Enable IAM User Permissions"
+    sid = "Enable IAM User Permissions"
     effect = "Allow"
     principals {
       type = "AWS"
@@ -110,7 +122,7 @@ data "aws_iam_policy_document" "securityhub-log-key-policy" {
         "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/security"
       ]
     }
-    actions   = ["kms:*"]
+    actions = ["kms:*"]
     resources = ["*"]
   }
   statement {
@@ -133,8 +145,8 @@ data "aws_iam_policy_document" "securityhub-log-key-policy" {
 }
 
 resource "aws_kms_key" "securityhub-log-key" {
-  description         = "key for SecurityHub log"
-  policy              = data.aws_iam_policy_document.securityhub-log-key-policy.json
+  description = "key for SecurityHub log"
+  policy = data.aws_iam_policy_document.securityhub-log-key-policy.json
   enable_key_rotation = true
   tags = {
     ManagedBy = "SecurityGroup"
@@ -142,7 +154,7 @@ resource "aws_kms_key" "securityhub-log-key" {
 }
 
 resource "aws_cloudwatch_log_group" "securityhub-log" {
-  name       = "SecurityHubLog"
+  name = "SecurityHubLog"
   kms_key_id = aws_kms_key.securityhub-log-key.arn
 }
 
@@ -158,7 +170,7 @@ resource "aws_iam_role" "securityhub-action-bestpractice-role" {
 }
 
 resource "aws_iam_role_policy_attachment" "securityhub-action-bestpractice-role-policy-attachment" {
-  role       = aws_iam_role.securityhub-action-bestpractice-role.name
+  role = aws_iam_role.securityhub-action-bestpractice-role.name
   policy_arn = "arn:aws:iam::aws:policy/AWSLambdaExecute"
 }
 
@@ -178,32 +190,25 @@ data "aws_iam_policy_document" "securityhub-action-bestpractice-role-policy" {
     ]
     resources = ["*"]
     condition {
-      test     = "ForAllValues:StringEquals"
+      test = "ForAllValues:StringEquals"
       variable = "aws:TagKeys"
-      values   = ["AmazonInspectorProfile"]
+      values = ["AmazonInspectorProfile"]
     }
   }
 }
 
 resource "aws_iam_role_policy" "securityhub-action-bestpractice-role-policy" {
-  role   = aws_iam_role.securityhub-action-bestpractice-role.name
+  role = aws_iam_role.securityhub-action-bestpractice-role.name
   policy = data.aws_iam_policy_document.securityhub-action-bestpractice-role-policy.json
-}
-
-data "archive_file" "securityhub-action-bestpractice" {
-  type        = "zip"
-  source_dir  = "./files/lambda/src/securityhub_action_bestpractice"
-  output_path = "./files/lambda/dist/securityhub_action_bestpractice.zip"
 }
 
 resource "aws_lambda_function" "securityhub-action-bestpractice" {
   function_name = "SecurityHubActionBestPractice"
 
-  filename         = data.archive_file.securityhub-action-bestpractice.output_path
-  source_code_hash = data.archive_file.securityhub-action-bestpractice.output_base64sha256
-  handler          = "securityhub_action_bestpractice.lambda_handler"
-  runtime          = "ruby2.5"
-  timeout          = 30
+  filename = data.archive_file.lambda-dummy.output_path
+  handler = "securityhub_action_bestpractice.lambda_handler"
+  runtime = "ruby2.5"
+  timeout = 30
 
   role = aws_iam_role.securityhub-action-bestpractice-role.arn
 
@@ -219,7 +224,7 @@ resource "aws_lambda_function" "securityhub-action-bestpractice" {
 }
 
 resource "aws_cloudwatch_event_rule" "securityhub-action-bestpractice-event" {
-  name        = "SecurityHubActionBestPracticeEvent"
+  name = "SecurityHubActionBestPracticeEvent"
   description = "Security Hub Custom Action for Best Practice"
 
   event_pattern = templatefile(
@@ -229,13 +234,13 @@ resource "aws_cloudwatch_event_rule" "securityhub-action-bestpractice-event" {
 }
 
 resource "aws_lambda_permission" "securityhub-action-bestpractice-permission" {
-  action        = "lambda:InvokeFunction"
+  action = "lambda:InvokeFunction"
   function_name = aws_lambda_function.securityhub-action-bestpractice.arn
-  principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.securityhub-action-bestpractice-event.arn
+  principal = "events.amazonaws.com"
+  source_arn = aws_cloudwatch_event_rule.securityhub-action-bestpractice-event.arn
 }
 
 resource "aws_cloudwatch_event_target" "securityhub-action-bestpractice-target" {
   rule = aws_cloudwatch_event_rule.securityhub-action-bestpractice-event.name
-  arn  = aws_lambda_function.securityhub-action-bestpractice.arn
+  arn = aws_lambda_function.securityhub-action-bestpractice.arn
 }
