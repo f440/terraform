@@ -3,32 +3,40 @@ resource "aws_iam_role" "security" {
   assume_role_policy = file("./files/iam/roles/account-assume.json")
 }
 
+resource "aws_iam_role_policy" "security-role-policy" {
+  name   = "SecurityRolePolicy"
+  role   = aws_iam_role.security.name
+  policy = data.aws_iam_policy_document.security-role-policy.json
+}
+
+# NOTE: その他のサービス Readonly
+resource "aws_iam_role_policy_attachment" "security-role-readonly" {
+  role       = aws_iam_role.security.name
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+}
+
 # NOTE: セキュリティ系サービスのフル権限
 # Amazon Inspector
-resource "aws_iam_policy_attachment" "security-role-inspector" {
-  name       = "security-role-inspector"
-  roles      = [aws_iam_role.security.name]
+resource "aws_iam_role_policy_attachment" "security-role-inspector" {
+  role       = aws_iam_role.security.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonInspectorFullAccess"
 }
 
 # GuardDuty
-resource "aws_iam_policy_attachment" "security-role-guardduty" {
-  name       = "security-role-guardduty"
-  roles      = [aws_iam_role.security.name]
+resource "aws_iam_role_policy_attachment" "security-role-guardduty" {
+  role       = aws_iam_role.security.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonGuardDutyFullAccess"
 }
 
 # Security Hub
-resource "aws_iam_policy_attachment" "security-role-securityhub" {
-  name       = "security-role-securityhub"
-  roles      = [aws_iam_role.security.name]
+resource "aws_iam_role_policy_attachment" "security-role-securityhub" {
+  role       = aws_iam_role.security.name
   policy_arn = "arn:aws:iam::aws:policy/AWSSecurityHubFullAccess"
 }
 
 # AWS WAF
-resource "aws_iam_policy_attachment" "security-role-waf" {
-  name       = "security-role-waf"
-  roles      = [aws_iam_role.security.name]
+resource "aws_iam_role_policy_attachment" "security-role-waf" {
+  role       = aws_iam_role.security.name
   policy_arn = "arn:aws:iam::aws:policy/AWSWAFFullAccess"
 }
 
@@ -315,17 +323,4 @@ data "aws_iam_policy_document" "security-role-policy" {
       "arn:aws:s3:::kufu-terraform-state/cloudflare/cloudflare-terraform.tfstate"
     ]
   }
-}
-
-resource "aws_iam_role_policy" "security-role-policy" {
-  name   = "SecurityRolePolicy"
-  role   = aws_iam_role.security.name
-  policy = data.aws_iam_policy_document.security-role-policy.json
-}
-
-# NOTE: その他のサービス Readonly
-resource "aws_iam_policy_attachment" "security-role-readonly" {
-  name       = "security-role-readonly"
-  roles      = [aws_iam_role.security.name]
-  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }

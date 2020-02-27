@@ -3,9 +3,8 @@ resource "aws_iam_role" "administrator" {
   assume_role_policy = file("./files/iam/roles/account-assume.json")
 }
 
-resource "aws_iam_policy_attachment" "administrator-role-attachment" {
-  name       = "administrator-role-attachment"
-  roles      = [aws_iam_role.administrator.name]
+resource "aws_iam_role_policy_attachment" "administrator-role-attachment" {
+  role       = aws_iam_role.administrator.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
 
@@ -14,12 +13,12 @@ resource "aws_iam_role" "developer" {
   assume_role_policy = file("./files/iam/roles/account-assume.json")
 }
 
-resource "aws_iam_policy_attachment" "developer-role-attachment" {
-  name = "developer-role-attachment"
-  roles = [
-    aws_iam_role.developer.name,
-    aws_iam_role.oke-operator.name,
-  ]
+resource "aws_iam_role_policy_attachment" "developer-role-attachment" {
+  role       = aws_iam_role.developer.name
   policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
 
+resource "aws_iam_role_policy_attachment" "oke-operator-role-attachment" {
+  role       = aws_iam_role.oke-operator.name
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+}
