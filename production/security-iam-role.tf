@@ -3,6 +3,18 @@ resource "aws_iam_role" "security" {
   assume_role_policy = file("./files/iam/roles/account-assume.json")
 }
 
+resource "aws_iam_role_policy" "security-role-policy" {
+  name   = "SecurityRolePolicy"
+  role   = aws_iam_role.security.name
+  policy = data.aws_iam_policy_document.security-role-policy.json
+}
+
+# NOTE: その他のサービス Readonly
+resource "aws_iam_role_policy_attachment" "security-role-readonly" {
+  role       = aws_iam_role.security.name
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+}
+
 # NOTE: セキュリティ系サービスのフル権限
 # Amazon Inspector
 resource "aws_iam_policy_attachment" "security-role-inspector" {
@@ -315,17 +327,4 @@ data "aws_iam_policy_document" "security-role-policy" {
       "arn:aws:s3:::kufu-terraform-state/cloudflare/cloudflare-terraform.tfstate"
     ]
   }
-}
-
-resource "aws_iam_role_policy" "security-role-policy" {
-  name   = "SecurityRolePolicy"
-  role   = aws_iam_role.security.name
-  policy = data.aws_iam_policy_document.security-role-policy.json
-}
-
-# NOTE: その他のサービス Readonly
-resource "aws_iam_policy_attachment" "security-role-readonly" {
-  name       = "security-role-readonly"
-  roles      = [aws_iam_role.security.name]
-  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
