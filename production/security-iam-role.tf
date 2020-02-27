@@ -17,30 +17,26 @@ resource "aws_iam_role_policy_attachment" "security-role-readonly" {
 
 # NOTE: セキュリティ系サービスのフル権限
 # Amazon Inspector
-resource "aws_iam_policy_attachment" "security-role-inspector" {
-  name       = "security-role-inspector"
-  roles      = [aws_iam_role.security.name]
+resource "aws_iam_role_policy_attachment" "security-role-inspector" {
+  role       = aws_iam_role.security.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonInspectorFullAccess"
 }
 
 # GuardDuty
-resource "aws_iam_policy_attachment" "security-role-guardduty" {
-  name       = "security-role-guardduty"
-  roles      = [aws_iam_role.security.name]
+resource "aws_iam_role_policy_attachment" "security-role-guardduty" {
+  role       = aws_iam_role.security.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonGuardDutyFullAccess"
 }
 
 # Security Hub
-resource "aws_iam_policy_attachment" "security-role-securityhub" {
-  name       = "security-role-securityhub"
-  roles      = [aws_iam_role.security.name]
+resource "aws_iam_role_policy_attachment" "security-role-securityhub" {
+  role       = aws_iam_role.security.name
   policy_arn = "arn:aws:iam::aws:policy/AWSSecurityHubFullAccess"
 }
 
 # AWS WAF
-resource "aws_iam_policy_attachment" "security-role-waf" {
-  name       = "security-role-waf"
-  roles      = [aws_iam_role.security.name]
+resource "aws_iam_role_policy_attachment" "security-role-waf" {
+  role       = aws_iam_role.security.name
   policy_arn = "arn:aws:iam::aws:policy/AWSWAFFullAccess"
 }
 
