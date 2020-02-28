@@ -147,7 +147,7 @@ resource "aws_route53_record" "asterisk-tatami-staging-aoyagi-farm-CNAME" {
   zone_id = var.aoyagi_farm_zone_id
   name    = "*.tatami-staging.aoyagi.farm"
   type    = "CNAME"
-  records = ["reticulated-lettuce-558r487iadiqqxsbhxme8qs3.herokudns.com"]
+  records = ["powerful-journey-4406.thawing-headland-5882.herokuspace.com"]
   ttl     = "60"
 }
 
