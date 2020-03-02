@@ -1,0 +1,11 @@
+{
+  "source": [
+    "aws.securityhub"
+  ],
+  "detail-type": [
+    "Security Hub Findings - Custom Action"
+  ],
+  "resources": [
+    "${custom_action_arn}"
+  ]
+}

@@ -13,11 +13,15 @@ resource "aws_iam_role_policy_attachment" "bastion-role-ssm-attachment" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
+resource "aws_iam_role_policy_attachment" "bastion-role-cloudwatch-attachment" {
+  role       = aws_iam_role.bastion-role.name
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+}
+
 resource "aws_iam_instance_profile" "bastion-instance-profile" {
   name = aws_iam_role.bastion-role.name
   role = aws_iam_role.bastion-role.name
 }
-
 
 # NOTE: terraformer import aws --resources=ec2_instance --regions=ap-northeast-1 --filter=aws_instance=i-09a4cf5604a088fba
 #       でインポートしたものをベース
