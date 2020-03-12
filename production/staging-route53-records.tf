@@ -163,7 +163,7 @@ resource "aws_route53_record" "asterisk-meyasu-staging-aoyagi-farm-CNAME" {
   zone_id = var.aoyagi_farm_zone_id
   name    = "*.meyasu-staging.aoyagi.farm"
   type    = "CNAME"
-  records = ["arcane-reef-4627.thawing-headland-5882.herokuspace.com"]
+  records = ["protected-ravine-8610.thawing-headland-5882.herokuspace.com"]
   ttl     = "60"
 }
 
