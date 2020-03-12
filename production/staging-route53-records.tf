@@ -151,11 +151,27 @@ resource "aws_route53_record" "asterisk-tatami-staging-aoyagi-farm-CNAME" {
   ttl     = "60"
 }
 
+resource "aws_route53_record" "meyasu-staging-aoyagi-farm-CNAME" {
+  zone_id = var.aoyagi_farm_zone_id
+  name    = "meyasu-staging.aoyagi.farm"
+  type    = "CNAME"
+  records = ["arcane-reef-4627.thawing-headland-5882.herokuspace.com"]
+  ttl     = "60"
+}
+
 resource "aws_route53_record" "asterisk-meyasu-staging-aoyagi-farm-CNAME" {
   zone_id = var.aoyagi_farm_zone_id
   name    = "*.meyasu-staging.aoyagi.farm"
   type    = "CNAME"
   records = ["arcane-reef-4627.thawing-headland-5882.herokuspace.com"]
+  ttl     = "60"
+}
+
+resource "aws_route53_record" "meyasu-staging-TXT" {
+  zone_id = var.aoyagi_farm_zone_id
+  name    = "_acme-challenge.meyasu-staging.aoyagi.farm"
+  type    = "TXT"
+  records = ["CYlsvHL5-ILyrMMWd5GNVundjdyvw6wBdSUF99YKDWU"]
   ttl     = "60"
 }
 

@@ -3,6 +3,7 @@
 # staging
 #
 ##################################################
+/*
 resource "heroku_app" "tatami-staging" {
   name   = "tatami-staging"
   region = "us"
@@ -49,7 +50,7 @@ resource "heroku_addon" "tatami-staging-sslfasttrack" {
   app  = heroku_app.tatami-staging.name
   plan = "sslfasttrack:wildcard"
 }
-
+*/
 ##################################################
 #
 # production
@@ -91,13 +92,13 @@ resource "heroku_app" "tatami-production" {
 resource "heroku_pipeline" "tatami" {
   name = "tatami"
 }
-
+/*
 resource "heroku_pipeline_coupling" "tatami-staging" {
   app      = heroku_app.tatami-staging.name
   pipeline = heroku_pipeline.tatami.id
   stage    = "staging"
 }
-
+*/
 resource "heroku_pipeline_coupling" "tatami-production" {
   app      = heroku_app.tatami-production.name
   pipeline = heroku_pipeline.tatami.id
