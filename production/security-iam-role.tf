@@ -114,14 +114,32 @@ data "aws_iam_policy_document" "security-role-policy" {
     resources = ["*"]
   }
 
-  # SNS
+  # SNS (タグ付きのみ)
   statement {
     effect = "Allow"
     actions = [
       "sns:CreateTopic",
+      "sns:TagResource"
+    ]
+    resources = ["*"]
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestTag/ManagedBy"
+      values   = ["SecurityGroup"]
+    }
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
       "sns:Subscribe"
     ]
     resources = ["*"]
+    condition {
+      test     = "StringEquals"
+      variable = "aws:ResourceTag/ManagedBy"
+      values   = ["SecurityGroup"]
+    }
   }
 
   # IAM ロール関連 (タグがついているもののみ)
@@ -207,6 +225,7 @@ data "aws_iam_policy_document" "security-role-policy" {
       "lambda:AddPermission",
       "lambda:InvokeFunction",
       "lambda:PublishVersion",
+      "lambda:PutFunctionConcurrency",
       "lambda:UpdateEventSourceMapping",
       "lambda:UpdateFunctionCode",
       "lambda:UpdateFunctionConfiguration"
@@ -306,6 +325,22 @@ data "aws_iam_policy_document" "security-role-policy" {
       "firehose:StartDeliveryStreamEncryption",
       "firehose:TagDeliveryStream",
       "firehose:UpdateDestination"
+    ]
+    resources = ["*"]
+  }
+
+  # SQS
+  # NOTE: タグで条件が付けられない
+  #       https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonsqs.html#amazonsqs-policy-keys
+  statement {
+    effect = "Allow"
+    actions = [
+      "sqs:CreateQueue",
+      "sqs:TagQueue",
+      "sqs:AddPermission",
+      "sqs:ChangeMessageVisibility",
+      "sqs:ChangeMessageVisibilityBatch",
+      "sqs:SetQueueAttributes"
     ]
     resources = ["*"]
   }
