@@ -1,0 +1,22 @@
+{
+  "source": [
+    "aws.securityhub"
+  ],
+  "detail-type": [
+    "Security Hub Findings - Imported"
+  ],
+  "detail": {
+    "findings": {
+      "ProductArn": [
+        "arn:aws:securityhub:${aws_region}::product/aws/inspector"
+      ],
+      "Resources": {
+        "Tags": {
+          "StopSecurityHubNotification": [
+            { "exists": false}
+          ]
+        }
+      }
+    }
+  }
+}

@@ -110,6 +110,7 @@ resource "aws_cloudwatch_event_target" "securityhub-action-exception-target" {
 # Run Commandのログ出力用CloudWatch Logs
 
 # NOTE: https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/logs/encrypt-log-data-kms.html
+#       https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-troubleshooting.html#sqs-encrypted
 data "aws_iam_policy_document" "securityhub-log-key-policy" {
   policy_id = "key-default-1"
   statement {
@@ -139,6 +140,21 @@ data "aws_iam_policy_document" "securityhub-log-key-policy" {
       "kms:ReEncrypt*",
       "kms:GenerateDataKey*",
       "kms:Describe*"
+    ]
+    resources = ["*"]
+  }
+  statement {
+    effect = "Allow"
+    principals {
+      type = "Service"
+      identifiers = [
+        "events.amazonaws.com",
+        "lambda.amazonaws.com"
+      ]
+    }
+    actions = [
+      "kms:Decrypt",
+      "kms:GenerateDataKey"
     ]
     resources = ["*"]
   }
@@ -243,4 +259,171 @@ resource "aws_lambda_permission" "securityhub-action-bestpractice-permission" {
 resource "aws_cloudwatch_event_target" "securityhub-action-bestpractice-target" {
   rule = aws_cloudwatch_event_rule.securityhub-action-bestpractice-event.name
   arn = aws_lambda_function.securityhub-action-bestpractice.arn
+}
+
+# 通知
+data "template_file" "securityhub-imported-event" {
+  template = file("./files/events/securityhub_imported.json")
+  vars = {
+    aws_region = data.aws_region.current.name
+  }
+}
+
+resource "aws_cloudwatch_event_rule" "securityhub-notification-rule" {
+  name = "SecurityHubNotification"
+  description = "Forward Security Hub events to Lambda for notifcation"
+
+  event_pattern = data.template_file.securityhub-imported-event.rendered
+}
+
+resource "aws_sqs_queue" "securityhub-notification-queue" {
+  name = "SecurityHubNotificationQueue"
+  kms_master_key_id = aws_kms_key.securityhub-log-key.key_id
+
+  tags = {
+    ManagedBy = "SecurityGroup"
+  }
+}
+
+# https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/resource-based-policies-cwe.html#sqs-permissions
+data "aws_iam_policy_document" "securityhub-notification-queue-policy" {
+  statement {
+    effect = "Allow"
+    principals {
+      type = "Service"
+      identifiers = ["events.amazonaws.com"]
+    }
+    actions = [
+      "sqs:SendMessage"
+    ]
+    resources = [aws_sqs_queue.securityhub-notification-queue.arn]
+    condition {
+      test = "ArnEquals"
+      variable = "aws:SourceArn"
+      values = [aws_cloudwatch_event_rule.securityhub-notification-rule.arn]
+    }
+  }
+}
+
+resource "aws_sqs_queue_policy" "securityhub-notification-queue-policy" {
+  queue_url = aws_sqs_queue.securityhub-notification-queue.id
+  policy = data.aws_iam_policy_document.securityhub-notification-queue-policy.json
+}
+
+resource "aws_cloudwatch_event_target" "seurityhub-notification-target" {
+  rule = aws_cloudwatch_event_rule.securityhub-notification-rule.name
+  arn = aws_sqs_queue.securityhub-notification-queue.arn
+}
+
+resource "aws_sns_topic" "securityhub-notification-topic" {
+  name = "SecurityHubNotification"
+
+  tags = {
+    ManagedBy = "SecurityGroup"
+  }
+}
+
+resource "aws_iam_role" "lambda-securityhub-filter-role" {
+  name = "LambdaSecurityHubFilterRole"
+  assume_role_policy = file("./files/iam/roles/lambda-assume.json")
+
+  tags = {
+    ManagedBy = "SecurityGroup"
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "lambda-securityhub-filter-role-policy-attachment" {
+  role = aws_iam_role.lambda-securityhub-filter-role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSLambdaExecute"
+}
+
+data "aws_iam_policy_document" "lambda-securityhub-filter-role-policy" {
+  statement {
+    effect = "Allow"
+    actions = ["SNS:Publish"]
+    resources = [aws_sns_topic.securityhub-notification-topic.arn]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "sqs:ReceiveMessage",
+      "sqs:DeleteMessage",
+      "sqs:GetQueueAttributes"
+    ]
+    resources = [aws_sqs_queue.securityhub-notification-queue.arn]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "kms:Decrypt",
+      "kms:GenerateDataKey"
+    ]
+    resources = [aws_kms_key.securityhub-log-key.arn]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "securityhub:GetFindings",
+      "securityhub:UpdateFindings",
+    ]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_role_policy" "lambda-securityhub-filter-role-policy" {
+  role = aws_iam_role.lambda-securityhub-filter-role.name
+  policy = data.aws_iam_policy_document.lambda-securityhub-filter-role-policy.json
+}
+
+resource "aws_lambda_function" "lambda-securityhub-filter" {
+  function_name = "SecurityHubNotificationFilter"
+
+  filename = data.archive_file.lambda-dummy.output_path
+
+  handler = "securityhub_notification_filter.lambda_handler"
+  runtime = "ruby2.5"
+  timeout = 30
+  environment {
+    variables = {
+      SNS_TOPIC_ARN = aws_sns_topic.securityhub-notification-topic.arn
+    }
+  }
+  # NOTE: TooManyRequestErrorを出にくくするために同時実行を減らす
+  reserved_concurrent_executions = 1
+
+  role = aws_iam_role.lambda-securityhub-filter-role.arn
+
+  tags = {
+    ManagedBy = "SecurityGroup"
+  }
+}
+
+resource "aws_lambda_event_source_mapping" "securityhub-notification-mapping" {
+  event_source_arn = aws_sqs_queue.securityhub-notification-queue.arn
+  function_name = aws_lambda_function.lambda-securityhub-filter.arn
+}
+
+resource "aws_cloudwatch_metric_alarm" "securityhub-notification-queue-alarm" {
+  alarm_name = "SecurityHubNotificationQueueAlarm"
+
+  namespace = "AWS/SQS"
+  metric_name = "ApproximateAgeOfOldestMessage"
+  dimensions = {
+    QueueName = aws_sqs_queue.securityhub-notification-queue.name
+  }
+
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods = 1
+  period = "300"
+  statistic = "Maximum"
+  threshold = "60"
+
+  alarm_actions = [aws_sns_topic.securityhub-notification-topic.arn]
+
+  tags = {
+    ManagedBy = "SecurityGroup"
+  }
 }
