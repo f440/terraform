@@ -3,9 +3,9 @@
 # ElastiCache
 #
 ##################################################
-resource "aws_elasticache_replication_group" "plus-oke-production" {
-  replication_group_id          = "oke-production"
-  replication_group_description = "Redis instance for oke-production"
+resource "aws_elasticache_replication_group" "plus-tatami-staging" {
+  replication_group_id          = "tatami-staging"
+  replication_group_description = "Redis instance for tatami-staging"
 
   number_cache_clusters      = 2
   node_type                  = "cache.m3.medium"
@@ -139,8 +139,8 @@ resource "aws_eip" "oke-natgw" {
 #
 ##################################################
 
-resource "aws_ecs_cluster" "oke-production" {
-  name = "oke-production"
+resource "aws_ecs_cluster" "tatami-staging" {
+  name = "tatami-staging"
 }
 
 resource "aws_ecr_repository" "oke" {
@@ -227,14 +227,14 @@ resource "aws_iam_role_policy_attachment" "oke-operator-elb-full-access-attachme
   policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
 }
 
-resource "aws_iam_role" "oke-production-ecs-task-execution-role" {
+resource "aws_iam_role" "tatami-staging-ecs-task-execution-role" {
   name               = "OkeProductionEcsTaskExecutionRole"
   description        = "Allows ECS tasks to call AWS services on your behalf."
   assume_role_policy = file("./files/iam/roles/ecs-assume.json")
 }
 
-resource "aws_iam_role_policy_attachment" "oke-production-ecs-task-execution-role-ecs-task-execution-role-attachment" {
-  role       = aws_iam_role.oke-production-ecs-task-execution-role.name
+resource "aws_iam_role_policy_attachment" "tatami-staging-ecs-task-execution-role-ecs-task-execution-role-attachment" {
+  role       = aws_iam_role.tatami-staging-ecs-task-execution-role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
@@ -244,8 +244,8 @@ resource "aws_iam_policy" "oke-ssm-get-parameters-policy" {
   policy = file("./files/iam/policies/oke-ssm-get-parameters-policy.json")
 }
 
-resource "aws_iam_role_policy_attachment" "oke-production-ecs-task-execution-role-oke-ssm-get-parameters-policy-attachment" {
-  role       = aws_iam_role.oke-production-ecs-task-execution-role.name
+resource "aws_iam_role_policy_attachment" "tatami-staging-ecs-task-execution-role-oke-ssm-get-parameters-policy-attachment" {
+  role       = aws_iam_role.tatami-staging-ecs-task-execution-role.name
   policy_arn = aws_iam_policy.oke-ssm-get-parameters-policy.arn
 }
 
@@ -255,13 +255,13 @@ resource "aws_iam_policy" "oke-ecs-update-service-policy" {
   policy = file("./files/iam/policies/oke-ecs-update-service-policy.json")
 }
 
-resource "aws_iam_role" "codebuild-oke-production-database-migration-service-role" {
+resource "aws_iam_role" "codebuild-tatami-staging-database-migration-service-role" {
   name               = "codebuild-okeProductionDatabaseMigration-service-role"
   path               = "/service-role/"
   assume_role_policy = file("./files/iam/roles/codebuild-assume.json")
 }
 
-resource "aws_iam_policy" "oke-codebuild-base-oke-production-database-migration-policy" {
+resource "aws_iam_policy" "oke-codebuild-base-tatami-staging-database-migration-policy" {
   name        = "CodeBuildBasePolicy-okeProductionDatabaseMigration-ap-northeast-1"
   description = "Policy used in trust relationship with CodeBuild"
   path        = "/service-role/"
@@ -270,22 +270,22 @@ resource "aws_iam_policy" "oke-codebuild-base-oke-production-database-migration-
   )
 }
 
-resource "aws_iam_role_policy_attachment" "codebuild-oke-production-database-migration-service-role-oke-ssm-get-parameters-policy-attachment" {
-  role       = aws_iam_role.codebuild-oke-production-database-migration-service-role.name
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-database-migration-service-role-oke-ssm-get-parameters-policy-attachment" {
+  role       = aws_iam_role.codebuild-tatami-staging-database-migration-service-role.name
   policy_arn = aws_iam_policy.oke-ssm-get-parameters-policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "codebuild-oke-production-database-migration-service-role-oke-codebuild-base-oke-production-database-migration-policy-attachment" {
-  role       = aws_iam_role.codebuild-oke-production-database-migration-service-role.name
-  policy_arn = aws_iam_policy.oke-codebuild-base-oke-production-database-migration-policy.arn
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-database-migration-service-role-oke-codebuild-base-oke-production-database-migration-policy-attachment" {
+  role       = aws_iam_role.codebuild-tatami-staging-database-migration-service-role.name
+  policy_arn = aws_iam_policy.oke-codebuild-base-tatami-staging-database-migration-policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "codebuild-oke-production-database-migration-service-role-oke-ecs-update-service-policy-attachment" {
-  role       = aws_iam_role.codebuild-oke-production-database-migration-service-role.name
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-database-migration-service-role-oke-ecs-update-service-policy-attachment" {
+  role       = aws_iam_role.codebuild-tatami-staging-database-migration-service-role.name
   policy_arn = aws_iam_policy.oke-ecs-update-service-policy.arn
 }
 
-resource "aws_iam_policy" "oke-codebuild-base-oke-production-deploy-worker-policy" {
+resource "aws_iam_policy" "oke-codebuild-base-tatami-staging-deploy-worker-policy" {
   name        = "CodeBuildBasePolicy-okeProductionDeployWorker-ap-northeast-1"
   description = "Policy used in trust relationship with CodeBuild"
   path        = "/service-role/"
@@ -294,19 +294,19 @@ resource "aws_iam_policy" "oke-codebuild-base-oke-production-deploy-worker-polic
   )
 }
 
-resource "aws_iam_role" "codebuild-oke-production-deploy-worker-service-role" {
+resource "aws_iam_role" "codebuild-tatami-staging-deploy-worker-service-role" {
   name               = "codebuild-okeProductionDeployWorker-service-role"
   path               = "/service-role/"
   assume_role_policy = file("./files/iam/roles/codebuild-assume.json")
 }
 
-resource "aws_iam_role_policy_attachment" "codebuild-oke-production-deploy-worker-service-role-oke-codebuild-base-oke-production-deploy-worker-policy-attachment" {
-  role       = aws_iam_role.codebuild-oke-production-deploy-worker-service-role.name
-  policy_arn = aws_iam_policy.oke-codebuild-base-oke-production-deploy-worker-policy.arn
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-deploy-worker-service-role-oke-codebuild-base-oke-production-deploy-worker-policy-attachment" {
+  role       = aws_iam_role.codebuild-tatami-staging-deploy-worker-service-role.name
+  policy_arn = aws_iam_policy.oke-codebuild-base-tatami-staging-deploy-worker-policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "codebuild-oke-production-deploy-worker-service-role-oke-ecs-update-service-policy-attachment" {
-  role       = aws_iam_role.codebuild-oke-production-deploy-worker-service-role.name
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-deploy-worker-service-role-oke-ecs-update-service-policy-attachment" {
+  role       = aws_iam_role.codebuild-tatami-staging-deploy-worker-service-role.name
   policy_arn = aws_iam_policy.oke-ecs-update-service-policy.arn
 }
 
