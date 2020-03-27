@@ -26,17 +26,17 @@ resource "aws_elasticache_replication_group" "plus-tatami-staging" {
     var.sg-default,
   ]
 
-  parameter_group_name = aws_elasticache_parameter_group.oke-redis-40.name
+  parameter_group_name = aws_elasticache_parameter_group.tatami-redis-40.name
 
   maintenance_window       = "tue:19:00-tue:20:00"
   snapshot_window          = "15:00-16:00"
   snapshot_retention_limit = "1"
 }
 
-resource "aws_elasticache_parameter_group" "oke-redis-40" {
-  name        = "oke-redis-40"
+resource "aws_elasticache_parameter_group" "tatami-redis-40" {
+  name        = "tatami-redis-40"
   family      = "redis4.0"
-  description = "Redis 4.0 parameter group for oke"
+  description = "Redis 4.0 parameter group for tatami"
 }
 
 ##################################################
@@ -45,10 +45,10 @@ resource "aws_elasticache_parameter_group" "oke-redis-40" {
 #
 ##################################################
 
-resource "aws_db_parameter_group" "oke-dbparamgroup" {
-  name        = "oke-dbparamgroup"
+resource "aws_db_parameter_group" "tatami-dbparamgroup" {
+  name        = "tatami-dbparamgroup"
   family      = "postgres10"
-  description = "oke-dbparamgroup"
+  description = "tatami-dbparamgroup"
 }
 
 ##################################################
@@ -56,56 +56,56 @@ resource "aws_db_parameter_group" "oke-dbparamgroup" {
 # VPC
 #
 ##################################################
-resource "aws_subnet" "oke-external-1a" {
+resource "aws_subnet" "tatami-external-1a" {
   vpc_id            = var.vpc-hanica-new-vpc
   availability_zone = "ap-northeast-1a"
   cidr_block        = "10.0.30.0/24"
   tags = {
-    Name = "oke-external-1a"
+    Name = "tatami-external-1a"
   }
 }
 
-resource "aws_subnet" "oke-external-1c" {
+resource "aws_subnet" "tatami-external-1c" {
   vpc_id            = var.vpc-hanica-new-vpc
   availability_zone = "ap-northeast-1c"
   cidr_block        = "10.0.31.0/24"
   tags = {
-    Name = "oke-external-1c"
+    Name = "tatami-external-1c"
   }
 }
 
-resource "aws_subnet" "oke-internal-1a" {
+resource "aws_subnet" "tatami-internal-1a" {
   vpc_id            = var.vpc-hanica-new-vpc
   availability_zone = "ap-northeast-1a"
   cidr_block        = "10.0.32.0/24"
   tags = {
-    Name = "oke-internal-1a"
+    Name = "tatami-internal-1a"
   }
 }
 
-resource "aws_subnet" "oke-internal-1c" {
+resource "aws_subnet" "tatami-internal-1c" {
   vpc_id            = var.vpc-hanica-new-vpc
   availability_zone = "ap-northeast-1c"
   cidr_block        = "10.0.33.0/24"
   tags = {
-    Name = "oke-internal-1c"
+    Name = "tatami-internal-1c"
   }
 }
 
-resource "aws_route_table" "oke-internal-rt" {
+resource "aws_route_table" "tatami-internal-rt" {
   vpc_id = var.vpc-hanica-new-vpc
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.oke-natgw-a.id
+    nat_gateway_id = aws_nat_gateway.tatami-natgw-a.id
   }
 
   tags = {
-    Name = "oke-internal-rt"
+    Name = "tatami-internal-rt"
   }
 }
 
-resource "aws_route_table" "oke-external-rt" {
+resource "aws_route_table" "tatami-external-rt" {
   vpc_id = var.vpc-hanica-new-vpc
 
   route {
@@ -114,22 +114,22 @@ resource "aws_route_table" "oke-external-rt" {
   }
 
   tags = {
-    Name = "oke-external-rt"
+    Name = "tatami-external-rt"
   }
 }
 
-resource "aws_nat_gateway" "oke-natgw-a" {
-  allocation_id = aws_eip.oke-natgw.id
-  subnet_id     = aws_subnet.oke-external-1a.id
+resource "aws_nat_gateway" "tatami-natgw-a" {
+  allocation_id = aws_eip.tatami-natgw.id
+  subnet_id     = aws_subnet.tatami-external-1a.id
 
   tags = {
-    Name = "oke-natgw-a"
+    Name = "tatami-natgw-a"
   }
 }
 
-resource "aws_eip" "oke-natgw" {
+resource "aws_eip" "tatami-natgw" {
   tags = {
-    Name = "oke-natgw"
+    Name = "tatami-natgw"
   }
 }
 
@@ -143,8 +143,8 @@ resource "aws_ecs_cluster" "tatami-staging" {
   name = "tatami-staging"
 }
 
-resource "aws_ecr_repository" "oke" {
-  name = "oke"
+resource "aws_ecr_repository" "tatami" {
+  name = "tatami"
 }
 
 ##################################################
@@ -153,77 +153,77 @@ resource "aws_ecr_repository" "oke" {
 #
 ##################################################
 
-resource "aws_iam_role" "oke-operator" {
+resource "aws_iam_role" "tatami-operator" {
   name               = "OkeOperator"
   assume_role_policy = file("./files/iam/roles/account-assume.json")
 }
 
-resource "aws_iam_role_policy_attachment" "oke-operator-ecs-full-access" {
-  role       = aws_iam_role.oke-operator.name
+resource "aws_iam_role_policy_attachment" "tatami-operator-ecs-full-access" {
+  role       = aws_iam_role.tatami-operator.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
 }
 
-resource "aws_iam_role_policy_attachment" "oke-operator-read-only-attachment" {
-  role       = aws_iam_role.oke-operator.name
+resource "aws_iam_role_policy_attachment" "tatami-operator-read-only-attachment" {
+  role       = aws_iam_role.tatami-operator.name
   policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
 
-resource "aws_iam_policy" "oke-run-one-off-task-policy" {
+resource "aws_iam_policy" "tatami-run-one-off-task-policy" {
   name = "OkeRunOneOffTask"
   path = "/"
 
-  policy = file("./files/iam/policies/oke-run-one-off-task-policy.json")
+  policy = file("./files/iam/policies/tatami-run-one-off-task-policy.json")
 }
 
-resource "aws_iam_policy" "oke-manage-parameter-store-parameters-policy" {
+resource "aws_iam_policy" "tatami-manage-parameter-store-parameters-policy" {
   name = "OkeManageParameterStoreParameters"
   path = "/"
 
   policy = file(
-    "./files/iam/policies/oke-manage-parameter-store-parameters-policy.json",
+    "./files/iam/policies/tatami-manage-parameter-store-parameters-policy.json",
   )
 }
 
-resource "aws_iam_role_policy_attachment" "oke-operator-oke-manage-parameter-store-parameters-policy-attachment" {
-  role       = aws_iam_role.oke-operator.name
-  policy_arn = aws_iam_policy.oke-manage-parameter-store-parameters-policy.arn
+resource "aws_iam_role_policy_attachment" "tatami-operator-oke-manage-parameter-store-parameters-policy-attachment" {
+  role       = aws_iam_role.tatami-operator.name
+  policy_arn = aws_iam_policy.tatami-manage-parameter-store-parameters-policy.arn
 }
 
-resource "aws_iam_policy" "oke-manage-ecr-repository-policy" {
+resource "aws_iam_policy" "tatami-manage-ecr-repository-policy" {
   name   = "OkeManageECRRepository"
   path   = "/"
-  policy = file("./files/iam/policies/oke-manage-ecr-repository-policy.json")
+  policy = file("./files/iam/policies/tatami-manage-ecr-repository-policy.json")
 }
 
-resource "aws_iam_role_policy_attachment" "oke-operator-oke-manage-ecr-repository-policy-attachment" {
-  role       = aws_iam_role.oke-operator.name
-  policy_arn = aws_iam_policy.oke-manage-ecr-repository-policy.arn
+resource "aws_iam_role_policy_attachment" "tatami-operator-oke-manage-ecr-repository-policy-attachment" {
+  role       = aws_iam_role.tatami-operator.name
+  policy_arn = aws_iam_policy.tatami-manage-ecr-repository-policy.arn
 }
 
-resource "aws_iam_policy" "oke-manage-elasticache-policy" {
+resource "aws_iam_policy" "tatami-manage-elasticache-policy" {
   name   = "OkeManageElastiCache"
   path   = "/"
-  policy = file("./files/iam/policies/oke-manage-elasticache-policy.json")
+  policy = file("./files/iam/policies/tatami-manage-elasticache-policy.json")
 }
 
-resource "aws_iam_role_policy_attachment" "oke-operator-oke-manage-elasticache-policy-attachment" {
-  role       = aws_iam_role.oke-operator.name
-  policy_arn = aws_iam_policy.oke-manage-elasticache-policy.arn
+resource "aws_iam_role_policy_attachment" "tatami-operator-oke-manage-elasticache-policy-attachment" {
+  role       = aws_iam_role.tatami-operator.name
+  policy_arn = aws_iam_policy.tatami-manage-elasticache-policy.arn
 }
 
-resource "aws_iam_policy" "oke-manage-rds-policy" {
+resource "aws_iam_policy" "tatami-manage-rds-policy" {
   name   = "OkeManageRDS"
   path   = "/"
-  policy = file("./files/iam/policies/oke-manage-rds-policy.json")
+  policy = file("./files/iam/policies/tatami-manage-rds-policy.json")
 }
 
-resource "aws_iam_role_policy_attachment" "oke-operator-oke-manage-rds-policy-attachment" {
-  role       = aws_iam_role.oke-operator.name
-  policy_arn = aws_iam_policy.oke-manage-rds-policy.arn
+resource "aws_iam_role_policy_attachment" "tatami-operator-oke-manage-rds-policy-attachment" {
+  role       = aws_iam_role.tatami-operator.name
+  policy_arn = aws_iam_policy.tatami-manage-rds-policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "oke-operator-elb-full-access-attachment" {
-  role       = aws_iam_role.oke-operator.name
+resource "aws_iam_role_policy_attachment" "tatami-operator-elb-full-access-attachment" {
+  role       = aws_iam_role.tatami-operator.name
   policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
 }
 
@@ -238,75 +238,75 @@ resource "aws_iam_role_policy_attachment" "tatami-staging-ecs-task-execution-rol
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_iam_policy" "oke-ssm-get-parameters-policy" {
+resource "aws_iam_policy" "tatami-ssm-get-parameters-policy" {
   name   = "OkeSsmGetParameters"
   path   = "/"
-  policy = file("./files/iam/policies/oke-ssm-get-parameters-policy.json")
+  policy = file("./files/iam/policies/tatami-ssm-get-parameters-policy.json")
 }
 
-resource "aws_iam_role_policy_attachment" "tatami-staging-ecs-task-execution-role-oke-ssm-get-parameters-policy-attachment" {
+resource "aws_iam_role_policy_attachment" "tatami-staging-ecs-task-execution-role-tatami-ssm-get-parameters-policy-attachment" {
   role       = aws_iam_role.tatami-staging-ecs-task-execution-role.name
-  policy_arn = aws_iam_policy.oke-ssm-get-parameters-policy.arn
+  policy_arn = aws_iam_policy.tatami-ssm-get-parameters-policy.arn
 }
 
-resource "aws_iam_policy" "oke-ecs-update-service-policy" {
+resource "aws_iam_policy" "tatami-ecs-update-service-policy" {
   name   = "OkeEcsUpdateService"
   path   = "/"
-  policy = file("./files/iam/policies/oke-ecs-update-service-policy.json")
+  policy = file("./files/iam/policies/tatami-ecs-update-service-policy.json")
 }
 
 resource "aws_iam_role" "codebuild-tatami-staging-database-migration-service-role" {
-  name               = "codebuild-okeProductionDatabaseMigration-service-role"
+  name               = "codebuild-tatamiProductionDatabaseMigration-service-role"
   path               = "/service-role/"
   assume_role_policy = file("./files/iam/roles/codebuild-assume.json")
 }
 
-resource "aws_iam_policy" "oke-codebuild-base-tatami-staging-database-migration-policy" {
-  name        = "CodeBuildBasePolicy-okeProductionDatabaseMigration-ap-northeast-1"
+resource "aws_iam_policy" "tatami-codebuild-base-tatami-staging-database-migration-policy" {
+  name        = "CodeBuildBasePolicy-tatamiProductionDatabaseMigration-ap-northeast-1"
   description = "Policy used in trust relationship with CodeBuild"
   path        = "/service-role/"
   policy = file(
-    "./files/iam/policies/oke-codebuild-base-policy-database-migration.json",
+    "./files/iam/policies/tatami-codebuild-base-policy-database-migration.json",
   )
 }
 
-resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-database-migration-service-role-oke-ssm-get-parameters-policy-attachment" {
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-database-migration-service-role-tatami-ssm-get-parameters-policy-attachment" {
   role       = aws_iam_role.codebuild-tatami-staging-database-migration-service-role.name
-  policy_arn = aws_iam_policy.oke-ssm-get-parameters-policy.arn
+  policy_arn = aws_iam_policy.tatami-ssm-get-parameters-policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-database-migration-service-role-oke-codebuild-base-oke-production-database-migration-policy-attachment" {
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-database-migration-service-role-tatami-codebuild-base-oke-production-database-migration-policy-attachment" {
   role       = aws_iam_role.codebuild-tatami-staging-database-migration-service-role.name
-  policy_arn = aws_iam_policy.oke-codebuild-base-tatami-staging-database-migration-policy.arn
+  policy_arn = aws_iam_policy.tatami-codebuild-base-tatami-staging-database-migration-policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-database-migration-service-role-oke-ecs-update-service-policy-attachment" {
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-database-migration-service-role-tatami-ecs-update-service-policy-attachment" {
   role       = aws_iam_role.codebuild-tatami-staging-database-migration-service-role.name
-  policy_arn = aws_iam_policy.oke-ecs-update-service-policy.arn
+  policy_arn = aws_iam_policy.tatami-ecs-update-service-policy.arn
 }
 
-resource "aws_iam_policy" "oke-codebuild-base-tatami-staging-deploy-worker-policy" {
-  name        = "CodeBuildBasePolicy-okeProductionDeployWorker-ap-northeast-1"
+resource "aws_iam_policy" "tatami-codebuild-base-tatami-staging-deploy-worker-policy" {
+  name        = "CodeBuildBasePolicy-tatamiProductionDeployWorker-ap-northeast-1"
   description = "Policy used in trust relationship with CodeBuild"
   path        = "/service-role/"
   policy = file(
-    "./files/iam/policies/oke-codebuild-base-policy-deploy-worker.json",
+    "./files/iam/policies/tatami-codebuild-base-policy-deploy-worker.json",
   )
 }
 
 resource "aws_iam_role" "codebuild-tatami-staging-deploy-worker-service-role" {
-  name               = "codebuild-okeProductionDeployWorker-service-role"
+  name               = "codebuild-tatamiProductionDeployWorker-service-role"
   path               = "/service-role/"
   assume_role_policy = file("./files/iam/roles/codebuild-assume.json")
 }
 
-resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-deploy-worker-service-role-oke-codebuild-base-oke-production-deploy-worker-policy-attachment" {
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-deploy-worker-service-role-tatami-codebuild-base-oke-production-deploy-worker-policy-attachment" {
   role       = aws_iam_role.codebuild-tatami-staging-deploy-worker-service-role.name
-  policy_arn = aws_iam_policy.oke-codebuild-base-tatami-staging-deploy-worker-policy.arn
+  policy_arn = aws_iam_policy.tatami-codebuild-base-tatami-staging-deploy-worker-policy.arn
 }
 
-resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-deploy-worker-service-role-oke-ecs-update-service-policy-attachment" {
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-staging-deploy-worker-service-role-tatami-ecs-update-service-policy-attachment" {
   role       = aws_iam_role.codebuild-tatami-staging-deploy-worker-service-role.name
-  policy_arn = aws_iam_policy.oke-ecs-update-service-policy.arn
+  policy_arn = aws_iam_policy.tatami-ecs-update-service-policy.arn
 }
 
