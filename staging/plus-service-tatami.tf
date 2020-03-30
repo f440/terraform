@@ -20,11 +20,13 @@ resource "aws_security_group" "tatami-staging-redis-sg" {
     to_port   = 0
   }
 }
+
 resource "aws_elasticache_parameter_group" "tatami-staging-redis-50" {
   name        = "tatami-staging-redis-50"
   family      = "redis5.0"
   description = "Redis 5.0 parameter group for tatami staging"
 }
+
 resource "aws_elasticache_subnet_group" "tatami-staging-redis-sg" {
   name = "tatami-staging-redis-subnet-group"
   subnet_ids = [
@@ -32,6 +34,7 @@ resource "aws_elasticache_subnet_group" "tatami-staging-redis-sg" {
     aws_subnet.tatami-staging-internal-1c.id,
   ]
 }
+
 resource "aws_elasticache_replication_group" "plus-tatami-staging" {
   replication_group_id          = "tatami-staging"
   replication_group_description = "Redis instance for tatami-staging"
