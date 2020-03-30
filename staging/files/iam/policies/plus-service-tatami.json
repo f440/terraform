@@ -7,6 +7,8 @@
                 "s3:*"
             ],
             "Resource": [
+                "arn:aws:s3:::tatami-staging-blob1",
+                "arn:aws:s3:::tatami-staging-blob1/*",
                 "arn:aws:s3:::tatami-staging",
                 "arn:aws:s3:::tatami-staging/*"
             ]

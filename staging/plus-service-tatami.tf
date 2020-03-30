@@ -199,6 +199,28 @@ resource "aws_s3_bucket_public_access_block" "tatami-staging-deploy-config" {
   block_public_policy = true
 }
 
+resource "aws_s3_bucket" "tatami-staging-alb-access-logs" {
+  bucket = "tatami-staging-alb-access-logs"
+  acl    = "private"
+  region = "ap-northeast-1"
+}
+
+resource "aws_s3_bucket_public_access_block" "tatami-staging-alb-access-logs" {
+  bucket              = aws_s3_bucket.tatami-staging-alb-access-logs.id
+  block_public_acls   = true
+  block_public_policy = true
+}
+
+resource "aws_s3_bucket" "tatami-staging-blob1" {
+  bucket = "tatami-staging-blob1"
+  acl    = "private"
+  region = "ap-northeast-1"
+
+  versioning {
+    enabled = true
+  }
+}
+
 //##################################################
 //#
 //# IAM
