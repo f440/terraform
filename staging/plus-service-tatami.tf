@@ -4,7 +4,7 @@
 #
 ##################################################
 resource "aws_security_group" "tatami-staging-redis-sg" {
-  name = "tatami-staging-sg"
+  name   = "tatami-staging-sg"
   vpc_id = aws_vpc.staging-hanica-vpc.id
 
   ingress {
@@ -26,8 +26,8 @@ resource "aws_elasticache_parameter_group" "tatami-staging-redis-50" {
   description = "Redis 5.0 parameter group for tatami staging"
 }
 resource "aws_elasticache_subnet_group" "tatami-staging-redis-sg" {
-  name        = "tatami-staging-redis-subnet-group"
-  subnet_ids  = [
+  name = "tatami-staging-redis-subnet-group"
+  subnet_ids = [
     aws_subnet.tatami-staging-internal-1a.id,
     aws_subnet.tatami-staging-internal-1c.id,
   ]
@@ -36,11 +36,11 @@ resource "aws_elasticache_replication_group" "plus-tatami-staging" {
   replication_group_id          = "tatami-staging"
   replication_group_description = "Redis instance for tatami-staging"
 
-  number_cache_clusters      = 2
-  node_type                  = "cache.m3.medium"
-  engine                     = "redis"
-  engine_version             = "5.0.6"
-  port                       = 6379
+  number_cache_clusters = 2
+  node_type             = "cache.m3.medium"
+  engine                = "redis"
+  engine_version        = "5.0.6"
+  port                  = 6379
 
   automatic_failover_enabled = true
   auto_minor_version_upgrade = true
@@ -48,9 +48,9 @@ resource "aws_elasticache_replication_group" "plus-tatami-staging" {
   snapshot_window            = "15:00-16:00"
   snapshot_retention_limit   = "1"
 
-  subnet_group_name          = aws_elasticache_subnet_group.tatami-staging-redis-sg.name
-  security_group_ids         = [aws_security_group.tatami-staging-redis-sg.id]
-  parameter_group_name       = aws_elasticache_parameter_group.tatami-staging-redis-50.name
+  subnet_group_name    = aws_elasticache_subnet_group.tatami-staging-redis-sg.name
+  security_group_ids   = [aws_security_group.tatami-staging-redis-sg.id]
+  parameter_group_name = aws_elasticache_parameter_group.tatami-staging-redis-50.name
 }
 
 //##################################################
@@ -116,10 +116,10 @@ resource "aws_subnet" "tatami-staging-internal-1c" {
 resource "aws_route_table" "tatami-staging-internal-rt" {
   vpc_id = aws_vpc.staging-hanica-vpc.id
 
-//  route {
-//    cidr_block     = "0.0.0.0/0"
-//    nat_gateway_id = aws_nat_gateway.tatami-staging-natgw-a.id
-//  }
+  //  route {
+  //    cidr_block     = "0.0.0.0/0"
+  //    nat_gateway_id = aws_nat_gateway.tatami-staging-natgw-a.id
+  //  }
 
   tags = {
     Name = "tatami-internal-rt"
