@@ -74,7 +74,10 @@ data "aws_iam_policy_document" "security-role-policy" {
     condition {
       test     = "ForAllValues:StringEquals"
       variable = "aws:TagKeys"
-      values   = ["AmazonInspectorProfile"]
+      values = [
+        "AmazonInspectorProfile",
+        "StopSecurityHubNotification"
+      ]
     }
   }
 
