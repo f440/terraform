@@ -3,40 +3,54 @@
 # ElastiCache
 #
 ##################################################
+resource "aws_security_group" "tatami-staging-redis-sg" {
+  name = "tatami-staging-sg"
+  vpc_id = var.vpc-hanica-new-vpc
+
+  ingress {
+    from_port   = 6379
+    protocol    = "tcp"
+    to_port     = 6379
+    cidr_blocks = [aws_vpc.staging-hanica-vpc.cidr_block]
+  }
+
+  egress {
+    from_port = 0
+    protocol  = "-1"
+    to_port   = 0
+  }
+}
+resource "aws_elasticache_parameter_group" "tatami-staging-redis-50" {
+  name        = "tatami-staging-redis-50"
+  family      = "redis5.0"
+  description = "Redis 5.0 parameter group for tatami staging"
+}
+resource "aws_elasticache_subnet_group" "tatami-staging-redis-sg" {
+  name        = "tatami-staging-redis-subnet-group"
+  subnet_ids  = [
+    aws_subnet.tatami-staging-internal-1a.id,
+    aws_subnet.tatami-staging-internal-1c.id,
+  ]
+}
 resource "aws_elasticache_replication_group" "plus-tatami-staging" {
   replication_group_id          = "tatami-staging"
   replication_group_description = "Redis instance for tatami-staging"
 
   number_cache_clusters      = 2
   node_type                  = "cache.m3.medium"
-  automatic_failover_enabled = true
-  auto_minor_version_upgrade = true
   engine                     = "redis"
-  engine_version             = "4.0.10"
+  engine_version             = "5.0.6"
   port                       = 6379
 
-  # Memo
-  # 将来的には「aws_elasticache_subnet_group」リソースで作成したものに入れ替えたい
-  subnet_group_name = var.plus_subnet_group_name
+  automatic_failover_enabled = true
+  auto_minor_version_upgrade = true
+  maintenance_window         = "tue:19:00-tue:20:00"
+  snapshot_window            = "15:00-16:00"
+  snapshot_retention_limit   = "1"
 
-  # Memo
-  # 将来的には「aws_security_group」リソースで作成したものに入れ替えたい
-  security_group_ids = [
-    var.sg-heroku-ps-redis,
-    var.sg-default,
-  ]
-
-  parameter_group_name = aws_elasticache_parameter_group.tatami-redis-40.name
-
-  maintenance_window       = "tue:19:00-tue:20:00"
-  snapshot_window          = "15:00-16:00"
-  snapshot_retention_limit = "1"
-}
-
-resource "aws_elasticache_parameter_group" "tatami-redis-40" {
-  name        = "tatami-redis-40"
-  family      = "redis4.0"
-  description = "Redis 4.0 parameter group for tatami"
+  subnet_group_name          = aws_elasticache_subnet_group.tatami-staging-redis-sg.name
+  security_group_ids         = [aws_security_group.tatami-staging-redis-sg.id]
+  parameter_group_name       = aws_elasticache_parameter_group.tatami-staging-redis-50.name
 }
 
 //##################################################
@@ -50,16 +64,23 @@ resource "aws_elasticache_parameter_group" "tatami-redis-40" {
 //  family      = "postgres10"
 //  description = "tatami-dbparamgroup"
 //}
-//
-//##################################################
-//#
-//# VPC
-//#
-//##################################################
+
+##################################################
+#
+# VPC
+#
+# - external
+#   - 10.0.34.0/24
+#   - 10.0.35.0/24
+# - internal
+#   - 10.0.36.0/24
+#   - 10.0.37.0/24
+#
+##################################################
 //resource "aws_subnet" "tatami-external-1a" {
 //  vpc_id            = var.vpc-hanica-new-vpc
 //  availability_zone = "ap-northeast-1a"
-//  cidr_block        = "10.0.30.0/24"
+//  cidr_block        = "10.0.34.0/24"
 //  tags = {
 //    Name = "tatami-external-1a"
 //  }
@@ -68,44 +89,44 @@ resource "aws_elasticache_parameter_group" "tatami-redis-40" {
 //resource "aws_subnet" "tatami-external-1c" {
 //  vpc_id            = var.vpc-hanica-new-vpc
 //  availability_zone = "ap-northeast-1c"
-//  cidr_block        = "10.0.31.0/24"
+//  cidr_block        = "10.0.35.0/24"
 //  tags = {
 //    Name = "tatami-external-1c"
 //  }
 //}
-//
-//resource "aws_subnet" "tatami-internal-1a" {
-//  vpc_id            = var.vpc-hanica-new-vpc
-//  availability_zone = "ap-northeast-1a"
-//  cidr_block        = "10.0.32.0/24"
-//  tags = {
-//    Name = "tatami-internal-1a"
-//  }
-//}
-//
-//resource "aws_subnet" "tatami-internal-1c" {
-//  vpc_id            = var.vpc-hanica-new-vpc
-//  availability_zone = "ap-northeast-1c"
-//  cidr_block        = "10.0.33.0/24"
-//  tags = {
-//    Name = "tatami-internal-1c"
-//  }
-//}
-//
-//resource "aws_route_table" "tatami-internal-rt" {
-//  vpc_id = var.vpc-hanica-new-vpc
-//
+
+resource "aws_subnet" "tatami-staging-internal-1a" {
+  vpc_id            = var.vpc-hanica-new-vpc
+  availability_zone = "ap-northeast-1a"
+  cidr_block        = "10.0.36.0/24"
+  tags = {
+    Name = "tatami-internal-1a"
+  }
+}
+
+resource "aws_subnet" "tatami-staging-internal-1c" {
+  vpc_id            = var.vpc-hanica-new-vpc
+  availability_zone = "ap-northeast-1c"
+  cidr_block        = "10.0.37.0/24"
+  tags = {
+    Name = "tatami-internal-1c"
+  }
+}
+
+resource "aws_route_table" "tatami-staging-internal-rt" {
+  vpc_id = var.vpc-hanica-new-vpc
+
 //  route {
 //    cidr_block     = "0.0.0.0/0"
-//    nat_gateway_id = aws_nat_gateway.tatami-natgw-a.id
+//    nat_gateway_id = aws_nat_gateway.tatami-staging-natgw-a.id
 //  }
-//
-//  tags = {
-//    Name = "tatami-internal-rt"
-//  }
-//}
-//
-//resource "aws_route_table" "tatami-external-rt" {
+
+  tags = {
+    Name = "tatami-internal-rt"
+  }
+}
+
+//resource "aws_route_table" "tatami-staging-external-rt" {
 //  vpc_id = var.vpc-hanica-new-vpc
 //
 //  route {
@@ -118,7 +139,7 @@ resource "aws_elasticache_parameter_group" "tatami-redis-40" {
 //  }
 //}
 //
-//resource "aws_nat_gateway" "tatami-natgw-a" {
+//resource "aws_nat_gateway" "tatami-staging-natgw-1a" {
 //  allocation_id = aws_eip.tatami-natgw.id
 //  subnet_id     = aws_subnet.tatami-external-1a.id
 //
@@ -132,7 +153,7 @@ resource "aws_elasticache_parameter_group" "tatami-redis-40" {
 //    Name = "tatami-natgw"
 //  }
 //}
-//
+
 //##################################################
 //#
 //# ECS / ECR
