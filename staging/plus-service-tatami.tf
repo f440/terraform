@@ -4,7 +4,7 @@
 #
 ##################################################
 resource "aws_security_group" "tatami-staging-redis-sg" {
-  name   = "tatami-staging-sg"
+  name   = "tatami-staging-redis-sg"
   vpc_id = aws_vpc.staging-hanica-vpc.id
 
   ingress {
@@ -18,6 +18,11 @@ resource "aws_security_group" "tatami-staging-redis-sg" {
     from_port = 0
     protocol  = "-1"
     to_port   = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tatami-staging-redis-sg"
   }
 }
 
@@ -36,7 +41,7 @@ resource "aws_elasticache_subnet_group" "tatami-staging-redis-sg" {
 }
 
 resource "aws_elasticache_replication_group" "plus-tatami-staging" {
-  replication_group_id          = "tatami-staging"
+  replication_group_id          = "staging-tatami"
   replication_group_description = "Redis instance for tatami-staging"
 
   number_cache_clusters = 2
@@ -103,7 +108,7 @@ resource "aws_subnet" "tatami-staging-internal-1a" {
   availability_zone = "ap-northeast-1a"
   cidr_block        = "10.0.36.0/24"
   tags = {
-    Name = "tatami-internal-1a"
+    Name = "staging-tatami-internal-1a"
   }
 }
 
@@ -112,7 +117,7 @@ resource "aws_subnet" "tatami-staging-internal-1c" {
   availability_zone = "ap-northeast-1c"
   cidr_block        = "10.0.37.0/24"
   tags = {
-    Name = "tatami-internal-1c"
+    Name = "staging-tatami-internal-1c"
   }
 }
 
@@ -125,7 +130,7 @@ resource "aws_route_table" "tatami-staging-internal-rt" {
   //  }
 
   tags = {
-    Name = "tatami-internal-rt"
+    Name = "staging-tatami-internal-rt"
   }
 }
 
