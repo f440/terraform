@@ -15,12 +15,3 @@ variable "office-ip" {
 variable "ubuntu-server-1804-ami-id" {
   default = "ami-0eeb679d57500a06c"
 }
-
-##################################################
-#
-# VPC
-#
-##################################################
-variable "vpc-hanica-new-vpc" {
-  default = "vpc-77586713"
-}

@@ -5,7 +5,7 @@
 ##################################################
 resource "aws_security_group" "tatami-staging-redis-sg" {
   name = "tatami-staging-sg"
-  vpc_id = var.vpc-hanica-new-vpc
+  vpc_id = aws_vpc.staging-hanica-vpc.id
 
   ingress {
     from_port   = 6379
@@ -78,7 +78,7 @@ resource "aws_elasticache_replication_group" "plus-tatami-staging" {
 #
 ##################################################
 //resource "aws_subnet" "tatami-external-1a" {
-//  vpc_id            = var.vpc-hanica-new-vpc
+//  vpc_id            = aws_vpc.staging-hanica-vpc.id
 //  availability_zone = "ap-northeast-1a"
 //  cidr_block        = "10.0.34.0/24"
 //  tags = {
@@ -87,7 +87,7 @@ resource "aws_elasticache_replication_group" "plus-tatami-staging" {
 //}
 //
 //resource "aws_subnet" "tatami-external-1c" {
-//  vpc_id            = var.vpc-hanica-new-vpc
+//  vpc_id            = aws_vpc.staging-hanica-vpc.id
 //  availability_zone = "ap-northeast-1c"
 //  cidr_block        = "10.0.35.0/24"
 //  tags = {
@@ -96,7 +96,7 @@ resource "aws_elasticache_replication_group" "plus-tatami-staging" {
 //}
 
 resource "aws_subnet" "tatami-staging-internal-1a" {
-  vpc_id            = var.vpc-hanica-new-vpc
+  vpc_id            = aws_vpc.staging-hanica-vpc.id
   availability_zone = "ap-northeast-1a"
   cidr_block        = "10.0.36.0/24"
   tags = {
@@ -105,7 +105,7 @@ resource "aws_subnet" "tatami-staging-internal-1a" {
 }
 
 resource "aws_subnet" "tatami-staging-internal-1c" {
-  vpc_id            = var.vpc-hanica-new-vpc
+  vpc_id            = aws_vpc.staging-hanica-vpc.id
   availability_zone = "ap-northeast-1c"
   cidr_block        = "10.0.37.0/24"
   tags = {
@@ -114,7 +114,7 @@ resource "aws_subnet" "tatami-staging-internal-1c" {
 }
 
 resource "aws_route_table" "tatami-staging-internal-rt" {
-  vpc_id = var.vpc-hanica-new-vpc
+  vpc_id = aws_vpc.staging-hanica-vpc.id
 
 //  route {
 //    cidr_block     = "0.0.0.0/0"
@@ -127,7 +127,7 @@ resource "aws_route_table" "tatami-staging-internal-rt" {
 }
 
 //resource "aws_route_table" "tatami-staging-external-rt" {
-//  vpc_id = var.vpc-hanica-new-vpc
+//  vpc_id = aws_vpc.staging-hanica-vpc.id
 //
 //  route {
 //    cidr_block = "0.0.0.0/0"
