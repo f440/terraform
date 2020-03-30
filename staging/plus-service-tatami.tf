@@ -176,6 +176,18 @@ resource "aws_route_table" "tatami-staging-internal-rt" {
 //  name = "tatami"
 //}
 //
+
+##################################################
+#
+# S3
+#
+##################################################
+
+resource "aws_s3_bucket" "tatami-staging-deploy-config" {
+  bucket = "tatami-staging-deploy-config"
+  acl    = "private"
+}
+
 //##################################################
 //#
 //# IAM
@@ -339,3 +351,19 @@ resource "aws_route_table" "tatami-staging-internal-rt" {
 //  policy_arn = aws_iam_policy.tatami-ecs-update-service-policy.arn
 //}
 //
+
+resource "aws_iam_user" "plus-service-tatami-circleci" {
+  name          = "plus-service-tatami-circleci"
+  force_destroy = "false"
+}
+
+resource "aws_iam_policy" "plus-service-tatami-circleci" {
+  name   = "TatamiCircleCI"
+  policy = file("./files/iam/policies/plus-service-tatami-circleci.json")
+}
+
+resource "aws_iam_policy_attachment" "plus-service-tatami-circleci" {
+  name       = "plus-service-tatami-circleci"
+  users      = [aws_iam_user.plus-service-tatami-circleci.name]
+  policy_arn = aws_iam_policy.plus-service-tatami-circleci.arn
+}
