@@ -89,3 +89,6 @@ variable "hanica-bastion-ami-id" {
   default = "ami-940cdceb"
 }
 
+variable "hanica-operation-ami-id" {
+  default = "ami-48630c2e"
+}

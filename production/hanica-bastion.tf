@@ -3,24 +3,24 @@
 # hanica-bastion
 #
 ##################################################
-resource "aws_iam_role" "bastion-role" {
-  name               = "HanicaBastionRole"
+resource "aws_iam_role" "hanica-basic-role" {
+  name               = "HanicaBasicRole"
   assume_role_policy = file("./files/iam/roles/ec2-assume.json")
 }
 
-resource "aws_iam_role_policy_attachment" "bastion-role-ssm-attachment" {
-  role       = aws_iam_role.bastion-role.name
+resource "aws_iam_role_policy_attachment" "hanica-basic-role-ssm-attachment" {
+  role       = aws_iam_role.hanica-basic-role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-resource "aws_iam_role_policy_attachment" "bastion-role-cloudwatch-attachment" {
-  role       = aws_iam_role.bastion-role.name
+resource "aws_iam_role_policy_attachment" "hanica-basic-role-cloudwatch-attachment" {
+  role       = aws_iam_role.hanica-basic-role.name
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
 }
 
-resource "aws_iam_instance_profile" "bastion-instance-profile" {
-  name = aws_iam_role.bastion-role.name
-  role = aws_iam_role.bastion-role.name
+resource "aws_iam_instance_profile" "hanica-basic-instance-profile" {
+  name = aws_iam_role.hanica-basic-role.name
+  role = aws_iam_role.hanica-basic-role.name
 }
 
 # NOTE: terraformer import aws --resources=ec2_instance --regions=ap-northeast-1 --filter=aws_instance=i-09a4cf5604a088fba
@@ -38,7 +38,7 @@ resource "aws_instance" "hanica-bastion" {
   disable_api_termination = "true"
   ebs_optimized           = "false"
   get_password_data       = "false"
-  iam_instance_profile    = aws_iam_instance_profile.bastion-instance-profile.name
+  iam_instance_profile    = aws_iam_instance_profile.hanica-basic-instance-profile.name
   instance_type           = "t2.nano"
   ipv6_address_count      = "0"
   key_name                = "Hanica"
