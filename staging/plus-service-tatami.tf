@@ -61,17 +61,55 @@ resource "aws_elasticache_replication_group" "plus-tatami-staging" {
   parameter_group_name = aws_elasticache_parameter_group.tatami-staging-redis-50.name
 }
 
-//##################################################
-//#
-//# RDS
-//#
-//##################################################
-//
-//resource "aws_db_parameter_group" "tatami-dbparamgroup" {
-//  name        = "tatami-dbparamgroup"
-//  family      = "postgres10"
-//  description = "tatami-dbparamgroup"
-//}
+##################################################
+#
+# RDS
+#
+##################################################
+resource "aws_security_group" "tatami-staging-db-sg" {
+  name   = "tatami-staging-db-sg"
+  vpc_id = aws_vpc.staging-hanica-vpc.id
+
+  ingress {
+    from_port = 5432
+    protocol  = "tcp"
+    to_port   = 5432
+    # TODO:
+    # tatami-staging-web, tatami-staging-worker の security groups 作成後に security_groups に置き換える
+    cidr_blocks = [aws_vpc.staging-hanica-vpc.cidr_block]
+  }
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tatami-staging-db-sg"
+  }
+}
+
+resource "aws_db_parameter_group" "tatami-staging-dbparamgroup" {
+  name        = "tatami-staging-dbparamgroup"
+  family      = "postgres11"
+  description = "tatami-staging-dbparamgroup"
+}
+
+resource "aws_db_option_group" "tatami-staging-dboptiongroup" {
+  name                 = "tatami-staging-dbparamgroup"
+  engine_name          = "postgres"
+  major_engine_version = "11"
+}
+
+resource "aws_db_subnet_group" "tatami-staging-db-subnet-group" {
+  name = "tatami-staging-db-subnet-group"
+  subnet_ids = [
+    aws_subnet.tatami-staging-internal-1a.id,
+    aws_subnet.tatami-staging-internal-1c.id,
+  ]
+}
 
 ##################################################
 #
