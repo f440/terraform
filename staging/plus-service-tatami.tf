@@ -194,17 +194,43 @@ resource "aws_s3_bucket" "tatami-staging-deploy-config" {
 }
 
 resource "aws_s3_bucket_public_access_block" "tatami-staging-deploy-config" {
-  bucket              = aws_s3_bucket.tatami-staging-deploy-config.id
-  block_public_acls   = true
-  block_public_policy = true
+  bucket                  = aws_s3_bucket.tatami-staging-deploy-config.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
-//##################################################
-//#
-//# IAM
-//#
-//##################################################
-//
+resource "aws_s3_bucket" "tatami-staging-alb-access-logs" {
+  bucket = "tatami-staging-alb-access-logs"
+  acl    = "private"
+  region = "ap-northeast-1"
+}
+
+resource "aws_s3_bucket_public_access_block" "tatami-staging-alb-access-logs" {
+  bucket                  = aws_s3_bucket.tatami-staging-alb-access-logs.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket" "tatami-staging-blob" {
+  bucket = "tatami-staging-blob"
+  acl    = "private"
+  region = "ap-northeast-1"
+
+  versioning {
+    enabled = true
+  }
+}
+
+##################################################
+#
+# IAM
+#
+##################################################
+
 //resource "aws_iam_role" "tatami-operator" {
 //  name               = "OkeOperator"
 //  assume_role_policy = file("./files/iam/roles/account-assume.json")
@@ -362,6 +388,22 @@ resource "aws_s3_bucket_public_access_block" "tatami-staging-deploy-config" {
 //  policy_arn = aws_iam_policy.tatami-ecs-update-service-policy.arn
 //}
 //
+
+resource "aws_iam_user" "plus-service-tatami" {
+  name          = "plus-service-tatami"
+  force_destroy = "false"
+}
+
+resource "aws_iam_policy" "plus-service-tatami" {
+  name   = "PlusServicetatamiPolicy"
+  policy = file("./files/iam/policies/plus-service-tatami.json")
+}
+
+resource "aws_iam_policy_attachment" "plus-service-tatami" {
+  name       = "plus-service-tatami"
+  users      = [aws_iam_user.plus-service-tatami.name]
+  policy_arn = aws_iam_policy.plus-service-tatami.arn
+}
 
 resource "aws_iam_user" "plus-service-tatami-circleci" {
   name          = "plus-service-tatami-circleci"
