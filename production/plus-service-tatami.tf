@@ -44,7 +44,7 @@ resource "aws_ecr_repository" "tatami-one-off" {
 }
 
 resource "aws_ecr_repository_policy" "tatami-one-off" {
-  repository = aws_ecr_repository.tatami-base.name
+  repository = aws_ecr_repository.tatami-one-off.name
 
   policy = file("./files/iam/policies/tatami_aws_ecr_repository_policy_tatami_one_off.json")
 }
