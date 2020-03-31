@@ -385,6 +385,22 @@ resource "aws_s3_bucket" "tatami-staging-blob1" {
 //}
 //
 
+resource "aws_iam_user" "plus-service-tatami" {
+  name          = "plus-service-tatami"
+  force_destroy = "false"
+}
+
+resource "aws_iam_policy" "plus-service-tatami" {
+  name   = "PlusServicetatamiPolicy"
+  policy = file("./files/iam/policies/plus-service-tatami.json")
+}
+
+resource "aws_iam_policy_attachment" "plus-service-tatami" {
+  name       = "plus-service-tatami"
+  users      = [aws_iam_user.plus-service-tatami.name]
+  policy_arn = aws_iam_policy.plus-service-tatami.arn
+}
+
 resource "aws_iam_user" "plus-service-tatami-circleci" {
   name          = "plus-service-tatami-circleci"
   force_destroy = "false"
