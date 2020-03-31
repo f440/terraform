@@ -186,6 +186,11 @@ resource "aws_route_table" "tatami-staging-internal-rt" {
 resource "aws_s3_bucket" "tatami-staging-deploy-config" {
   bucket = "tatami-staging-deploy-config"
   acl    = "private"
+  region = "ap-northeast-1"
+
+  versioning {
+    enabled = true
+  }
 }
 
 //##################################################
