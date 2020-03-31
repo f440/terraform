@@ -17,6 +17,7 @@ resource "aws_iam_group_membership" "plus-app" {
     "plus-service-oke-circleci",
     aws_iam_user.plus-service-jougo.name,
     aws_iam_user.plus-service-omen.name,
+    aws_iam_user.plus-service-tatami-circleci.name,
     "plus-service-auto-maintenance-tool",
   ]
 }
@@ -75,4 +76,3 @@ resource "aws_iam_policy_attachment" "plus-service-tatami" {
   users      = [aws_iam_user.plus-service-tatami.name]
   policy_arn = aws_iam_policy.plus-service-tatami.arn
 }
-
