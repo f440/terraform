@@ -61,17 +61,85 @@ resource "aws_elasticache_replication_group" "plus-tatami-staging" {
   parameter_group_name = aws_elasticache_parameter_group.tatami-staging-redis-50.name
 }
 
-//##################################################
-//#
-//# RDS
-//#
-//##################################################
-//
-//resource "aws_db_parameter_group" "tatami-dbparamgroup" {
-//  name        = "tatami-dbparamgroup"
-//  family      = "postgres10"
-//  description = "tatami-dbparamgroup"
-//}
+##################################################
+#
+# RDS
+#
+##################################################
+resource "aws_security_group" "tatami-staging-db-sg" {
+  name   = "tatami-staging-db-sg"
+  vpc_id = aws_vpc.staging-hanica-vpc.id
+
+  ingress {
+    from_port = 5432
+    protocol  = "tcp"
+    to_port   = 5432
+    # TODO:
+    # tatami-staging-web, tatami-staging-worker の security groups 作成後に security_groups に置き換える
+    cidr_blocks = [aws_vpc.staging-hanica-vpc.cidr_block]
+  }
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tatami-staging-db-sg"
+  }
+}
+
+resource "aws_db_parameter_group" "tatami-staging-dbparamgroup" {
+  name        = "tatami-staging-dbparamgroup"
+  family      = "postgres11"
+  description = "tatami-staging-dbparamgroup"
+}
+
+resource "aws_db_option_group" "tatami-staging-dboptiongroup" {
+  name                 = "tatami-staging-dbparamgroup"
+  engine_name          = "postgres"
+  major_engine_version = "11"
+}
+
+resource "aws_db_subnet_group" "tatami-staging-db-subnet-group" {
+  name = "tatami-staging-db-subnet-group"
+  subnet_ids = [
+    aws_subnet.tatami-staging-internal-1a.id,
+    aws_subnet.tatami-staging-internal-1c.id,
+  ]
+}
+
+resource "aws_db_instance" "tatami-staging" {
+  identifier                 = "tatami-staging"
+  allocated_storage          = 20
+  max_allocated_storage      = 100
+  storage_type               = "gp2"
+  storage_encrypted          = true
+  engine                     = "postgres"
+  engine_version             = "11"
+  port                       = 5432
+  instance_class             = "db.t3.small"
+  publicly_accessible        = false
+  deletion_protection        = true
+  auto_minor_version_upgrade = true
+  parameter_group_name       = aws_db_parameter_group.tatami-staging-dbparamgroup.name
+  option_group_name          = aws_db_option_group.tatami-staging-dboptiongroup.name
+  db_subnet_group_name       = aws_db_subnet_group.tatami-staging-db-subnet-group.name
+  vpc_security_group_ids     = [aws_security_group.tatami-staging-db-sg.id]
+
+  maintenance_window      = "tue:19:00-tue:20:00"
+  backup_window           = "15:00-16:00"
+  backup_retention_period = 7
+
+  username = "tatami"
+  password = "tatami"
+
+  lifecycle {
+    ignore_changes = ["password"]
+  }
+}
 
 ##################################################
 #
