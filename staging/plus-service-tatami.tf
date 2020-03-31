@@ -221,12 +221,12 @@ resource "aws_s3_bucket" "tatami-staging-blob1" {
   }
 }
 
-//##################################################
-//#
-//# IAM
-//#
-//##################################################
-//
+##################################################
+#
+# IAM
+#
+##################################################
+
 //resource "aws_iam_role" "tatami-operator" {
 //  name               = "OkeOperator"
 //  assume_role_policy = file("./files/iam/roles/account-assume.json")
