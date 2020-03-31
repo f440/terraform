@@ -17,6 +17,7 @@ resource "aws_iam_group_membership" "plus-app" {
     "plus-service-oke-circleci",
     aws_iam_user.plus-service-jougo.name,
     aws_iam_user.plus-service-omen.name,
+    aws_iam_user.plus-service-tatami.name,
     aws_iam_user.plus-service-tatami-circleci.name,
     "plus-service-auto-maintenance-tool",
   ]
