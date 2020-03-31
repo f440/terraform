@@ -1,0 +1,21 @@
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "Allow Push/Pull from staging account",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::121659688561:root"
+      },
+      "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:CompleteLayerUpload",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:InitiateLayerUpload",
+        "ecr:PutImage",
+        "ecr:UploadLayerPart"
+      ]
+    }
+  ]
+}
