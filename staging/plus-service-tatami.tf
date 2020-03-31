@@ -211,8 +211,8 @@ resource "aws_s3_bucket_public_access_block" "tatami-staging-alb-access-logs" {
   block_public_policy = true
 }
 
-resource "aws_s3_bucket" "tatami-staging-blob1" {
-  bucket = "tatami-staging-blob1"
+resource "aws_s3_bucket" "tatami-staging-blob" {
+  bucket = "tatami-staging-blob"
   acl    = "private"
   region = "ap-northeast-1"
 
