@@ -193,6 +193,12 @@ resource "aws_s3_bucket" "tatami-staging-deploy-config" {
   }
 }
 
+resource "aws_s3_bucket_public_access_block" "tatami-staging-deploy-config" {
+  bucket              = aws_s3_bucket.tatami-staging-deploy-config.id
+  block_public_acls   = true
+  block_public_policy = true
+}
+
 //##################################################
 //#
 //# IAM
