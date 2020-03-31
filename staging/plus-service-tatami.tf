@@ -111,36 +111,6 @@ resource "aws_db_subnet_group" "tatami-staging-db-subnet-group" {
   ]
 }
 
-resource "aws_db_instance" "tatami-staging" {
-  identifier                 = "tatami-staging"
-  allocated_storage          = 20
-  max_allocated_storage      = 100
-  storage_type               = "gp2"
-  storage_encrypted          = true
-  engine                     = "postgres"
-  engine_version             = "11"
-  port                       = 5432
-  instance_class             = "db.t3.small"
-  publicly_accessible        = false
-  deletion_protection        = true
-  auto_minor_version_upgrade = true
-  parameter_group_name       = aws_db_parameter_group.tatami-staging-dbparamgroup.name
-  option_group_name          = aws_db_option_group.tatami-staging-dboptiongroup.name
-  db_subnet_group_name       = aws_db_subnet_group.tatami-staging-db-subnet-group.name
-  vpc_security_group_ids     = [aws_security_group.tatami-staging-db-sg.id]
-
-  maintenance_window      = "tue:19:00-tue:20:00"
-  backup_window           = "15:00-16:00"
-  backup_retention_period = 7
-
-  username = "tatami"
-  password = "tatami"
-
-  lifecycle {
-    ignore_changes = ["password"]
-  }
-}
-
 ##################################################
 #
 # VPC
