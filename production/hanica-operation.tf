@@ -24,7 +24,6 @@ resource "aws_instance" "hanica-operation" {
   ipv6_address_count      = "0"
   key_name                = "Hanica"
   monitoring              = "true"
-  private_ip              = "10.0.128.153"
 
   root_block_device {
     delete_on_termination = "true"
@@ -197,51 +196,7 @@ resource "aws_security_group" "new-alb-sg" {
   vpc_id = var.vpc-hanica-new-vpc
 }
 
-resource "aws_security_group_rule" "new-alb-sg" {
-  security_group_id = aws_security_group.new-alb-sg.id
-  type              = "ingress"
-
-  cidr_blocks = ["39.110.215.69/32", "118.238.204.122/32"]
-  from_port   = "80"
-  protocol    = "tcp"
-  self        = "false"
-  to_port     = "80"
-}
-
-resource "aws_security_group_rule" "new-alb-sg-1" {
-  security_group_id = aws_security_group.new-alb-sg.id
-  type              = "ingress"
-
-  cidr_blocks = ["39.110.215.69/32", "118.238.204.122/32"]
-  from_port   = "8080"
-  protocol    = "tcp"
-  self        = "false"
-  to_port     = "8080"
-}
-
-resource "aws_security_group_rule" "new-alb-sg-2" {
-  security_group_id = aws_security_group.new-alb-sg.id
-  type              = "ingress"
-
-  cidr_blocks = ["39.110.215.69/32", "118.238.204.122/32"]
-  from_port   = "4443"
-  protocol    = "tcp"
-  self        = "false"
-  to_port     = "4443"
-}
-
-resource "aws_security_group_rule" "new-alb-sg-3" {
-  security_group_id = aws_security_group.new-alb-sg.id
-  type              = "ingress"
-
-  cidr_blocks = ["39.110.215.69/32", "118.238.204.122/32"]
-  from_port   = "443"
-  protocol    = "tcp"
-  self        = "false"
-  to_port     = "443"
-}
-
-resource "aws_security_group_rule" "new-alb-sg-4" {
+resource "aws_security_group_rule" "new-alb-sg-egress" {
   security_group_id = aws_security_group.new-alb-sg.id
   type              = "egress"
 

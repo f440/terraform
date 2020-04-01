@@ -43,7 +43,6 @@ resource "aws_instance" "hanica-bastion" {
   ipv6_address_count      = "0"
   key_name                = "Hanica"
   monitoring              = "true"
-  private_ip              = "10.0.1.18"
 
   root_block_device {
     delete_on_termination = "true"
