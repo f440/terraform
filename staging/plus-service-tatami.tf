@@ -225,13 +225,6 @@ resource "aws_security_group" "tatami-staging-alb-sg" {
   vpc_id = aws_vpc.staging-hanica-vpc.id
 
   ingress {
-    from_port   = 80
-    protocol    = "tcp"
-    to_port     = 80
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
     from_port   = 443
     protocol    = "tcp"
     to_port     = 443
