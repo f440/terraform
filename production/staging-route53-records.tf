@@ -151,6 +151,19 @@ resource "aws_route53_record" "asterisk-tatami-staging-aoyagi-farm-CNAME" {
   ttl     = "60"
 }
 
+# TODO: tatami-staging の Heroku -> AWS 移行完了後に削除する
+resource "aws_route53_record" "asterisk-tatami-staging2-aoyagi-farm-CNAME" {
+  zone_id = var.aoyagi_farm_zone_id
+  name    = "*.tatami-staging2.aoyagi.farm"
+  type    = "A"
+
+  alias {
+    name                   = "dualstack.tatami-staging-alb-54059534.ap-northeast-1.elb.amazonaws.com"
+    zone_id                = "Z14GRHDCWA56QT"
+    evaluate_target_health = false
+  }
+}
+
 resource "aws_route53_record" "meyasu-staging-aoyagi-farm-CNAME" {
   zone_id = var.aoyagi_farm_zone_id
   name    = "meyasu-staging.aoyagi.farm"
