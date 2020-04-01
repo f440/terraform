@@ -23,11 +23,10 @@ resource "aws_ecr_repository" "tatami-base" {
 }
 
 resource "aws_ecr_repository_policy" "tatami-base" {
-  repository = aws_ecr_repository.tatami.name
+  repository = aws_ecr_repository.tatami-base.name
 
   policy = file("./files/iam/policies/tatami_aws_ecr_repository_policy_tatami_base.json")
 }
-
 
 resource "aws_ecr_repository" "tatami-fluentd" {
   name = "tatami/fluentd"
