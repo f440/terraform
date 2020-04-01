@@ -123,23 +123,23 @@ resource "aws_db_subnet_group" "tatami-staging-db-subnet-group" {
 #   - 10.0.37.0/24
 #
 ##################################################
-//resource "aws_subnet" "tatami-external-1a" {
-//  vpc_id            = aws_vpc.staging-hanica-vpc.id
-//  availability_zone = "ap-northeast-1a"
-//  cidr_block        = "10.0.34.0/24"
-//  tags = {
-//    Name = "tatami-external-1a"
-//  }
-//}
-//
-//resource "aws_subnet" "tatami-external-1c" {
-//  vpc_id            = aws_vpc.staging-hanica-vpc.id
-//  availability_zone = "ap-northeast-1c"
-//  cidr_block        = "10.0.35.0/24"
-//  tags = {
-//    Name = "tatami-external-1c"
-//  }
-//}
+resource "aws_subnet" "tatami-staging-external-1a" {
+  vpc_id            = aws_vpc.staging-hanica-vpc.id
+  availability_zone = "ap-northeast-1a"
+  cidr_block        = "10.0.34.0/24"
+  tags = {
+    Name = "tatami-staging-external-1a"
+  }
+}
+
+resource "aws_subnet" "tatami-staging-external-1c" {
+  vpc_id            = aws_vpc.staging-hanica-vpc.id
+  availability_zone = "ap-northeast-1c"
+  cidr_block        = "10.0.35.0/24"
+  tags = {
+    Name = "tatami-staging-external-1c"
+  }
+}
 
 resource "aws_subnet" "tatami-staging-internal-1a" {
   vpc_id            = aws_vpc.staging-hanica-vpc.id
@@ -172,19 +172,19 @@ resource "aws_route_table" "tatami-staging-internal-rt" {
   }
 }
 
-//resource "aws_route_table" "tatami-staging-external-rt" {
-//  vpc_id = aws_vpc.staging-hanica-vpc.id
-//
-//  route {
-//    cidr_block = "0.0.0.0/0"
-//    gateway_id = var.hanica-new-igw
-//  }
-//
-//  tags = {
-//    Name = "tatami-external-rt"
-//  }
-//}
-//
+resource "aws_route_table" "tatami-staging-external-rt" {
+  vpc_id = aws_vpc.staging-hanica-vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.staging-hanica-igw.id
+  }
+
+  tags = {
+    Name = "tatami-external-rt"
+  }
+}
+
 //resource "aws_nat_gateway" "tatami-staging-natgw-1a" {
 //  allocation_id = aws_eip.tatami-natgw.id
 //  subnet_id     = aws_subnet.tatami-external-1a.id
@@ -213,7 +213,78 @@ resource "aws_route_table" "tatami-staging-internal-rt" {
 //resource "aws_ecr_repository" "tatami" {
 //  name = "tatami"
 //}
-//
+
+##################################################
+#
+# EC2
+#
+##################################################
+
+resource "aws_security_group" "tatami-staging-alb-sg" {
+  name   = "tatami-staging-alb-sg"
+  vpc_id = aws_vpc.staging-hanica-vpc.id
+
+  ingress {
+    from_port   = 443
+    protocol    = "tcp"
+    to_port     = 443
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tatami-staging-alb-sg"
+  }
+}
+
+resource "aws_lb" "tatami-staging-alb" {
+  name                       = "tatami-staging-alb"
+  load_balancer_type         = "application"
+  internal                   = false
+  idle_timeout               = 60
+  enable_deletion_protection = true
+
+  subnets = [
+    aws_subnet.tatami-staging-external-1a.id,
+    aws_subnet.tatami-staging-external-1c.id,
+  ]
+  security_groups = [aws_security_group.tatami-staging-alb-sg.id]
+
+  // access_logs {
+  //   bucket  = aws_s3_bucket.tatami-staging-alb-access-logs.id
+  //   enabled = true
+  //   prefix  = "tatami-staging-alb"
+  // }
+}
+
+resource "aws_lb_listener" "tatami-staging-alb-https" {
+  load_balancer_arn = aws_lb.tatami-staging-alb.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+
+  # FIXME: 移行準備のための tatami-staging2 とした証明書は手動で発行
+  #        移行後に tatami-staging で発行したものに置き換える.
+  # - tatami-staging2.aoyagi.farm
+  # - *.tatami-staging2.aoyagi.farm
+  certificate_arn = "arn:aws:acm:ap-northeast-1:121659688561:certificate/9cf1c5e5-9476-4d73-9cd6-aaeb09123c2f"
+
+  default_action {
+    # TODO: ECS 作成後に変更する
+    type = "fixed-response"
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "tatami-staging"
+      status_code  = "200"
+    }
+  }
+}
 
 ##################################################
 #
