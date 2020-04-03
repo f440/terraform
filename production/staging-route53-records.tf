@@ -212,3 +212,12 @@ resource "aws_route53_record" "sakidori-pca-hyper-staging-aoyagi-farm-CNAME" {
   ttl     = "60"
 }
 
+
+resource "aws_route53_record" "shinogi-staging-aoyagi-farm-CNAME" {
+  zone_id = var.aoyagi_farm_zone_id
+  name    = "shinogi-staging.aoyagi.farm"
+  type    = "CNAME"
+  records = ["sleepy-firefly-c0thcongup58m4pi5zehnwmc.herokudns.com"]
+  ttl     = "60"
+}
+
