@@ -12,12 +12,21 @@
 #  action_id = "bestpractice"
 #  description = "Best Practiceで推奨された設定を適用"
 #}
+#resource "aws_securityhub_custom_action" "securitypatch-action" {
+#  name = "セキュリティパッチ適用"
+#  action_id = "securitypatch"
+#  description = "利用可能なセキュリティパッチを適用"
+#}
 variable "securityhub-action-exception" {
   default = "arn:aws:securityhub:ap-northeast-1:736134917012:action/custom/exception"
 }
 
 variable "securityhub-action-bestpractice" {
   default = "arn:aws:securityhub:ap-northeast-1:736134917012:action/custom/bestpractice"
+}
+
+variable "securityhub-action-securitypatch" {
+  default = "arn:aws:securityhub:ap-northeast-1:736134917012:action/custom/securitypatch"
 }
 
 resource "aws_securityhub_account" "securityhub" {}
@@ -259,6 +268,93 @@ resource "aws_lambda_permission" "securityhub-action-bestpractice-permission" {
 resource "aws_cloudwatch_event_target" "securityhub-action-bestpractice-target" {
   rule = aws_cloudwatch_event_rule.securityhub-action-bestpractice-event.name
   arn = aws_lambda_function.securityhub-action-bestpractice.arn
+}
+
+# セキュリティパッチ適用のカスタムアクション
+resource "aws_iam_role" "securityhub-action-securitypatch-role" {
+  name = "SecurityHubActionSecurityPatchRole"
+
+  assume_role_policy = file("./files/iam/roles/lambda-assume.json")
+
+  tags = {
+    ManagedBy = "SecurityGroup"
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "securityhub-action-securitypatch-role-policy-attachment" {
+  role = aws_iam_role.securityhub-action-securitypatch-role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSLambdaExecute"
+}
+
+data "aws_iam_policy_document" "securityhub-action-securitypatch-role-policy" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "securityhub:UpdateFindings"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "ssm:SendCommand"
+    ]
+    resources = ["*"]
+    condition {
+      test = "ForAllValues:StringEquals"
+      variable = "aws:TagKeys"
+      values = ["AmazonInspectorProfile"]
+    }
+  }
+}
+
+resource "aws_iam_role_policy" "securityhub-action-securitypatch-role-policy" {
+  role = aws_iam_role.securityhub-action-securitypatch-role.name
+  policy = data.aws_iam_policy_document.securityhub-action-securitypatch-role-policy.json
+}
+
+resource "aws_lambda_function" "securityhub-action-securitypatch" {
+  function_name = "SecurityHubActionSecurityPatch"
+
+  filename = data.archive_file.lambda-dummy.output_path
+  handler = "securityhub_action_securitypatch.lambda_handler"
+  runtime = "ruby2.5"
+  timeout = 30
+
+  role = aws_iam_role.securityhub-action-securitypatch-role.arn
+
+  environment {
+    variables = {
+      CLOUDWATCH_LOG_GROUP = aws_cloudwatch_log_group.securityhub-log.name
+    }
+  }
+
+  tags = {
+    ManagedBy = "SecurityGroup"
+  }
+}
+
+resource "aws_cloudwatch_event_rule" "securityhub-action-securitypatch-event" {
+  name = "SecurityHubActionSecurityPatchEvent"
+  description = "Security Hub Custom Action for Security Patch"
+
+  event_pattern = templatefile(
+    "./files/events/securityhub_custom_action.json",
+    { custom_action_arn = var.securityhub-action-securitypatch }
+  )
+}
+
+resource "aws_lambda_permission" "securityhub-action-securitypatch-permission" {
+  action = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.securityhub-action-securitypatch.arn
+  principal = "events.amazonaws.com"
+  source_arn = aws_cloudwatch_event_rule.securityhub-action-securitypatch-event.arn
+}
+
+resource "aws_cloudwatch_event_target" "securityhub-action-securitypatch-target" {
+  rule = aws_cloudwatch_event_rule.securityhub-action-securitypatch-event.name
+  arn = aws_lambda_function.securityhub-action-securitypatch.arn
 }
 
 # 通知
