@@ -163,10 +163,10 @@ resource "aws_subnet" "tatami-staging-internal-1c" {
 resource "aws_route_table" "tatami-staging-internal-rt" {
   vpc_id = aws_vpc.staging-hanica-vpc.id
 
-  //  route {
-  //    cidr_block     = "0.0.0.0/0"
-  //    nat_gateway_id = aws_nat_gateway.tatami-staging-natgw-a.id
-  //  }
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.tatami-staging-natgw-a.id
+  }
 
   tags = {
     Name = "staging-tatami-internal-rt"
@@ -186,20 +186,20 @@ resource "aws_route_table" "tatami-staging-external-rt" {
   }
 }
 
-//resource "aws_nat_gateway" "tatami-staging-natgw-1a" {
-//  allocation_id = aws_eip.tatami-natgw.id
-//  subnet_id     = aws_subnet.tatami-external-1a.id
-//
-//  tags = {
-//    Name = "tatami-natgw-a"
-//  }
-//}
-//
-//resource "aws_eip" "tatami-natgw" {
-//  tags = {
-//    Name = "tatami-natgw"
-//  }
-//}
+resource "aws_nat_gateway" "tatami-staging-natgw-a" {
+  allocation_id = aws_eip.tatami-natgw.id
+  subnet_id     = aws_subnet.tatami-staging-external-1a.id
+
+  tags = {
+    Name = "tatami-natgw-a"
+  }
+}
+
+resource "aws_eip" "tatami-natgw" {
+  tags = {
+    Name = "tatami-natgw"
+  }
+}
 
 ##################################################
 #
