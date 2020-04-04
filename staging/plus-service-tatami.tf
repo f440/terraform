@@ -335,6 +335,17 @@ resource "aws_lb_listener" "tatami-staging-alb-https" {
 
 ##################################################
 #
+# CodeDeploy
+#
+##################################################
+
+resource "aws_codedeploy_app" "tatami-staging" {
+  compute_platform = "ECS"
+  name             = "tatamiStaging"
+}
+
+##################################################
+#
 # S3
 #
 ##################################################
