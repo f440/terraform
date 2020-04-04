@@ -247,19 +247,19 @@ resource "aws_security_group" "tatami-staging-worker-sg" {
   }
 }
 
-//##################################################
-//#
-//# ECS / ECR
-//#
-//##################################################
-//
-//resource "aws_ecs_cluster" "tatami-staging" {
-//  name = "tatami-staging"
-//}
-//
-//resource "aws_ecr_repository" "tatami" {
-//  name = "tatami"
-//}
+##################################################
+#
+# ECS / ECR
+#
+##################################################
+
+resource "aws_ecs_cluster" "tatami-staging" {
+  name = "tatami-staging"
+}
+
+# resource "aws_ecr_repository" "tatami" {
+#   name = "tatami"
+# }
 
 ##################################################
 #
