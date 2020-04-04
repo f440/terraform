@@ -200,6 +200,53 @@ resource "aws_route_table" "tatami-staging-external-rt" {
 //  }
 //}
 
+##################################################
+#
+# Web / Woerker
+#
+##################################################
+
+resource "aws_security_group" "tatami-staging-web-sg" {
+  name   = "tatami-staging-web-sg"
+  vpc_id = aws_vpc.staging-hanica-vpc.id
+
+  ingress {
+    from_port       = 3000
+    protocol        = "tcp"
+    to_port         = 3000
+    security_groups = [aws_security_group.tatami-staging-alb-sg.id]
+  }
+
+  # NOTE: Oke に準拠させる
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tatami-staging-web-sg"
+  }
+}
+
+resource "aws_security_group" "tatami-staging-worker-sg" {
+  name   = "tatami-staging-worker-sg"
+  vpc_id = aws_vpc.staging-hanica-vpc.id
+
+  # NOTE: Oke に準拠させる
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tatami-staging-worker-sg"
+  }
+}
+
 //##################################################
 //#
 //# ECS / ECR
