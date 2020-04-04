@@ -74,9 +74,10 @@ resource "aws_security_group" "tatami-staging-db-sg" {
     from_port = 5432
     protocol  = "tcp"
     to_port   = 5432
-    # TODO:
-    # tatami-staging-web, tatami-staging-worker の security groups 作成後に security_groups に置き換える
-    cidr_blocks = [aws_vpc.staging-hanica-vpc.cidr_block]
+    security_groups = [
+      aws_security_group.tatami-staging-web-sg.id,
+      aws_security_group.tatami-staging-worker-sg.id,
+    ]
   }
 
   egress {
