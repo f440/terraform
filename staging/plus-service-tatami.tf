@@ -614,3 +614,15 @@ resource "aws_iam_policy_attachment" "plus-service-tatami-circleci" {
   users      = [aws_iam_user.plus-service-tatami-circleci.name]
   policy_arn = aws_iam_policy.plus-service-tatami-circleci.arn
 }
+
+##################################################
+#
+# CloudWatch Logs
+#
+##################################################
+
+resource "aws_cloudwatch_log_group" "tatami-staging" {
+  name = "/tatami/staging"
+
+  retention_in_days = 14
+}
