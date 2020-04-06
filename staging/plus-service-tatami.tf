@@ -221,7 +221,7 @@ resource "aws_route_table_association" "tatami-staging-external-rt-1c" {
 
 ##################################################
 #
-# Web / Woerker
+# Web / Worker
 #
 ##################################################
 
