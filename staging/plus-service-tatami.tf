@@ -74,9 +74,10 @@ resource "aws_security_group" "tatami-staging-db-sg" {
     from_port = 5432
     protocol  = "tcp"
     to_port   = 5432
-    # TODO:
-    # tatami-staging-web, tatami-staging-worker の security groups 作成後に security_groups に置き換える
-    cidr_blocks = [aws_vpc.staging-hanica-vpc.cidr_block]
+    security_groups = [
+      aws_security_group.tatami-staging-web-sg.id,
+      aws_security_group.tatami-staging-worker-sg.id,
+    ]
   }
 
   egress {
@@ -159,17 +160,40 @@ resource "aws_subnet" "tatami-staging-internal-1c" {
   }
 }
 
-resource "aws_route_table" "tatami-staging-internal-rt" {
+resource "aws_route_table" "tatami-staging-internal-rt-1a" {
   vpc_id = aws_vpc.staging-hanica-vpc.id
 
-  //  route {
-  //    cidr_block     = "0.0.0.0/0"
-  //    nat_gateway_id = aws_nat_gateway.tatami-staging-natgw-a.id
-  //  }
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.staging-hanica-vpc-1a-ngw.id
+  }
 
   tags = {
     Name = "staging-tatami-internal-rt"
   }
+}
+
+resource "aws_route_table_association" "tatami-staging-internal-rt-1a" {
+  subnet_id      = aws_subnet.tatami-staging-internal-1a.id
+  route_table_id = aws_route_table.tatami-staging-internal-rt-1a.id
+}
+
+resource "aws_route_table" "tatami-staging-internal-rt-1c" {
+  vpc_id = aws_vpc.staging-hanica-vpc.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.staging-hanica-vpc-1c-ngw.id
+  }
+
+  tags = {
+    Name = "staging-tatami-internal-rt"
+  }
+}
+
+resource "aws_route_table_association" "tatami-staging-internal-rt-1c" {
+  subnet_id      = aws_subnet.tatami-staging-internal-1c.id
+  route_table_id = aws_route_table.tatami-staging-internal-rt-1c.id
 }
 
 resource "aws_route_table" "tatami-staging-external-rt" {
@@ -185,34 +209,76 @@ resource "aws_route_table" "tatami-staging-external-rt" {
   }
 }
 
-//resource "aws_nat_gateway" "tatami-staging-natgw-1a" {
-//  allocation_id = aws_eip.tatami-natgw.id
-//  subnet_id     = aws_subnet.tatami-external-1a.id
-//
-//  tags = {
-//    Name = "tatami-natgw-a"
-//  }
-//}
-//
-//resource "aws_eip" "tatami-natgw" {
-//  tags = {
-//    Name = "tatami-natgw"
-//  }
-//}
+resource "aws_route_table_association" "tatami-staging-external-rt-1a" {
+  subnet_id      = aws_subnet.tatami-staging-external-1a.id
+  route_table_id = aws_route_table.tatami-staging-external-rt.id
+}
 
-//##################################################
-//#
-//# ECS / ECR
-//#
-//##################################################
-//
-//resource "aws_ecs_cluster" "tatami-staging" {
-//  name = "tatami-staging"
-//}
-//
-//resource "aws_ecr_repository" "tatami" {
-//  name = "tatami"
-//}
+resource "aws_route_table_association" "tatami-staging-external-rt-1c" {
+  subnet_id      = aws_subnet.tatami-staging-external-1c.id
+  route_table_id = aws_route_table.tatami-staging-external-rt.id
+}
+
+##################################################
+#
+# Web / Worker
+#
+##################################################
+
+resource "aws_security_group" "tatami-staging-web-sg" {
+  name   = "tatami-staging-web-sg"
+  vpc_id = aws_vpc.staging-hanica-vpc.id
+
+  ingress {
+    from_port       = 3000
+    protocol        = "tcp"
+    to_port         = 3000
+    security_groups = [aws_security_group.tatami-staging-alb-sg.id]
+  }
+
+  # NOTE: Oke に準拠させる
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tatami-staging-web-sg"
+  }
+}
+
+resource "aws_security_group" "tatami-staging-worker-sg" {
+  name   = "tatami-staging-worker-sg"
+  vpc_id = aws_vpc.staging-hanica-vpc.id
+
+  # NOTE: Oke に準拠させる
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tatami-staging-worker-sg"
+  }
+}
+
+##################################################
+#
+# ECS / ECR
+#
+##################################################
+
+resource "aws_ecs_cluster" "tatami-staging" {
+  name = "tatami-staging"
+}
+
+# resource "aws_ecr_repository" "tatami" {
+#   name = "tatami"
+# }
 
 ##################################################
 #
@@ -284,6 +350,17 @@ resource "aws_lb_listener" "tatami-staging-alb-https" {
       status_code  = "200"
     }
   }
+}
+
+##################################################
+#
+# CodeDeploy
+#
+##################################################
+
+resource "aws_codedeploy_app" "tatami-staging" {
+  compute_platform = "ECS"
+  name             = "tatamiStaging"
 }
 
 ##################################################
@@ -421,29 +498,29 @@ resource "aws_s3_bucket_public_access_block" "tatami-staging-blob" {
 //  role       = aws_iam_role.tatami-operator.name
 //  policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
 //}
-//
-//resource "aws_iam_role" "tatami-staging-ecs-task-execution-role" {
-//  name               = "OkeProductionEcsTaskExecutionRole"
-//  description        = "Allows ECS tasks to call AWS services on your behalf."
-//  assume_role_policy = file("./files/iam/roles/ecs-assume.json")
-//}
-//
-//resource "aws_iam_role_policy_attachment" "tatami-staging-ecs-task-execution-role-ecs-task-execution-role-attachment" {
-//  role       = aws_iam_role.tatami-staging-ecs-task-execution-role.name
-//  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-//}
-//
-//resource "aws_iam_policy" "tatami-ssm-get-parameters-policy" {
-//  name   = "OkeSsmGetParameters"
-//  path   = "/"
-//  policy = file("./files/iam/policies/tatami-ssm-get-parameters-policy.json")
-//}
-//
-//resource "aws_iam_role_policy_attachment" "tatami-staging-ecs-task-execution-role-tatami-ssm-get-parameters-policy-attachment" {
-//  role       = aws_iam_role.tatami-staging-ecs-task-execution-role.name
-//  policy_arn = aws_iam_policy.tatami-ssm-get-parameters-policy.arn
-//}
-//
+
+resource "aws_iam_role" "tatami-staging-ecs-task-execution-role" {
+  name               = "TatamiStagingEcsTaskExecutionRole"
+  description        = "Allows ECS tasks to call AWS services on your behalf."
+  assume_role_policy = file("./files/iam/roles/ecs-assume.json")
+}
+
+resource "aws_iam_role_policy_attachment" "tatami-staging-ecs-task-execution-role-ecs-task-execution-role-attachment" {
+  role       = aws_iam_role.tatami-staging-ecs-task-execution-role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+resource "aws_iam_policy" "tatami-ssm-get-parameters-policy" {
+  name   = "TatamiSsmGetParameters"
+  path   = "/"
+  policy = file("./files/iam/policies/tatami-ssm-get-parameters-policy.json")
+}
+
+resource "aws_iam_role_policy_attachment" "tatami-staging-ecs-task-execution-role-tatami-ssm-get-parameters-policy-attachment" {
+  role       = aws_iam_role.tatami-staging-ecs-task-execution-role.name
+  policy_arn = aws_iam_policy.tatami-ssm-get-parameters-policy.arn
+}
+
 //resource "aws_iam_policy" "tatami-ecs-update-service-policy" {
 //  name   = "OkeEcsUpdateService"
 //  path   = "/"
@@ -536,4 +613,16 @@ resource "aws_iam_policy_attachment" "plus-service-tatami-circleci" {
   name       = "plus-service-tatami-circleci"
   users      = [aws_iam_user.plus-service-tatami-circleci.name]
   policy_arn = aws_iam_policy.plus-service-tatami-circleci.arn
+}
+
+##################################################
+#
+# CloudWatch Logs
+#
+##################################################
+
+resource "aws_cloudwatch_log_group" "tatami-staging" {
+  name = "/tatami/staging"
+
+  retention_in_days = 14
 }
