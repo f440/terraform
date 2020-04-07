@@ -1,0 +1,30 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "elasticache:CopySnapshot",
+        "elasticache:RevokeCacheSecurityGroupIngress",
+        "elasticache:CreateSnapshot",
+        "elasticache:PurchaseReservedCacheNodesOffering",
+        "elasticache:CreateCacheSecurityGroup",
+        "elasticache:CreateReplicationGroup",
+        "elasticache:AuthorizeCacheSecurityGroupIngress",
+        "elasticache:ResetCacheParameterGroup",
+        "elasticache:RebootCacheCluster",
+        "elasticache:CreateCacheSubnetGroup",
+        "elasticache:ModifyCacheParameterGroup",
+        "elasticache:IncreaseReplicaCount",
+        "elasticache:ModifyCacheCluster",
+        "elasticache:CreateCacheParameterGroup",
+        "elasticache:ModifyReplicationGroup",
+        "elasticache:DecreaseReplicaCount",
+        "elasticache:CreateCacheCluster",
+        "elasticache:ModifyReplicationGroupShardConfiguration",
+        "elasticache:ModifyCacheSubnetGroup"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

@@ -47,3 +47,83 @@ resource "aws_ecr_repository_policy" "tatami-one-off" {
 
   policy = file("./files/iam/policies/tatami_aws_ecr_repository_policy_tatami_one_off.json")
 }
+
+##################################################
+#
+# IAM
+#
+##################################################
+
+resource "aws_iam_role" "tatami-operator" {
+  name               = "TatamiOperator"
+  assume_role_policy = file("./files/iam/roles/account-assume.json")
+}
+
+resource "aws_iam_role_policy_attachment" "tatami-operator-ecs-full-access" {
+  role       = aws_iam_role.tatami-operator.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "tatami-operator-read-only-attachment" {
+  role       = aws_iam_role.tatami-operator.name
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+}
+
+resource "aws_iam_policy" "tatami-run-one-off-task-policy" {
+  name = "TatamiRunOneOffTask"
+  path = "/"
+
+  policy = file("./files/iam/policies/tatami-run-one-off-task-policy.json")
+}
+
+resource "aws_iam_policy" "tatami-manage-parameter-store-parameters-policy" {
+  name = "TatamiManageParameterStoreParameters"
+  path = "/"
+
+  policy = file(
+    "./files/iam/policies/tatami-manage-parameter-store-parameters-policy.json",
+  )
+}
+
+resource "aws_iam_role_policy_attachment" "tatami-operator-tatami-manage-parameter-store-parameters-policy-attachment" {
+  role       = aws_iam_role.tatami-operator.name
+  policy_arn = aws_iam_policy.tatami-manage-parameter-store-parameters-policy.arn
+}
+
+resource "aws_iam_policy" "tatami-manage-ecr-repository-policy" {
+  name   = "TatamiManageECRRepository"
+  path   = "/"
+  policy = file("./files/iam/policies/tatami-manage-ecr-repository-policy.json")
+}
+
+resource "aws_iam_role_policy_attachment" "tatami-operator-tatami-manage-ecr-repository-policy-attachment" {
+  role       = aws_iam_role.tatami-operator.name
+  policy_arn = aws_iam_policy.tatami-manage-ecr-repository-policy.arn
+}
+
+resource "aws_iam_policy" "tatami-manage-elasticache-policy" {
+  name   = "TatamiManageElastiCache"
+  path   = "/"
+  policy = file("./files/iam/policies/tatami-manage-elasticache-policy.json")
+}
+
+resource "aws_iam_role_policy_attachment" "tatami-operator-tatami-manage-elasticache-policy-attachment" {
+  role       = aws_iam_role.tatami-operator.name
+  policy_arn = aws_iam_policy.tatami-manage-elasticache-policy.arn
+}
+
+resource "aws_iam_policy" "tatami-manage-rds-policy" {
+  name   = "TatamiManageRDS"
+  path   = "/"
+  policy = file("./files/iam/policies/tatami-manage-rds-policy.json")
+}
+
+resource "aws_iam_role_policy_attachment" "tatami-operator-tatami-manage-rds-policy-attachment" {
+  role       = aws_iam_role.tatami-operator.name
+  policy_arn = aws_iam_policy.tatami-manage-rds-policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "tatami-operator-elb-full-access-attachment" {
+  role       = aws_iam_role.tatami-operator.name
+  policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
+}
