@@ -127,3 +127,31 @@ resource "aws_iam_role_policy_attachment" "tatami-operator-elb-full-access-attac
   role       = aws_iam_role.tatami-operator.name
   policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
 }
+
+resource "aws_iam_role" "tatami-production-ecs-task-execution-role" {
+  name               = "TatamiProductionEcsTaskExecutionRole"
+  description        = "Allows ECS tasks to call AWS services on your behalf."
+  assume_role_policy = file("./files/iam/roles/ecs-assume.json")
+}
+
+resource "aws_iam_role_policy_attachment" "tatami-production-ecs-task-execution-role-ecs-task-execution-role-attachment" {
+  role       = aws_iam_role.tatami-production-ecs-task-execution-role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+resource "aws_iam_policy" "tatami-ssm-get-parameters-policy" {
+  name   = "TatamiSsmGetParameters"
+  path   = "/"
+  policy = file("./files/iam/policies/tatami-ssm-get-parameters-policy.json")
+}
+
+resource "aws_iam_role_policy_attachment" "tatami-production-ecs-task-execution-role-tatami-ssm-get-parameters-policy-attachment" {
+  role       = aws_iam_role.tatami-production-ecs-task-execution-role.name
+  policy_arn = aws_iam_policy.tatami-ssm-get-parameters-policy.arn
+}
+
+resource "aws_iam_policy" "tatami-ecs-update-service-policy" {
+  name   = "TatamiEcsUpdateService"
+  path   = "/"
+  policy = file("./files/iam/policies/tatami-ecs-update-service-policy.json")
+}
