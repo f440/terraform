@@ -167,14 +167,6 @@ resource "aws_route53_record" "asterisk-tatami-staging-aoyagi-farm-A" {
   }
 }
 
-resource "aws_route53_record" "asterisk-tatami-staging-aoyagi-farm-for-ACM" {
-  zone_id = var.aoyagi_farm_zone_id
-  name    = "_bd69aebdc5993b5df7112f2f1583c8b1.tatami-staging.aoyagi.farm"
-  type    = "CNAME"
-  records = ["_e442aa48145ab0c72c77f44ce897e909.nhqijqilxf.acm-validations.aws"]
-  ttl     = "60"
-}
-
 resource "aws_route53_record" "meyasu-staging-aoyagi-farm-CNAME" {
   zone_id = var.aoyagi_farm_zone_id
   name    = "meyasu-staging.aoyagi.farm"
