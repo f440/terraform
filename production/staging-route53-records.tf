@@ -135,26 +135,9 @@ resource "aws_route53_record" "shittori-staging-aoyagi-farm-CNAME" {
   ttl     = "60"
 }
 
-resource "aws_route53_record" "tatami-staging-aoyagi-farm-CNAME" {
+resource "aws_route53_record" "tatami-staging-aoyagi-farm-A" {
   zone_id = var.aoyagi_farm_zone_id
   name    = "tatami-staging.aoyagi.farm"
-  type    = "CNAME"
-  records = ["pacific-rose-5ztud21qobl3ufuwwprd97dr.herokudns.com"]
-  ttl     = "60"
-}
-
-resource "aws_route53_record" "asterisk-tatami-staging-aoyagi-farm-CNAME" {
-  zone_id = var.aoyagi_farm_zone_id
-  name    = "*.tatami-staging.aoyagi.farm"
-  type    = "CNAME"
-  records = ["powerful-journey-4406.thawing-headland-5882.herokuspace.com"]
-  ttl     = "60"
-}
-
-# TODO: tatami-staging の Heroku -> AWS 移行完了後に削除する
-resource "aws_route53_record" "asterisk-tatami-staging2-aoyagi-farm-CNAME" {
-  zone_id = var.aoyagi_farm_zone_id
-  name    = "*.tatami-staging2.aoyagi.farm"
   type    = "A"
 
   alias {
@@ -162,6 +145,34 @@ resource "aws_route53_record" "asterisk-tatami-staging2-aoyagi-farm-CNAME" {
     zone_id                = "Z14GRHDCWA56QT"
     evaluate_target_health = false
   }
+}
+
+resource "aws_route53_record" "tatami-staging-aoyagi-farm-for-ACM" {
+  zone_id = var.aoyagi_farm_zone_id
+  name    = "_bd69aebdc5993b5df7112f2f1583c8b1.tatami-staging.aoyagi.farm"
+  type    = "CNAME"
+  records = ["_e442aa48145ab0c72c77f44ce897e909.nhqijqilxf.acm-validations.aws"]
+  ttl     = "60"
+}
+
+resource "aws_route53_record" "asterisk-tatami-staging-aoyagi-farm-A" {
+  zone_id = var.aoyagi_farm_zone_id
+  name    = "*.tatami-staging.aoyagi.farm"
+  type    = "A"
+
+  alias {
+    name                   = "dualstack.tatami-staging-alb-54059534.ap-northeast-1.elb.amazonaws.com"
+    zone_id                = "Z14GRHDCWA56QT"
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_route53_record" "asterisk-tatami-staging-aoyagi-farm-for-ACM" {
+  zone_id = var.aoyagi_farm_zone_id
+  name    = "_bd69aebdc5993b5df7112f2f1583c8b1.tatami-staging.aoyagi.farm"
+  type    = "CNAME"
+  records = ["_e442aa48145ab0c72c77f44ce897e909.nhqijqilxf.acm-validations.aws"]
+  ttl     = "60"
 }
 
 resource "aws_route53_record" "meyasu-staging-aoyagi-farm-CNAME" {
