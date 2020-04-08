@@ -76,6 +76,11 @@ resource "aws_iam_policy" "tatami-run-one-off-task-policy" {
   policy = file("./files/iam/policies/tatami-run-one-off-task-policy.json")
 }
 
+resource "aws_iam_role_policy_attachment" "tatami-operator-tatami-run-one-off-task-policy-attachment" {
+  role       = aws_iam_role.tatami-operator.name
+  policy_arn = aws_iam_policy.tatami-run-one-off-task-policy.arn
+}
+
 resource "aws_iam_policy" "tatami-manage-parameter-store-parameters-policy" {
   name = "TatamiManageParameterStoreParameters"
   path = "/"
