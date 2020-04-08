@@ -160,3 +160,58 @@ resource "aws_iam_policy" "tatami-ecs-update-service-policy" {
   path   = "/"
   policy = file("./files/iam/policies/tatami-ecs-update-service-policy.json")
 }
+
+resource "aws_iam_role" "codebuild-tatami-production-database-migration-service-role" {
+  name               = "codebuild-tatamiProductionDatabaseMigration-service-role"
+  path               = "/service-role/"
+  assume_role_policy = file("./files/iam/roles/codebuild-assume.json")
+}
+
+resource "aws_iam_policy" "tatami-codebuild-base-tatami-production-database-migration-policy" {
+  name        = "CodeBuildBasePolicy-tatamiProductionDatabaseMigration-ap-northeast-1"
+  description = "Policy used in trust relationship with CodeBuild"
+  path        = "/service-role/"
+  policy = file(
+    "./files/iam/policies/tatami-codebuild-base-policy-database-migration.json",
+  )
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-production-database-migration-service-role-tatami-ssm-get-parameters-policy-attachment" {
+  role       = aws_iam_role.codebuild-tatami-production-database-migration-service-role.name
+  policy_arn = aws_iam_policy.tatami-ssm-get-parameters-policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-production-database-migration-service-role-tatami-codebuild-base-tatami-production-database-migration-policy-attachment" {
+  role       = aws_iam_role.codebuild-tatami-production-database-migration-service-role.name
+  policy_arn = aws_iam_policy.tatami-codebuild-base-tatami-production-database-migration-policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-production-database-migration-service-role-tatami-ecs-update-service-policy-attachment" {
+  role       = aws_iam_role.codebuild-tatami-production-database-migration-service-role.name
+  policy_arn = aws_iam_policy.tatami-ecs-update-service-policy.arn
+}
+
+resource "aws_iam_policy" "tatami-codebuild-base-tatami-production-deploy-worker-policy" {
+  name        = "CodeBuildBasePolicy-tatamiProductionDeployWorker-ap-northeast-1"
+  description = "Policy used in trust relationship with CodeBuild"
+  path        = "/service-role/"
+  policy = file(
+    "./files/iam/policies/tatami-codebuild-base-policy-deploy-worker.json",
+  )
+}
+
+resource "aws_iam_role" "codebuild-tatami-production-deploy-worker-service-role" {
+  name               = "codebuild-tatamiProductionDeployWorker-service-role"
+  path               = "/service-role/"
+  assume_role_policy = file("./files/iam/roles/codebuild-assume.json")
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-production-deploy-worker-service-role-tatami-codebuild-base-tatami-production-deploy-worker-policy-attachment" {
+  role       = aws_iam_role.codebuild-tatami-production-deploy-worker-service-role.name
+  policy_arn = aws_iam_policy.tatami-codebuild-base-tatami-production-deploy-worker-policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild-tatami-production-deploy-worker-service-role-tatami-ecs-update-service-policy-attachment" {
+  role       = aws_iam_role.codebuild-tatami-production-deploy-worker-service-role.name
+  policy_arn = aws_iam_policy.tatami-ecs-update-service-policy.arn
+}
