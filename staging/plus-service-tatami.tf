@@ -335,11 +335,7 @@ resource "aws_lb_listener" "tatami-staging-alb-https" {
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
 
-  # FIXME: 移行準備のための tatami-staging2 とした証明書は手動で発行
-  #        移行後に tatami-staging で発行したものに置き換える.
-  # - tatami-staging2.aoyagi.farm
-  # - *.tatami-staging2.aoyagi.farm
-  certificate_arn = "arn:aws:acm:ap-northeast-1:121659688561:certificate/9cf1c5e5-9476-4d73-9cd6-aaeb09123c2f"
+  certificate_arn = "arn:aws:acm:ap-northeast-1:121659688561:certificate/fb42d3af-41da-4b97-9b1d-048f86ed16ff"
 
   default_action {
     # TODO: ECS 作成後に変更する
