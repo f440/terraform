@@ -39,3 +39,18 @@ resource "aws_elasticache_parameter_group" "plus-omen-redis-32" {
   description = "Redis 3.2 parameter group for omen"
 }
 
+resource "aws_iam_user" "omen-s3-production" {
+  name          = "omen-s3-production"
+  force_destroy = "false"
+}
+
+resource "aws_iam_policy" "omen-policy" {
+  name   = "OmenPolicy"
+  policy = file("./files/iam/policies/omen-policy.json")
+}
+
+resource "aws_iam_policy_attachment" "omen-s3-production-policy" {
+  name       = "omen-s3-production"
+  users      = [aws_iam_user.omen-s3-production.name]
+  policy_arn = aws_iam_policy.omen-policy.arn
+}
