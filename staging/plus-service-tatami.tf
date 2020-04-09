@@ -338,12 +338,12 @@ resource "aws_lb_listener" "tatami-staging-alb-https" {
   certificate_arn = "arn:aws:acm:ap-northeast-1:121659688561:certificate/fb42d3af-41da-4b97-9b1d-048f86ed16ff"
 
   default_action {
-    # TODO: ECS 作成後に変更する
     type = "fixed-response"
     fixed_response {
-      content_type = "text/plain"
-      message_body = "tatami-staging"
-      status_code  = "200"
+      content_type = "text/html"
+      message_body = file("./files/alb/maintenance_tatami.html")
+
+      status_code = "503"
     }
   }
 }
