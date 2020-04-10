@@ -866,14 +866,6 @@ resource "aws_route53_record" "akeome-cc-SOA" {
   ttl     = "900"
 }
 
-resource "aws_route53_record" "asterisk-akeome-cc-CNAME" {
-  zone_id = "Z116S8B7W8HALH"
-  name    = "*.akeome.cc"
-  type    = "CNAME"
-  records = ["convex-mockingbird-xau9yo4f7zwu2b31gzobwuxx.herokudns.com"]
-  ttl     = "60"
-}
-
 resource "aws_route53_record" "_acme-challenge-akeome-cc-TXT" {
   zone_id = "Z116S8B7W8HALH"
   name    = "_acme-challenge.akeome.cc"
