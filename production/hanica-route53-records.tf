@@ -882,6 +882,25 @@ resource "aws_route53_record" "_acme-challenge-akeome-cc-TXT" {
   ttl     = "60"
 }
 
+resource "aws_route53_record" "asterisk-akeome-cc-A" {
+  zone_id = "Z116S8B7W8HALH"
+  name    = "*.akeome.cc"
+  type    = "A"
+
+  alias {
+    name                   = "hanica-akeome-app.ap-northeast-1.elasticbeanstalk.com"
+    zone_id                = "Z14GRHDCWA56QT"
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_route53_record" "_3788d0032729259f05343f99a61fc351-akeome-cc-CNAME" {
+  zone_id = "Z116S8B7W8HALH"
+  name    = "_3788d0032729259f05343f99a61fc351.akeome.cc"
+  type    = "CNAME"
+  records = ["_f895a4ef1b2b12ad68750b11e7ef1c6d.nhqijqilxf.acm-validations.aws"]
+}
+
 resource "aws_route53_record" "arigata-me-NS" {
   zone_id = "Z1OXYS5OD2PLTY"
   name    = "arigata.me"
