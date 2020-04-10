@@ -881,7 +881,7 @@ resource "aws_route53_record" "asterisk-akeome-cc-A" {
 
   alias {
     name                   = "hanica-akeome-app.ap-northeast-1.elasticbeanstalk.com"
-    zone_id                = "Z14GRHDCWA56QT"
+    zone_id                = "Z1R25G3KIG2GBW"
     evaluate_target_health = false
   }
 }
