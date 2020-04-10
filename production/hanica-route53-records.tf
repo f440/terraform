@@ -891,6 +891,7 @@ resource "aws_route53_record" "_3788d0032729259f05343f99a61fc351-akeome-cc-CNAME
   name    = "_3788d0032729259f05343f99a61fc351.akeome.cc"
   type    = "CNAME"
   records = ["_f895a4ef1b2b12ad68750b11e7ef1c6d.nhqijqilxf.acm-validations.aws"]
+  ttl     = "300"
 }
 
 resource "aws_route53_record" "arigata-me-NS" {
