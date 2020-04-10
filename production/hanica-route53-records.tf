@@ -866,20 +866,32 @@ resource "aws_route53_record" "akeome-cc-SOA" {
   ttl     = "900"
 }
 
-resource "aws_route53_record" "asterisk-akeome-cc-CNAME" {
-  zone_id = "Z116S8B7W8HALH"
-  name    = "*.akeome.cc"
-  type    = "CNAME"
-  records = ["convex-mockingbird-xau9yo4f7zwu2b31gzobwuxx.herokudns.com"]
-  ttl     = "60"
-}
-
 resource "aws_route53_record" "_acme-challenge-akeome-cc-TXT" {
   zone_id = "Z116S8B7W8HALH"
   name    = "_acme-challenge.akeome.cc"
   type    = "TXT"
   records = ["Io4Q0sxpmhPEhYgt_kjedIKPPdMrMZQ2XyMZyR9ezk0"]
   ttl     = "60"
+}
+
+resource "aws_route53_record" "asterisk-akeome-cc-A" {
+  zone_id = "Z116S8B7W8HALH"
+  name    = "*.akeome.cc"
+  type    = "A"
+
+  alias {
+    name                   = "hanica-akeome-app.ap-northeast-1.elasticbeanstalk.com"
+    zone_id                = "Z1R25G3KIG2GBW"
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_route53_record" "_3788d0032729259f05343f99a61fc351-akeome-cc-CNAME" {
+  zone_id = "Z116S8B7W8HALH"
+  name    = "_3788d0032729259f05343f99a61fc351.akeome.cc"
+  type    = "CNAME"
+  records = ["_f895a4ef1b2b12ad68750b11e7ef1c6d.nhqijqilxf.acm-validations.aws"]
+  ttl     = "300"
 }
 
 resource "aws_route53_record" "arigata-me-NS" {
