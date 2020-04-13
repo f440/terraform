@@ -224,3 +224,18 @@ resource "aws_route53_record" "shinogi-staging-aoyagi-farm-CNAME" {
   ttl     = "60"
 }
 
+resource "aws_route53_record" "asterisk-shinogi-staging-aoyagi-farm-CNAME" {
+  zone_id = var.aoyagi_farm_zone_id
+  name    = "*.shinogi-staging.aoyagi.farm"
+  type    = "CNAME"
+  records = ["mammalian-eyrie-n1v3myejba7k08jpuczbb1yp.herokudns.com"]
+  ttl     = "60"
+}
+
+resource "aws_route53_record" "shinogi-staging-TXT" {
+  zone_id = var.aoyagi_farm_zone_id
+  name    = "_acme-challenge.shinogi-staging.aoyagi.farm"
+  type    = "TXT"
+  records = ["tKsKgkWrxM-ngWsfhInD6ir2F-kS7GfwQjpRNLQX2po"]
+  ttl     = "60"
+}
