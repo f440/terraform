@@ -322,11 +322,10 @@ resource "aws_lb" "tatami-staging-alb" {
   ]
   security_groups = [aws_security_group.tatami-staging-alb-sg.id]
 
-  // access_logs {
-  //   bucket  = aws_s3_bucket.tatami-staging-alb-access-logs.id
-  //   enabled = true
-  //   prefix  = "tatami-staging-alb"
-  // }
+  access_logs {
+    bucket  = aws_s3_bucket.tatami-staging-alb-access-logs.id
+    enabled = true
+  }
 }
 
 resource "aws_lb_listener" "tatami-staging-alb-https" {
