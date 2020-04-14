@@ -1,5 +1,112 @@
 ##################################################
 #
+# VPC
+#
+# - external
+#   - 10.0.34.0/24
+#   - 10.0.35.0/24
+# - internal
+#   - 10.0.36.0/24
+#   - 10.0.37.0/24
+#
+##################################################
+resource "aws_subnet" "tatami-staging-external-1a" {
+  vpc_id            = aws_vpc.staging-hanica-vpc.id
+  availability_zone = "ap-northeast-1a"
+  cidr_block        = "10.0.34.0/24"
+  tags = {
+    Name = "tatami-staging-external-1a"
+  }
+}
+
+resource "aws_subnet" "tatami-staging-external-1c" {
+  vpc_id            = aws_vpc.staging-hanica-vpc.id
+  availability_zone = "ap-northeast-1c"
+  cidr_block        = "10.0.35.0/24"
+  tags = {
+    Name = "tatami-staging-external-1c"
+  }
+}
+
+resource "aws_subnet" "tatami-staging-internal-1a" {
+  vpc_id            = aws_vpc.staging-hanica-vpc.id
+  availability_zone = "ap-northeast-1a"
+  cidr_block        = "10.0.36.0/24"
+  tags = {
+    Name = "staging-tatami-internal-1a"
+  }
+}
+
+resource "aws_subnet" "tatami-staging-internal-1c" {
+  vpc_id            = aws_vpc.staging-hanica-vpc.id
+  availability_zone = "ap-northeast-1c"
+  cidr_block        = "10.0.37.0/24"
+  tags = {
+    Name = "staging-tatami-internal-1c"
+  }
+}
+
+resource "aws_route_table" "tatami-staging-internal-rt-1a" {
+  vpc_id = aws_vpc.staging-hanica-vpc.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.staging-hanica-vpc-1a-ngw.id
+  }
+
+  tags = {
+    Name = "staging-tatami-internal-rt"
+  }
+}
+
+resource "aws_route_table_association" "tatami-staging-internal-rt-1a" {
+  subnet_id      = aws_subnet.tatami-staging-internal-1a.id
+  route_table_id = aws_route_table.tatami-staging-internal-rt-1a.id
+}
+
+resource "aws_route_table" "tatami-staging-internal-rt-1c" {
+  vpc_id = aws_vpc.staging-hanica-vpc.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.staging-hanica-vpc-1c-ngw.id
+  }
+
+  tags = {
+    Name = "staging-tatami-internal-rt"
+  }
+}
+
+resource "aws_route_table_association" "tatami-staging-internal-rt-1c" {
+  subnet_id      = aws_subnet.tatami-staging-internal-1c.id
+  route_table_id = aws_route_table.tatami-staging-internal-rt-1c.id
+}
+
+resource "aws_route_table" "tatami-staging-external-rt" {
+  vpc_id = aws_vpc.staging-hanica-vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.staging-hanica-igw.id
+  }
+
+  tags = {
+    Name = "tatami-external-rt"
+  }
+}
+
+resource "aws_route_table_association" "tatami-staging-external-rt-1a" {
+  subnet_id      = aws_subnet.tatami-staging-external-1a.id
+  route_table_id = aws_route_table.tatami-staging-external-rt.id
+}
+
+resource "aws_route_table_association" "tatami-staging-external-rt-1c" {
+  subnet_id      = aws_subnet.tatami-staging-external-1c.id
+  route_table_id = aws_route_table.tatami-staging-external-rt.id
+}
+
+##################################################
+#
 # ElastiCache
 #
 ##################################################
@@ -110,113 +217,6 @@ resource "aws_db_subnet_group" "tatami-staging-db-subnet-group" {
     aws_subnet.tatami-staging-internal-1a.id,
     aws_subnet.tatami-staging-internal-1c.id,
   ]
-}
-
-##################################################
-#
-# VPC
-#
-# - external
-#   - 10.0.34.0/24
-#   - 10.0.35.0/24
-# - internal
-#   - 10.0.36.0/24
-#   - 10.0.37.0/24
-#
-##################################################
-resource "aws_subnet" "tatami-staging-external-1a" {
-  vpc_id            = aws_vpc.staging-hanica-vpc.id
-  availability_zone = "ap-northeast-1a"
-  cidr_block        = "10.0.34.0/24"
-  tags = {
-    Name = "tatami-staging-external-1a"
-  }
-}
-
-resource "aws_subnet" "tatami-staging-external-1c" {
-  vpc_id            = aws_vpc.staging-hanica-vpc.id
-  availability_zone = "ap-northeast-1c"
-  cidr_block        = "10.0.35.0/24"
-  tags = {
-    Name = "tatami-staging-external-1c"
-  }
-}
-
-resource "aws_subnet" "tatami-staging-internal-1a" {
-  vpc_id            = aws_vpc.staging-hanica-vpc.id
-  availability_zone = "ap-northeast-1a"
-  cidr_block        = "10.0.36.0/24"
-  tags = {
-    Name = "staging-tatami-internal-1a"
-  }
-}
-
-resource "aws_subnet" "tatami-staging-internal-1c" {
-  vpc_id            = aws_vpc.staging-hanica-vpc.id
-  availability_zone = "ap-northeast-1c"
-  cidr_block        = "10.0.37.0/24"
-  tags = {
-    Name = "staging-tatami-internal-1c"
-  }
-}
-
-resource "aws_route_table" "tatami-staging-internal-rt-1a" {
-  vpc_id = aws_vpc.staging-hanica-vpc.id
-
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.staging-hanica-vpc-1a-ngw.id
-  }
-
-  tags = {
-    Name = "staging-tatami-internal-rt"
-  }
-}
-
-resource "aws_route_table_association" "tatami-staging-internal-rt-1a" {
-  subnet_id      = aws_subnet.tatami-staging-internal-1a.id
-  route_table_id = aws_route_table.tatami-staging-internal-rt-1a.id
-}
-
-resource "aws_route_table" "tatami-staging-internal-rt-1c" {
-  vpc_id = aws_vpc.staging-hanica-vpc.id
-
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.staging-hanica-vpc-1c-ngw.id
-  }
-
-  tags = {
-    Name = "staging-tatami-internal-rt"
-  }
-}
-
-resource "aws_route_table_association" "tatami-staging-internal-rt-1c" {
-  subnet_id      = aws_subnet.tatami-staging-internal-1c.id
-  route_table_id = aws_route_table.tatami-staging-internal-rt-1c.id
-}
-
-resource "aws_route_table" "tatami-staging-external-rt" {
-  vpc_id = aws_vpc.staging-hanica-vpc.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.staging-hanica-igw.id
-  }
-
-  tags = {
-    Name = "tatami-external-rt"
-  }
-}
-
-resource "aws_route_table_association" "tatami-staging-external-rt-1a" {
-  subnet_id      = aws_subnet.tatami-staging-external-1a.id
-  route_table_id = aws_route_table.tatami-staging-external-rt.id
-}
-
-resource "aws_route_table_association" "tatami-staging-external-rt-1c" {
-  subnet_id      = aws_subnet.tatami-staging-external-1c.id
-  route_table_id = aws_route_table.tatami-staging-external-rt.id
 }
 
 ##################################################
