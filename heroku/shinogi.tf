@@ -7,7 +7,7 @@ resource "heroku_app" "shinogi-staging" {
   name   = "shinogi-staging"
   region = "us"
   stack  = "heroku-18"
-  acm    = true
+  acm    = false
 
   organization {
     name   = "smarthr"
@@ -25,8 +25,8 @@ resource "heroku_app" "shinogi-staging" {
   }
 
   buildpacks = [
-    "heroku/ruby",
     "heroku/nodejs",
+    "heroku/ruby",
   ]
 }
 
