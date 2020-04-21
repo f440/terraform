@@ -100,3 +100,28 @@ resource "aws_wafregional_web_acl" "hanica-production-waf" {
     }
   }
 }
+
+resource "aws_cloudwatch_metric_alarm" "aws-waf-block-alarm" {
+  alarm_name = "HanicaProductionWafBlockAlarm"
+
+  namespace   = "WAF"
+  metric_name = "BlockedRequests"
+  dimensions = {
+    WebACL = aws_wafregional_web_acl.hanica-production-waf.metric_name
+    Rule   = "ALL"
+    Region = data.aws_region.current.name
+  }
+
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1
+  period              = "60"
+  statistic           = "Sum"
+  threshold           = "0"
+  treat_missing_data  = "notBreaching"
+
+  alarm_actions = [aws_sns_topic.securityhub-notification-topic.arn]
+
+  tags = {
+    ManagedBy = "SecurityGroup"
+  }
+}

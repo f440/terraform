@@ -1,0 +1,14 @@
+{
+    "Version": "2012-10-17",
+    "Id": "Tatami-Staging-ALB-AccessLogs-Policy",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::582318560864:root"
+            },
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::tatami-staging-alb-access-logs/AWSLogs/121659688561/*"
+        }
+    ]
+}
