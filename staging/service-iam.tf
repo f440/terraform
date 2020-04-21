@@ -17,6 +17,7 @@ resource "aws_iam_group_membership" "plus-app" {
     "plus-service-oke-circleci",
     aws_iam_user.plus-service-jougo.name,
     aws_iam_user.plus-service-omen.name,
+    aws_iam_user.plus-service-meyasu.name,
     "plus-service-auto-maintenance-tool",
   ]
 }
@@ -76,3 +77,18 @@ resource "aws_iam_policy_attachment" "plus-service-tatami" {
   policy_arn = aws_iam_policy.plus-service-tatami.arn
 }
 
+resource "aws_iam_user" "plus-service-meyasu" {
+  name          = "plus-service-meyasu"
+  force_destroy = "false"
+}
+
+resource "aws_iam_policy" "plus-service-meyasu" {
+  name   = "PlusServicemeyasuPolicy"
+  policy = file("./files/iam/policies/plus-service-meyasu.json")
+}
+
+resource "aws_iam_policy_attachment" "plus-service-meyasu" {
+  name       = "plus-service-meyasu"
+  users      = [aws_iam_user.plus-service-meyasu.name]
+  policy_arn = aws_iam_policy.plus-service-meyasu.arn
+}
