@@ -506,7 +506,7 @@ resource "aws_cloudwatch_metric_alarm" "securityhub-notification-queue-alarm" {
   alarm_name = "SecurityHubNotificationQueueAlarm"
 
   namespace = "AWS/SQS"
-  metric_name = "ApproximateAgeOfOldestMessage"
+  metric_name = "ApproximateNumberOfMessagesNotVisible"
   dimensions = {
     QueueName = aws_sqs_queue.securityhub-notification-queue.name
   }
@@ -514,8 +514,8 @@ resource "aws_cloudwatch_metric_alarm" "securityhub-notification-queue-alarm" {
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods = 1
   period = "300"
-  statistic = "Maximum"
-  threshold = "60"
+  statistic = "Minimum"
+  threshold = "0"
 
   alarm_actions = [aws_sns_topic.securityhub-notification-topic.arn]
 
