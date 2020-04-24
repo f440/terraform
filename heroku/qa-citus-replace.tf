@@ -12,7 +12,7 @@ resource "heroku_app" "qa-citus-replace-production" {
 
   organization {
     name   = "smarthr"
-    locked = true
+    locked = false
   }
 
   sensitive_config_vars = {
