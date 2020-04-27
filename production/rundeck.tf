@@ -48,11 +48,11 @@ resource "aws_instance" "rundeck" {
 
 ##################################################
 #
-# IAMロール rundeck
+# IAMロール RundeckRole
 #
 ##################################################
 resource "aws_iam_role" "rundeck-role" {
-  name               = "rundeck"
+  name               = "RundeckRole"
   assume_role_policy = file("./files/iam/roles/ec2-assume.json")
 }
 
@@ -74,22 +74,22 @@ resource "aws_iam_role_policy_attachment" "rundeck-role-cloudwatch-attachment" {
 # アクセスアドバイザーとCloudTrailログから必要そうなポリシーを割り当て
 resource "aws_iam_role_policy_attachment" "rundeck-role-cfn-attachment" {
   role       = aws_iam_role.rundeck-role.name
-  policy_arn = "arn:aws:iam::aws:policy/AWSCloudFormationFullAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AWSCloudFormationReadOnlyAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "rundeck-role-elb-attachment" {
   role       = aws_iam_role.rundeck-role.name
-  policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
+  policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingReadOnly"
 }
 
 resource "aws_iam_role_policy_attachment" "rundeck-role-ec2-attachment" {
   role       = aws_iam_role.rundeck-role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "rundeck-role-autoscaling-attachment" {
   role       = aws_iam_role.rundeck-role.name
-  policy_arn = "arn:aws:iam::aws:policy/AutoScalingFullAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AutoScalingReadOnlyAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "rundeck-role-eb-attachment" {
@@ -99,7 +99,7 @@ resource "aws_iam_role_policy_attachment" "rundeck-role-eb-attachment" {
 
 resource "aws_iam_role_policy_attachment" "rundeck-role-ecr-attachment" {
   role       = aws_iam_role.rundeck-role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
 
 resource "aws_iam_role_policy_attachment" "rundeck-role-route53-attachment" {
