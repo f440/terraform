@@ -92,3 +92,7 @@ variable "hanica-bastion-ami-id" {
 variable "hanica-operation-ami-id" {
   default = "ami-48630c2e"
 }
+
+variable "rundeck-ami-id" {
+  default = "ami-696b9a16"
+}
