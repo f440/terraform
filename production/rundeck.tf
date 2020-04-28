@@ -79,7 +79,7 @@ resource "aws_iam_role_policy_attachment" "rundeck-role-cfn-attachment" {
 
 resource "aws_iam_role_policy_attachment" "rundeck-role-elb-attachment" {
   role       = aws_iam_role.rundeck-role.name
-  policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingReadOnly"
+  policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "rundeck-role-ec2-attachment" {
