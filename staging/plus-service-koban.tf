@@ -40,7 +40,7 @@ resource "aws_s3_bucket" "koban-api-document" {
 
 resource "aws_s3_bucket_public_access_block" "koban-api-document" {
   bucket                  = aws_s3_bucket.koban-api-document.id
-  block_public_acls       = true
+  block_public_acls       = false
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
