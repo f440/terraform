@@ -3,20 +3,20 @@
 # IAM
 #
 ##################################################
-resource "aws_iam_user" "plus-service-koban" {
-  name          = "plus-service-koban"
+resource "aws_iam_user" "plus-service-koban-api-document" {
+  name          = "plus-service-koban-api-document"
   force_destroy = "false"
 }
 
-resource "aws_iam_policy" "plus-service-koban" {
-  name   = "PlusServiceKobanPolicy"
-  policy = file("./files/iam/policies/plus-service-koban.json")
+resource "aws_iam_policy" "plus-service-koban-api-document" {
+  name   = "PlusServiceKobanApiDocumentPolicy"
+  policy = file("./files/iam/policies/plus-service-koban-api-document.json")
 }
 
-resource "aws_iam_policy_attachment" "plus-service-koban" {
-  name       = "plus-service-koban"
-  users      = [aws_iam_user.plus-service-koban.name]
-  policy_arn = aws_iam_policy.plus-service-koban.arn
+resource "aws_iam_policy_attachment" "plus-service-koban-api-document" {
+  name       = "plus-service-koban-api-document"
+  users      = [aws_iam_user.plus-service-koban-api-document.name]
+  policy_arn = aws_iam_policy.plus-service-koban-api-document.arn
 }
 
 ##################################################
@@ -24,8 +24,8 @@ resource "aws_iam_policy_attachment" "plus-service-koban" {
 # S3
 #
 ##################################################
-resource "aws_s3_bucket" "koban-development" {
-  bucket = "koban-development"
+resource "aws_s3_bucket" "koban-api-document" {
+  bucket = "koban-api-document"
   acl    = "private"
   region = "ap-northeast-1"
 
@@ -38,17 +38,15 @@ resource "aws_s3_bucket" "koban-development" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "koban-development" {
-  bucket                  = aws_s3_bucket.koban-development.id
+resource "aws_s3_bucket_public_access_block" "koban-api-document" {
+  bucket                  = aws_s3_bucket.koban-api-document.id
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
 }
 
-/*
-resource "aws_s3_bucket_policy" "koban-development-policy" {
-  bucket = aws_s3_bucket.koban-development.id
-  policy = file("./files/s3/policies/koban-development-policy.json")
+resource "aws_s3_bucket_policy" "koban-api-document-policy" {
+  bucket = aws_s3_bucket.koban-api-document.id
+  policy = file("./files/s3/policies/koban-api-document-policy.json")
 }
-*/

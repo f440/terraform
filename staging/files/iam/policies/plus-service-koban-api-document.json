@@ -11,8 +11,8 @@
                 "s3:DeleteObject"
             ],
             "Resource": [
-                "arn:aws:s3:::koban-development/*",
-                "arn:aws:s3:::koban-development"
+                "arn:aws:s3:::koban-api-document/*",
+                "arn:aws:s3:::koban-api-document"
             ]
         }
     ]
