@@ -32,7 +32,7 @@ resource "aws_instance" "rundeck" {
 
   tags = {
     Name                   = "rundeck"
-    AmazonInspectorProfile = "base+network_inspector_group"
+    AmazonInspectorProfile = "base_inspector_group"
   }
 
   tenancy = "default"
