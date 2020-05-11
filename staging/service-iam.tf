@@ -20,7 +20,7 @@ resource "aws_iam_group_membership" "plus-app" {
     aws_iam_user.plus-service-tatami.name,
     aws_iam_user.plus-service-tatami-circleci.name,
     aws_iam_user.plus-service-meyasu.name,
-    aws_iam_user.plus-service-koban.name,
+    aws_iam_user.plus-service-koban-api-document.name,
     "plus-service-auto-maintenance-tool",
   ]
 }

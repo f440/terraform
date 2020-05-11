@@ -1,0 +1,34 @@
+{
+    "Version": "2012-10-17",
+    "Id": "koban-api-document-policy",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::121659688561:root"
+            },
+            "Action": "s3:*",
+            "Resource": [
+               "arn:aws:s3:::koban-api-document/*",
+               "arn:aws:s3:::koban-api-document"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::koban-api-document/*",
+                "arn:aws:s3:::koban-api-document"
+            ],
+            "Condition": {
+                "IpAddress": {
+                    "aws:SourceIp": [
+                        "150.249.198.101",
+                        "54.65.102.6"
+                    ]
+                }
+            }
+        }
+    ]
+}
