@@ -110,3 +110,38 @@ resource "aws_instance" "kiban-service-fivetran-omen" {
   }
 }
 
+resource "aws_eip" "kiban-service-fivetran-oke" {
+  vpc      = true
+  instance = aws_instance.kiban-service-fivetran-oke.id
+
+  tags = {
+    Name = "kiban-service-fivetran-oke"
+  }
+}
+
+resource "aws_instance" "kiban-service-fivetran-oke" {
+  ami                     = var.kiban-service-fivetran-latest-ami-id
+  availability_zone       = "ap-northeast-1c"
+  instance_type           = "t2.large"
+  key_name                = aws_key_pair.kiban-service-fivetran.key_name
+  disable_api_termination = true
+  monitoring              = true
+
+  subnet_id = var.vpc_subnet_hanica_external_1c_id
+  vpc_security_group_ids = [
+    aws_security_group.sg-kiban-service-fivetran.id,
+  ]
+  associate_public_ip_address = true
+
+  user_data = data.template_cloudinit_config.kiban-service-fivetran-oke.rendered
+
+  root_block_device {
+    volume_type           = "gp2"
+    volume_size           = "100"
+    delete_on_termination = true
+  }
+
+  tags = {
+    Name = "kiban-service-fivetran-oke"
+  }
+}
