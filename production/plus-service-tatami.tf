@@ -51,7 +51,7 @@ resource "aws_route_table" "tatami-production-internal-rt-1a" {
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = "nat-082042ed299995ecc"
+    nat_gateway_id = var.hanica-ngw-1a
   }
 
   tags = {
@@ -69,7 +69,7 @@ resource "aws_route_table" "tatami-production-internal-rt-1c" {
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = "nat-0c4f7fba08b7ea6bf"
+    nat_gateway_id = var.hanica-ngw-1c
   }
 
   tags = {
