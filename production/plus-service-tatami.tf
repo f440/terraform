@@ -323,3 +323,178 @@ resource "aws_iam_role_policy_attachment" "codebuild-tatami-production-deploy-wo
   role       = aws_iam_role.codebuild-tatami-production-deploy-worker-service-role.name
   policy_arn = aws_iam_policy.tatami-ecs-update-service-policy.arn
 }
+
+##################################################
+#
+# ElastiCache
+#
+##################################################
+resource "aws_security_group" "tatami-production-redis-sg" {
+  name   = "tatami-production-redis-sg"
+  vpc_id = var.vpc-hanica-new-vpc
+
+  ingress {
+    from_port = 6379
+    protocol  = "tcp"
+    to_port   = 6379
+    security_groups = [
+      aws_security_group.tatami-production-web-sg.id,
+      aws_security_group.tatami-production-worker-sg.id,
+    ]
+  }
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tatami-production-redis-sg"
+  }
+}
+
+##################################################
+#
+# EC2
+#
+##################################################
+
+resource "aws_security_group" "tatami-production-alb-sg" {
+  name   = "tatami-production-alb-sg"
+  vpc_id = var.vpc-hanica-new-vpc
+
+  ingress {
+    from_port   = 443
+    protocol    = "tcp"
+    to_port     = 443
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tatami-production-alb-sg"
+  }
+}
+
+##################################################
+#
+# Web / Worker
+#
+##################################################
+
+resource "aws_security_group" "tatami-production-web-sg" {
+  name   = "tatami-production-web-sg"
+  vpc_id = var.vpc-hanica-new-vpc
+
+  ingress {
+    from_port       = 3000
+    protocol        = "tcp"
+    to_port         = 3000
+    security_groups = [aws_security_group.tatami-production-alb-sg.id]
+  }
+
+  tags = {
+    Name = "tatami-production-web-sg"
+  }
+}
+
+resource "aws_security_group_rule" "tatami-production-web-sg-egress-http" {
+  type              = "egress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.tatami-production-web-sg.id
+}
+
+resource "aws_security_group_rule" "tatami-production-web-sg-egress-https" {
+  type              = "egress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0", "::/0"]
+  security_group_id = aws_security_group.tatami-production-web-sg.id
+}
+
+resource "aws_security_group_rule" "tatami-production-web-sg-egress-papertrail" {
+  type              = "egress"
+  from_port         = 24008
+  to_port           = 24008
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.tatami-production-web-sg.id
+}
+
+resource "aws_security_group_rule" "tatami-production-web-sg-egress-redis" {
+  type                     = "egress"
+  from_port                = 6379
+  to_port                  = 6379
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.tatami-production-redis-sg.id
+  security_group_id        = aws_security_group.tatami-production-web-sg.id
+}
+
+resource "aws_security_group_rule" "tatami-production-web-sg-egress-db" {
+  type                     = "egress"
+  from_port                = 5432
+  to_port                  = 5432
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.tatami-production-db-sg.id
+  security_group_id        = aws_security_group.tatami-production-web-sg.id
+}
+
+resource "aws_security_group" "tatami-production-worker-sg" {
+  name   = "tatami-production-worker-sg"
+  vpc_id = var.vpc-hanica-new-vpc
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tatami-production-worker-sg"
+  }
+}
+
+##################################################
+#
+# RDS
+#
+##################################################
+resource "aws_security_group" "tatami-production-db-sg" {
+  name   = "tatami-production-db-sg"
+  vpc_id = var.vpc-hanica-new-vpc
+
+  ingress {
+    from_port = 5432
+    protocol  = "tcp"
+    to_port   = 5432
+    security_groups = [
+      aws_security_group.tatami-production-web-sg.id,
+      aws_security_group.tatami-production-worker-sg.id,
+    ]
+  }
+
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tatami-production-db-sg"
+  }
+}
+
