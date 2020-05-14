@@ -1,5 +1,113 @@
 ##################################################
 #
+# VPC
+#
+# - external
+#   - 10.0.34.0/24
+#   - 10.0.35.0/24
+# - internal
+#   - 10.0.36.0/24
+#   - 10.0.37.0/24
+#
+##################################################
+resource "aws_subnet" "tatami-production-external-1a" {
+  vpc_id            = var.vpc-hanica-new-vpc
+  availability_zone = "ap-northeast-1a"
+  cidr_block        = "10.0.34.0/24"
+  tags = {
+    Name = "tatami-production-external-1a"
+  }
+}
+
+resource "aws_subnet" "tatami-production-external-1c" {
+  vpc_id            = var.vpc-hanica-new-vpc
+  availability_zone = "ap-northeast-1c"
+  cidr_block        = "10.0.35.0/24"
+  tags = {
+    Name = "tatami-production-external-1c"
+  }
+}
+
+resource "aws_subnet" "tatami-production-internal-1a" {
+  vpc_id            = var.vpc-hanica-new-vpc
+  availability_zone = "ap-northeast-1a"
+  cidr_block        = "10.0.36.0/24"
+  tags = {
+    Name = "production-tatami-internal-1a"
+  }
+}
+
+resource "aws_subnet" "tatami-production-internal-1c" {
+  vpc_id            = var.vpc-hanica-new-vpc
+  availability_zone = "ap-northeast-1c"
+  cidr_block        = "10.0.37.0/24"
+  tags = {
+    Name = "production-tatami-internal-1c"
+  }
+}
+
+resource "aws_route_table" "tatami-production-internal-rt-1a" {
+  vpc_id = var.vpc-hanica-new-vpc
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = "nat-082042ed299995ecc"
+  }
+
+  tags = {
+    Name = "production-tatami-internal-rt"
+  }
+}
+
+resource "aws_route_table_association" "tatami-production-internal-rt-1a" {
+  subnet_id      = aws_subnet.tatami-production-internal-1a.id
+  route_table_id = aws_route_table.tatami-production-internal-rt-1a.id
+}
+
+resource "aws_route_table" "tatami-production-internal-rt-1c" {
+  vpc_id = var.vpc-hanica-new-vpc
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = "nat-0c4f7fba08b7ea6bf"
+  }
+
+  tags = {
+    Name = "production-tatami-internal-rt"
+  }
+}
+
+resource "aws_route_table_association" "tatami-production-internal-rt-1c" {
+  subnet_id      = aws_subnet.tatami-production-internal-1c.id
+  route_table_id = aws_route_table.tatami-production-internal-rt-1c.id
+}
+
+resource "aws_route_table" "tatami-production-external-rt" {
+  vpc_id = var.vpc-hanica-new-vpc
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = var.hanica-new-igw
+  }
+
+  tags = {
+    Name = "tatami-external-rt"
+  }
+}
+
+resource "aws_route_table_association" "tatami-production-external-rt-1a" {
+  subnet_id      = aws_subnet.tatami-production-external-1a.id
+  route_table_id = aws_route_table.tatami-production-external-rt.id
+}
+
+resource "aws_route_table_association" "tatami-production-external-rt-1c" {
+  subnet_id      = aws_subnet.tatami-production-external-1c.id
+  route_table_id = aws_route_table.tatami-production-external-rt.id
+}
+
+
+##################################################
+#
 # ECS / ECR
 #
 ##################################################
