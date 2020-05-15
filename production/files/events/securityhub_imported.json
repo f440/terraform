@@ -10,6 +10,11 @@
       "ProductArn": [
         "arn:aws:securityhub:${aws_region}::product/aws/inspector"
       ],
+      "Workflow": {
+        "Status": [
+          "NEW"
+        ]
+      },
       "Resources": {
         "Tags": {
           "StopSecurityHubNotification": [
