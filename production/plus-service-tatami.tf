@@ -406,7 +406,7 @@ resource "aws_security_group" "tatami-production-web-sg" {
   }
 }
 
-resource "aws_security_group_rule" "tatami-production-web-sg-egress-http" {
+resource "aws_security_group_rule" "tatami-production-web-sg-http-rule" {
   type              = "egress"
   from_port         = 80
   to_port           = 80
@@ -415,7 +415,7 @@ resource "aws_security_group_rule" "tatami-production-web-sg-egress-http" {
   security_group_id = aws_security_group.tatami-production-web-sg.id
 }
 
-resource "aws_security_group_rule" "tatami-production-web-sg-egress-https" {
+resource "aws_security_group_rule" "tatami-production-web-sg-https-rule" {
   type              = "egress"
   from_port         = 443
   to_port           = 443
@@ -424,7 +424,7 @@ resource "aws_security_group_rule" "tatami-production-web-sg-egress-https" {
   security_group_id = aws_security_group.tatami-production-web-sg.id
 }
 
-resource "aws_security_group_rule" "tatami-production-web-sg-egress-papertrail" {
+resource "aws_security_group_rule" "tatami-production-web-sg-papertrail-rule" {
   type              = "egress"
   from_port         = 18124
   to_port           = 18124
@@ -433,7 +433,7 @@ resource "aws_security_group_rule" "tatami-production-web-sg-egress-papertrail" 
   security_group_id = aws_security_group.tatami-production-web-sg.id
 }
 
-resource "aws_security_group_rule" "tatami-production-web-sg-egress-redis" {
+resource "aws_security_group_rule" "tatami-production-web-sg-redis-rule" {
   type                     = "egress"
   from_port                = 6379
   to_port                  = 6379
@@ -442,7 +442,7 @@ resource "aws_security_group_rule" "tatami-production-web-sg-egress-redis" {
   security_group_id        = aws_security_group.tatami-production-web-sg.id
 }
 
-resource "aws_security_group_rule" "tatami-production-web-sg-egress-db" {
+resource "aws_security_group_rule" "tatami-production-web-sg-db-rule" {
   type                     = "egress"
   from_port                = 5432
   to_port                  = 5432
