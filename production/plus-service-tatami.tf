@@ -426,8 +426,8 @@ resource "aws_security_group_rule" "tatami-production-web-sg-egress-https" {
 
 resource "aws_security_group_rule" "tatami-production-web-sg-egress-papertrail" {
   type              = "egress"
-  from_port         = 24008
-  to_port           = 24008
+  from_port         = 18124
+  to_port           = 18124
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.tatami-production-web-sg.id
