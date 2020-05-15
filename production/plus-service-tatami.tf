@@ -508,3 +508,23 @@ resource "aws_security_group" "tatami-production-db-sg" {
   }
 }
 
+resource "aws_db_parameter_group" "tatami-production-dbparamgroup" {
+  name        = "tatami-production-dbparamgroup"
+  family      = "postgres11"
+  description = "tatami-production-dbparamgroup"
+}
+
+resource "aws_db_option_group" "tatami-production-dboptiongroup" {
+  name                 = "tatami-production-dbparamgroup"
+  engine_name          = "postgres"
+  major_engine_version = "11"
+}
+
+resource "aws_db_subnet_group" "tatami-production-db-subnet-group" {
+  name = "tatami-production-db-subnet-group"
+  subnet_ids = [
+    aws_subnet.tatami-production-internal-1a.id,
+    aws_subnet.tatami-production-internal-1c.id,
+  ]
+}
+
