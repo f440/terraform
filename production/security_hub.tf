@@ -69,7 +69,10 @@ resource "aws_iam_role_policy_attachment" "securityhub-action-exception-role-pol
 data "aws_iam_policy_document" "securityhub-action-exception-role-policy" {
   statement {
     effect = "Allow"
-    actions = ["securityhub:UpdateFindings"]
+    actions = [
+      "securityhub:UpdateFindings",
+      "securityhub:BatchUpdateFindings"
+    ]
     resources = ["*"]
   }
 }
@@ -203,7 +206,8 @@ data "aws_iam_policy_document" "securityhub-action-bestpractice-role-policy" {
   statement {
     effect = "Allow"
     actions = [
-      "securityhub:UpdateFindings"
+      "securityhub:UpdateFindings",
+      "securityhub:BatchUpdateFindings"
     ]
     resources = ["*"]
   }
@@ -290,7 +294,9 @@ data "aws_iam_policy_document" "securityhub-action-securitypatch-role-policy" {
   statement {
     effect = "Allow"
     actions = [
-      "securityhub:UpdateFindings"
+      "securityhub:UpdateFindings",
+      "securityhub:GetFindings",
+      "securityhub:BatchUpdateFindings"
     ]
     resources = ["*"]
   }
@@ -464,6 +470,7 @@ data "aws_iam_policy_document" "lambda-securityhub-filter-role-policy" {
     actions = [
       "securityhub:GetFindings",
       "securityhub:UpdateFindings",
+      "securityhub:BatchUpdateFindings"
     ]
     resources = ["*"]
   }
