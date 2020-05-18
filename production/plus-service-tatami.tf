@@ -514,12 +514,6 @@ resource "aws_db_parameter_group" "tatami-production-dbparamgroup" {
   description = "tatami-production-dbparamgroup"
 }
 
-resource "aws_db_option_group" "tatami-production-dboptiongroup" {
-  name                 = "tatami-production-dboptiongroup"
-  engine_name          = "postgres"
-  major_engine_version = "11"
-}
-
 resource "aws_db_subnet_group" "tatami-production-db-subnet-group" {
   name = "tatami-production-db-subnet-group"
   subnet_ids = [

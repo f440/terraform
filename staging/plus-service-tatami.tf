@@ -205,18 +205,6 @@ resource "aws_db_parameter_group" "tatami-staging-dbparamgroup" {
   description = "tatami-staging-dbparamgroup"
 }
 
-resource "aws_db_option_group" "tatami-staging-dboptiongroup" {
-  name                 = "tatami-staging-dbparamgroup"
-  engine_name          = "postgres"
-  major_engine_version = "11"
-}
-
-resource "aws_db_option_group" "tatami-staging-dboptiongroup-renamed" {
-  name                 = "tatami-staging-dboptiongroup"
-  engine_name          = "postgres"
-  major_engine_version = "11"
-}
-
 resource "aws_db_subnet_group" "tatami-staging-db-subnet-group" {
   name = "tatami-staging-db-subnet-group"
   subnet_ids = [
