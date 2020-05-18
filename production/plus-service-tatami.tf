@@ -415,14 +415,24 @@ resource "aws_security_group_rule" "tatami-production-web-sg-http-rule" {
   security_group_id = aws_security_group.tatami-production-web-sg.id
 }
 
-resource "aws_security_group_rule" "tatami-production-web-sg-https-rule" {
+resource "aws_security_group_rule" "tatami-production-web-sg-https-ipv4-rule" {
   type              = "egress"
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0", "::/0"]
+  cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.tatami-production-web-sg.id
 }
+
+resource "aws_security_group_rule" "tatami-production-web-sg-https-ipv6-rule" {
+  type              = "egress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  ipv6_cidr_blocks  = ["::/0"]
+  security_group_id = aws_security_group.tatami-production-web-sg.id
+}
+
 
 resource "aws_security_group_rule" "tatami-production-web-sg-papertrail-rule" {
   type              = "egress"
