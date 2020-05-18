@@ -211,6 +211,12 @@ resource "aws_db_option_group" "tatami-staging-dboptiongroup" {
   major_engine_version = "11"
 }
 
+resource "aws_db_option_group" "tatami-staging-dboptiongroup-renamed" {
+  name                 = "tatami-staging-dboptiongroup"
+  engine_name          = "postgres"
+  major_engine_version = "11"
+}
+
 resource "aws_db_subnet_group" "tatami-staging-db-subnet-group" {
   name = "tatami-staging-db-subnet-group"
   subnet_ids = [
