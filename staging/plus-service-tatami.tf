@@ -206,7 +206,7 @@ resource "aws_db_parameter_group" "tatami-staging-dbparamgroup" {
 }
 
 resource "aws_db_option_group" "tatami-staging-dboptiongroup" {
-  name                 = "tatami-staging-dbparamgroup"
+  name                 = "tatami-staging-dboptiongroup"
   engine_name          = "postgres"
   major_engine_version = "11"
 }
