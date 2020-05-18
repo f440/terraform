@@ -384,6 +384,44 @@ resource "aws_security_group" "tatami-production-alb-sg" {
   }
 }
 
+resource "aws_lb" "tatami-production-alb" {
+  name                       = "tatami-production-alb"
+  load_balancer_type         = "application"
+  internal                   = false
+  idle_timeout               = 60
+  enable_deletion_protection = true
+
+  subnets = [
+    aws_subnet.tatami-production-external-1a.id,
+    aws_subnet.tatami-production-external-1c.id,
+  ]
+  security_groups = [aws_security_group.tatami-production-alb-sg.id]
+
+  access_logs {
+    bucket  = aws_s3_bucket.tatami-production-alb-access-logs.id
+    enabled = true
+  }
+}
+
+resource "aws_lb_listener" "tatami-production-alb-https" {
+  load_balancer_arn = aws_lb.tatami-production-alb.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+
+  certificate_arn = var.acm-wildcard-smarthr-plus-arn
+
+  default_action {
+    type = "fixed-response"
+    fixed_response {
+      content_type = "text/html"
+      message_body = file("./files/alb/maintenance_tatami.html")
+
+      status_code = "503"
+    }
+  }
+}
+
 ##################################################
 #
 # Web / Worker
@@ -475,6 +513,26 @@ resource "aws_security_group" "tatami-production-worker-sg" {
   tags = {
     Name = "tatami-production-worker-sg"
   }
+}
+
+##################################################
+#
+# S3
+#
+##################################################
+
+resource "aws_s3_bucket" "tatami-production-alb-access-logs" {
+  bucket = "tatami-production-alb-access-logs"
+  acl    = "private"
+  region = "ap-northeast-1"
+}
+
+resource "aws_s3_bucket_public_access_block" "tatami-production-alb-access-logs" {
+  bucket                  = aws_s3_bucket.tatami-production-alb-access-logs.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 ##################################################

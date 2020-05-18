@@ -109,3 +109,13 @@ variable "hanica-operation-ami-id" {
 variable "rundeck-ami-id" {
   default = "ami-696b9a16"
 }
+
+##################################################
+#
+# ACM ARN
+#
+##################################################
+
+variable "acm-wildcard-smarthr-plus-arn" {
+  default = "arn:aws:acm:ap-northeast-1:736134917012:certificate/af5335ba-1439-4aae-b351-0e3b7b74c881"
+}
