@@ -130,3 +130,29 @@ resource "aws_route53_record" "asterisk-doc-smarthr-plus-CNAME" {
   ttl     = "300"
 }
 
+resource "aws_route53_record" "tatami-doc-smarthr-plus-A" {
+  zone_id = var.smarthr_plus_zone_id
+  name    = "doc.smarthr.plus"
+  type    = "A"
+
+  alias {
+    # TODO: 本番の ALB のものに変更
+    name                   = "dualstack.tatami-production-alb-54059534.ap-northeast-1.elb.amazonaws.com"
+    zone_id                = "Z14GRHDCWA56QT"
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_route53_record" "asterisk-tatami-doc-smarthr-plus-A" {
+  zone_id = var.smarthr_plus_zone_id
+  name    = "*.doc.smarthr.plus"
+  type    = "A"
+
+  alias {
+    # TODO: 本番の ALB のものに変更
+    name                   = "dualstack.tatami-production-alb-54059534.ap-northeast-1.elb.amazonaws.com"
+    zone_id                = "Z14GRHDCWA56QT"
+    evaluate_target_health = false
+  }
+}
+
