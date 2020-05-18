@@ -122,3 +122,11 @@ resource "aws_route53_record" "sakidori-pca-pay-hyper-smarthr-plus-CNAME" {
   ttl     = "300"
 }
 
+resource "aws_route53_record" "asterisk-doc-smarthr-plus-CNAME" {
+  zone_id = var.smarthr_plus_zone_id
+  name    = "_1ead62a0b020f5823a552299dcfb8e29.doc.smarthr.plus."
+  type    = "CNAME"
+  records = ["_c2ea8bc9d5bb082f67212044c829551f.auiqqraehs.acm-validations.aws."]
+  ttl     = "300"
+}
+
