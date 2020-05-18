@@ -1,0 +1,19 @@
+{
+  "Id": "Policy1589797139223",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1589797136480",
+      "Action": [
+        "s3:PutObject"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::tatami-production-alb-access-logs",
+      "Principal": {
+        "AWS": [
+          "arn:aws:iam::582318560864:root"
+        ]
+      }
+    }
+  ]
+}
