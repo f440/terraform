@@ -136,9 +136,8 @@ resource "aws_route53_record" "tatami-doc-smarthr-plus-A" {
   type    = "A"
 
   alias {
-    # TODO: 本番の ALB のものに変更
-    name                   = "dualstack.tatami-production-alb-54059534.ap-northeast-1.elb.amazonaws.com"
-    zone_id                = "Z14GRHDCWA56QT"
+    name                   = var.route53-alias-tatami-production-alb
+    zone_id                = var.smarthr_plus_zone_id
     evaluate_target_health = false
   }
 }
@@ -149,9 +148,8 @@ resource "aws_route53_record" "asterisk-tatami-doc-smarthr-plus-A" {
   type    = "A"
 
   alias {
-    # TODO: 本番の ALB のものに変更
-    name                   = "dualstack.tatami-production-alb-54059534.ap-northeast-1.elb.amazonaws.com"
-    zone_id                = "Z14GRHDCWA56QT"
+    name                   = var.route53-alias-tatami-production-alb
+    zone_id                = var.smarthr_plus_zone_id
     evaluate_target_health = false
   }
 }
