@@ -535,6 +535,11 @@ resource "aws_s3_bucket_public_access_block" "tatami-production-alb-access-logs"
   restrict_public_buckets = true
 }
 
+resource "aws_s3_bucket_policy" "tatami-production-alb-access-logs" {
+  bucket = aws_s3_bucket.tatami-production-alb-access-logs.id
+  policy = file("./files/s3/policies/tatami-production-alb-access-logs-policy.json")
+}
+
 ##################################################
 #
 # RDS
