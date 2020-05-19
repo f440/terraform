@@ -119,3 +119,13 @@ variable "rundeck-ami-id" {
 variable "acm-wildcard-smarthr-plus-arn" {
   default = "arn:aws:acm:ap-northeast-1:736134917012:certificate/af5335ba-1439-4aae-b351-0e3b7b74c881"
 }
+
+##################################################
+#
+# Route 53 Alias Name
+#
+##################################################
+
+variable "route53-alias-tatami-production-alb" {
+  default = "dualstack.tatami-production-alb-1652781771.ap-northeast-1.elb.amazonaws.com"
+}
