@@ -137,7 +137,7 @@ resource "aws_route53_record" "tatami-doc-smarthr-plus-A" {
 
   alias {
     name                   = var.route53-alias-tatami-production-alb
-    zone_id                = var.smarthr_plus_zone_id
+    zone_id                = "Z14GRHDCWA56QT"
     evaluate_target_health = false
   }
 }
@@ -149,7 +149,7 @@ resource "aws_route53_record" "asterisk-tatami-doc-smarthr-plus-A" {
 
   alias {
     name                   = var.route53-alias-tatami-production-alb
-    zone_id                = var.smarthr_plus_zone_id
+    zone_id                = "Z14GRHDCWA56QT"
     evaluate_target_health = false
   }
 }
