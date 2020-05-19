@@ -8,7 +8,7 @@
         "s3:PutObject"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:s3:::tatami-production-alb-access-logs",
+      "Resource": "arn:aws:s3:::tatami-production-alb-access-logs/*",
       "Principal": {
         "AWS": [
           "arn:aws:iam::582318560864:root"
