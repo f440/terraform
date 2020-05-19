@@ -33,7 +33,6 @@ resource "aws_instance" "rundeck" {
   tags = {
     Name                   = "rundeck"
     AmazonInspectorProfile = "base_inspector_group"
-    StopSecurityHubNotification = "true"
   }
 
   tenancy = "default"
