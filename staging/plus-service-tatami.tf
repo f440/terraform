@@ -10,6 +10,7 @@
 #   - 10.0.37.0/24
 #
 ##################################################
+
 resource "aws_subnet" "tatami-staging-external-1a" {
   vpc_id            = aws_vpc.staging-hanica-vpc.id
   availability_zone = "ap-northeast-1a"
@@ -110,6 +111,7 @@ resource "aws_route_table_association" "tatami-staging-external-rt-1c" {
 # ElastiCache
 #
 ##################################################
+
 resource "aws_security_group" "tatami-staging-redis-sg" {
   name   = "tatami-staging-redis-sg"
   vpc_id = aws_vpc.staging-hanica-vpc.id
@@ -173,6 +175,7 @@ resource "aws_elasticache_replication_group" "plus-tatami-staging" {
 # RDS
 #
 ##################################################
+
 resource "aws_security_group" "tatami-staging-db-sg" {
   name   = "tatami-staging-db-sg"
   vpc_id = aws_vpc.staging-hanica-vpc.id
@@ -269,10 +272,6 @@ resource "aws_security_group" "tatami-staging-worker-sg" {
 resource "aws_ecs_cluster" "tatami-staging" {
   name = "tatami-staging"
 }
-
-# resource "aws_ecr_repository" "tatami" {
-#   name = "tatami"
-# }
 
 ##################################################
 #
